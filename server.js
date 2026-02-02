@@ -33,7 +33,7 @@ function getHostKey() {
   const { privateKey } = crypto.generateKeyPairSync("rsa", {
     modulusLength: 2048,
     publicKeyEncoding: { type: "spki", format: "pem" },
-    privateKeyEncoding: { type: "pkcs8", format: "pem" },
+    privateKeyEncoding: { type: "pkcs1", format: "pem" }, // pkcs1 for ssh2 compatibility
   });
   fs.writeFileSync(HOST_KEY_PATH, privateKey, { mode: 0o600 });
   console.log("  ✓ host.key generated");
