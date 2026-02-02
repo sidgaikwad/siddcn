@@ -136,6 +136,12 @@ module.exports = {
     const flat = flattenTree(TREE_DATA, state.expanded);
 
     switch (event.type) {
+      case "CHAR":
+        if (event.char === "q" || event.char === "Q") {
+          session.navigate("menu");
+        }
+        break;
+
       case "UP":
         state.cursor = Math.max(0, state.cursor - 1);
         session.render();
@@ -192,10 +198,6 @@ module.exports = {
       case "CTRL_C":
         session.destroy();
         break;
-    }
-
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
     }
   },
 
@@ -374,6 +376,6 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
