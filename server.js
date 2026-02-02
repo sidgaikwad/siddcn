@@ -1,13 +1,6 @@
 /**
  * server.js
  * The SSH2 server that powers TermUI.
- *
- * - Loads/generates the RSA host key
- * - Accepts connections (password: anything, or just press Enter)
- * - Allocates a PTY per session (captures cols/rows)
- * - Creates an isolated Session per client
- * - Handles terminal resize events
- * - Cleans up on disconnect
  */
 
 "use strict";
@@ -33,7 +26,7 @@ function getHostKey() {
   const { privateKey } = crypto.generateKeyPairSync("rsa", {
     modulusLength: 2048,
     publicKeyEncoding: { type: "spki", format: "pem" },
-    privateKeyEncoding: { type: "pkcs1", format: "pem" }, // pkcs1 for ssh2 compatibility
+    privateKeyEncoding: { type: "pkcs1", format: "pem" },
   });
   fs.writeFileSync(HOST_KEY_PATH, privateKey, { mode: 0o600 });
   console.log("  ✓ host.key generated");
@@ -49,104 +42,119 @@ let nextId = 0;
 
 const hostKey = getHostKey();
 
-const server = new Server(
-  {
-    hostKeys: [hostKey],
-  },
-  // ── Connection handler ──
-  // Called once per SSH connection, AFTER auth succeeds.
-  // ssh2 handles password auth automatically — any password is accepted
-  // as long as the client attempts password authentication.
-  function onConnection(client, connInfo) {
-    const id = ++nextId;
-    console.log(`  [${id}] Connected — ${connInfo.ip}`);
+const server = new Server({ hostKeys: [hostKey] }, function onConnection(
+  client,
+  connInfo,
+) {
+  const id = ++nextId;
+  console.log(`  [${id}] Connection from ${connInfo.ip}`);
 
-    client.on("ready", () => {
-      // Auth passed. Now wait for the client to request a session channel.
-      client.on("session", (accept, deny) => {
-        const session = accept();
-        let cols = 80;
-        let rows = 24;
-        let termSession = null;
+  // ── AUTHENTICATION ──
+  // Handle authentication requests
+  client.on("authentication", (ctx) => {
+    console.log(
+      `  [${id}] Auth attempt: method=${ctx.method} user=${ctx.username}`,
+    );
 
-        // ── PTY request ──
-        session.on("pty", (accept, deny, info) => {
-          cols = info.cols || 80;
-          rows = info.rows || 24;
-          accept();
+    // Accept ANY authentication method
+    if (ctx.method === "password") {
+      console.log(`  [${id}] Accepting password auth`);
+      ctx.accept();
+    } else if (ctx.method === "publickey") {
+      console.log(`  [${id}] Accepting publickey auth`);
+      ctx.accept();
+    } else if (ctx.method === "none") {
+      console.log(`  [${id}] Accepting none auth`);
+      ctx.accept();
+    } else {
+      console.log(`  [${id}] Rejecting auth method: ${ctx.method}`);
+      ctx.reject();
+    }
+  });
+
+  // ── READY (after successful auth) ──
+  client.on("ready", () => {
+    console.log(`  [${id}] Client authenticated successfully`);
+
+    client.on("session", (accept, reject) => {
+      const session = accept();
+      let cols = 80;
+      let rows = 24;
+      let termSession = null;
+
+      // ── PTY request ──
+      session.on("pty", (accept, reject, info) => {
+        cols = info.cols || 80;
+        rows = info.rows || 24;
+        console.log(`  [${id}] PTY requested: ${cols}x${rows}`);
+        accept();
+      });
+
+      // ── Shell request ──
+      session.on("shell", (accept, reject) => {
+        console.log(`  [${id}] Shell requested`);
+        const stream = accept();
+
+        // Create the terminal session
+        termSession = new Session(stream, cols, rows);
+        activeSessions.set(id, termSession);
+        console.log(`  [${id}] Session started`);
+
+        // ── Resize ──
+        session.on("window-change", (accept, reject, info) => {
+          if (termSession && !termSession.destroyed) {
+            console.log(`  [${id}] Resize: ${info.cols}x${info.rows}`);
+            termSession.resize(info.cols || cols, info.rows || rows);
+          }
+          if (accept) accept();
         });
 
-        // ── Shell request ──
-        session.on("shell", (accept, deny) => {
-          const stream = accept();
-
-          // Boot up the isolated session
-          termSession = new Session(stream, cols, rows);
-          activeSessions.set(id, termSession);
-          console.log(`  [${id}] Shell — ${cols}x${rows}`);
-
-          // ── Resize ──
-          session.on("window-change", (info) => {
-            if (termSession && !termSession.destroyed) {
-              termSession.resize(info.cols || cols, info.rows || rows);
-            }
-          });
-
-          // ── Cleanup on stream close ──
-          stream.on("close", () => {
-            console.log(`  [${id}] Disconnected`);
-            if (termSession) {
-              termSession.destroy();
-              activeSessions.delete(id);
-              termSession = null;
-            }
-            client.end();
-          });
-
-          stream.on("error", () => {
-            if (termSession) {
-              termSession.destroy();
-              activeSessions.delete(id);
-              termSession = null;
-            }
-          });
+        // ── Stream close ──
+        stream.on("close", () => {
+          console.log(`  [${id}] Stream closed`);
+          if (termSession) {
+            termSession.destroy();
+            activeSessions.delete(id);
+            termSession = null;
+          }
+          client.end();
         });
 
-        // Deny exec requests — this is a UI-only sandbox
-        session.on("exec", (accept, deny) => {
-          deny();
+        stream.on("error", (err) => {
+          console.log(`  [${id}] Stream error: ${err.message}`);
+          if (termSession) {
+            termSession.destroy();
+            activeSessions.delete(id);
+            termSession = null;
+          }
         });
       });
-    });
 
-    // ── Auth: accept ANY password ──
-    // ssh2 v1.x: to accept password auth, we listen for the 'password'
-    // event on the client and call accept().
-    client.on("password", (accept, deny, username, password) => {
-      // Accept everything — this is a public demo
-      accept();
+      // Reject exec requests
+      session.on("exec", (accept, reject) => {
+        console.log(`  [${id}] Exec rejected`);
+        reject();
+      });
     });
+  });
 
-    // Also accept public-key auth so users with SSH keys don't get blocked
-    client.on("publicKey", (accept, deny, algName, blob, signature, key) => {
-      accept();
-    });
+  // ── Client close ──
+  client.on("close", () => {
+    console.log(`  [${id}] Client disconnected`);
+    if (activeSessions.has(id)) {
+      const s = activeSessions.get(id);
+      if (s) s.destroy();
+      activeSessions.delete(id);
+    }
+  });
 
-    client.on("close", () => {
-      if (activeSessions.has(id)) {
-        const s = activeSessions.get(id);
-        if (s) s.destroy();
-        activeSessions.delete(id);
-      }
-    });
+  // ── Client error ──
+  client.on("error", (err) => {
+    console.log(`  [${id}] Client error: ${err.message}`);
+  });
+});
 
-    client.on("error", () => {
-      // Swallow — client may disconnect abruptly
-    });
-  },
-);
-
-// ─── STARTUP ──────────────────────────────────────────────────────────────────
+// ─── START ────────────────────────────────────────────────────────────────────
 
 console.log("");
 console.log("  ╔══════════════════════════════════════════╗");
