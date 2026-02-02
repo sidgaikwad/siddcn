@@ -1,0 +1,46 @@
+{
+  "name": "siddcn",
+  "version": "1.0.0",
+  "description": "A beautiful, themeable TUI component library built with React Ink - inspired by shadcn",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "siddcn": "./cli/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "web": "node web/server.js",
+    "ssh": "node ssh/server.js",
+    "both": "concurrently \"npm run web\" \"npm run ssh\""
+  },
+  "keywords": [
+    "tui",
+    "terminal",
+    "ui",
+    "components",
+    "react",
+    "ink",
+    "cli",
+    "shadcn"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ink": "^4.4.1",
+    "ink-text-input": "^5.0.1",
+    "ink-select-input": "^5.0.0",
+    "ink-spinner": "^5.0.0",
+    "react": "^18.2.0",
+    "chalk": "^5.3.0",
+    "gradient-string": "^2.0.2",
+    "cli-boxes": "^3.0.0",
+    "commander": "^11.1.0",
+    "ora": "^7.0.1",
+    "prompts": "^2.4.2",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
