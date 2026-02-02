@@ -255,7 +255,7 @@ module.exports = {
         [
           colors.bold(
             colors.cyan("║") +
-              "      side-ui Component Library Showcase      " +
+              "      sideui Component Library Showcase      " +
               colors.cyan("║"),
           ),
         ],

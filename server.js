@@ -1,6 +1,6 @@
 /**
  * server.js
- * The SSH2 server that powers side-ui.
+ * The SSH2 server that powers sideui.
  */
 
 "use strict";
@@ -158,7 +158,7 @@ const server = new Server({ hostKeys: [hostKey] }, function onConnection(
 
 console.log("");
 console.log("  ╔══════════════════════════════════════════╗");
-console.log("  ║        side-ui — SSH Component Demo       ║");
+console.log("  ║        sideui — SSH Component Demo       ║");
 console.log("  ╚══════════════════════════════════════════╝");
 console.log("");
 

@@ -1,4 +1,4 @@
-# side-ui — SSH Terminal UI Component Library
+# sideui — SSH Terminal UI Component Library
 
 An interactive terminal UI component library accessible via plain SSH.
 
