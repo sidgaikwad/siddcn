@@ -64,7 +64,13 @@ const DATA = [
     stars: "72.1k",
     status: "active",
   },
-  { id: "008", name: "rails", lang: "Ruby", stars: "56.0k", status: "stable" },
+  {
+    id: "008",
+    name: "rails",
+    lang: "Ruby",
+    stars: "56.0k",
+    status: "stable",
+  },
   { id: "009", name: "gin", lang: "Go", stars: "75.2k", status: "active" },
   {
     id: "010",
@@ -108,7 +114,13 @@ const DATA = [
     stars: "22.1k",
     status: "stable",
   },
-  { id: "016", name: "laravel", lang: "PHP", stars: "77.0k", status: "active" },
+  {
+    id: "016",
+    name: "laravel",
+    lang: "PHP",
+    stars: "77.0k",
+    status: "active",
+  },
   {
     id: "017",
     name: "kotlin",
@@ -176,6 +188,12 @@ module.exports = {
     const maxRows = DATA.length - 1;
 
     switch (event.type) {
+      case "CHAR":
+        if (event.char === "q" || event.char === "Q") {
+          session.navigate("menu");
+        }
+        break;
+
       case "UP":
         if (state.selected > 0) {
           state.selected--;
@@ -223,10 +241,6 @@ module.exports = {
         session.destroy();
         break;
     }
-
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
-    }
   },
 
   render(session) {
@@ -245,11 +259,6 @@ module.exports = {
     if (state.selected < state.scrollTop) {
       state.scrollTop = state.selected;
     }
-
-    // Total table width
-    const tableWidth =
-      COLUMNS.reduce((sum, col) => sum + col.width, 0) +
-      (COLUMNS.length - 1) * 3; // 3 for " │ " separators
 
     // ── Title ──
     lines.push("");
@@ -332,7 +341,9 @@ module.exports = {
         [
           colors.dim(
             colors.gray(
-              `Row ${state.selected + 1} of ${DATA.length}  ·  Showing ${state.scrollTop + 1}–${endRow}`,
+              `Row ${state.selected + 1} of ${DATA.length}  ·  Showing ${
+                state.scrollTop + 1
+              }–${endRow}`,
             ),
           ),
         ],
@@ -351,6 +362,6 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline
   },
 };
