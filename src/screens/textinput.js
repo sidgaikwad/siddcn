@@ -7,7 +7,7 @@
 
 "use strict";
 
-const { colors } = require("../ansi");
+const { colors, visibleLength } = require("../ansi");
 const { centerBlock } = require("../components/center");
 
 // ─── INPUT PROMPTS ────────────────────────────────────────────────────────────
@@ -237,22 +237,41 @@ module.exports = {
     let contentLine = "";
     if (state.value === "") {
       // Show placeholder
-      contentLine = colors.dim(
-        colors.gray(displayPlaceholder.slice(0, maxContentWidth)),
-      );
-      // Cursor at position 0
+      // Ensure placeholder fits
+      const truncatedPlaceholder = displayPlaceholder.slice(0, maxContentWidth);
+      contentLine = colors.dim(colors.gray(truncatedPlaceholder));
+
+      // Cursor at position 0 (blink logic)
       if (cursorVisible) {
-        contentLine =
-          colors.inverse("▌") +
-          colors.dim(
-            colors.gray(displayPlaceholder.slice(0, maxContentWidth - 1)),
-          );
+        // If blinking, replace first char or add block if empty
+        if (truncatedPlaceholder.length > 0) {
+          // We need to render the cursor OVER the first char of placeholder
+          // This is tricky with ANSI, so simpler approach:
+          // Just show cursor block followed by rest of placeholder
+          contentLine =
+            colors.inverse(truncatedPlaceholder[0]) +
+            colors.dim(colors.gray(truncatedPlaceholder.slice(1)));
+        } else {
+          contentLine = colors.inverse(" ");
+        }
       }
     } else {
       // Show actual value with cursor
-      const beforeCursor = state.value.slice(0, state.cursor);
-      const atCursor = state.value[state.cursor] || " ";
-      const afterCursor = state.value.slice(state.cursor + 1);
+      // Simple scrolling logic if value exceeds width
+      let startIdx = 0;
+      if (state.cursor >= maxContentWidth) {
+        startIdx = state.cursor - maxContentWidth + 1;
+      }
+
+      const visibleValue = state.value.slice(
+        startIdx,
+        startIdx + maxContentWidth,
+      );
+      const visibleCursor = state.cursor - startIdx;
+
+      const beforeCursor = visibleValue.slice(0, visibleCursor);
+      const atCursor = visibleValue[visibleCursor] || " "; // Space if at end of line
+      const afterCursor = visibleValue.slice(visibleCursor + 1);
 
       if (cursorVisible) {
         contentLine =
@@ -260,17 +279,15 @@ module.exports = {
           colors.inverse(atCursor) +
           colors.white(afterCursor);
       } else {
-        contentLine = colors.white(state.value);
+        contentLine = colors.white(visibleValue);
       }
     }
 
-    // Pad content to fill the box
-    const contentVisLen = state.value.length || (state.value === "" ? 1 : 0);
+    // FIX: Calculate padding based on the ACTUAL visible length of the contentLine
+    // This ensures the box border never jumps, regardless of ANSI codes or placeholder length.
+    const currentVisibleLength = visibleLength(contentLine);
     const rightPad = " ".repeat(
-      Math.max(
-        0,
-        maxContentWidth - Math.max(contentVisLen, displayPlaceholder.length),
-      ),
+      Math.max(0, maxContentWidth - currentVisibleLength),
     );
 
     // Determine border color based on state
@@ -352,6 +369,6 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline
   },
 };
