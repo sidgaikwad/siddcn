@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text, useInput } from "ink";
 import ProgressBar, { ProgressBarStyles } from "../components/progressBar.js";
-import InstallationAccordion from "../components/InstallationAccordion.js";
+import InstallationAccordion from "../components/installationAccordion.js";
 import BoxComponent from "../utils/Box.js";
 
 const PROGRESS_STYLES = [
