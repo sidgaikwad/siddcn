@@ -1,5 +1,5 @@
 {
-  "name": "side",
+  "name": "siddcn",
   "version": "1.0.0",
   "description": "SSH-accessible Terminal UI Component Library - Interactive components accessible via plain SSH",
   "main": "server.js",
