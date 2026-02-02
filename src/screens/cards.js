@@ -251,7 +251,7 @@ module.exports = {
         centerBlock(
           [
             colors.white("1. Import: ") +
-              colors.yellow("const { drawBox } = require('side-ui')"),
+              colors.yellow("const { drawBox } = require('siddcn')"),
           ],
           cols,
         )[0],
