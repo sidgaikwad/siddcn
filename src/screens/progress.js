@@ -2,13 +2,12 @@
  * screens/progress.js
  * Animated progress bar demo.
  * Shows multiple progress bars auto-filling at different rates.
- * Demonstrates different bar styles including a "Racing" bar.
- * Includes an interactive installation accordion.
+ * Demonstrates different bar styles including a "Racing" bar and "Autumn Leaf" theme.
  */
 
 "use strict";
 
-const { colors } = require("../ansi");
+const { colors, visibleLength } = require("../ansi");
 const { centerBlock } = require("../components/center");
 
 // ─── PROGRESS BAR CONFIGS ─────────────────────────────────────────────────────
@@ -36,17 +35,18 @@ const BARS = [
     width: 40,
   },
   {
-    label: "Processing",
-    speed: 0.9,
-    color: colors.magenta,
-    style: "block",
-    width: 40,
-  },
-  {
     label: "Deployment",
     speed: 1.5,
     color: colors.red,
     style: "racing", // 🏎 Real Car Style
+    width: 40,
+  },
+  {
+    label: "Autumn Leaf", // Renamed as requested
+    speed: 0.6,
+    // Use ANSI 201 (Hot Purple) for the leaf color
+    color: (s) => colors.color256(201, s),
+    style: "autumn", // 🍁 Falling Leaf Style
     width: 40,
   },
 ];
@@ -66,23 +66,23 @@ function renderBar(pct, width, style, colorFn) {
       left = "[";
       right = "]";
       break;
+
     case "hash":
       filledStr = "#".repeat(filled);
       emptyStr = "·".repeat(empty);
       left = "|";
       right = "|";
       break;
+
     case "equal":
       filledStr = "=".repeat(filled);
       emptyStr = "-".repeat(empty);
       left = "[";
       right = "]";
       break;
+
     case "racing":
-      // Racing style:  ═════🏎 -------
-      // We use the real car emoji.
-      // NOTE: On Windows, '🏎' faces LEFT. On Mac/Linux, it faces RIGHT.
-      // We use a '═' trail to visually indicate speed/direction regardless of car orientation.
+      // 🏎 Real Car Style with Trail
       if (filled === 0) {
         filledStr = "";
         emptyStr = "─".repeat(empty);
@@ -90,13 +90,33 @@ function renderBar(pct, width, style, colorFn) {
         filledStr = "═".repeat(filled);
         emptyStr = "";
       } else {
-        // We subtract 1 from repeat to make room for the car itself
-        filledStr = "═".repeat(Math.max(0, filled - 1)) + "🏎";
+        // Car takes up space, subtract 1 from trail
+        filledStr = "═".repeat(Math.max(0, filled - 1)) + "🏎 ";
         emptyStr = "─".repeat(Math.max(0, empty - 1));
       }
-      left = "🏁"; // Start flag
+      left = "🏁";
       right = " ";
       break;
+
+    case "autumn":
+      // 🍁 Autumn Style: Wind blowing a purple leaf
+      if (filled === 0) {
+        filledStr = "";
+        emptyStr = " ".repeat(empty);
+      } else if (filled >= width) {
+        filledStr = colors.dim(colors.white("~".repeat(filled)));
+        emptyStr = "";
+      } else {
+        // Wind trail (dim white) + Leaf (Purple)
+        filledStr =
+          colors.dim(colors.white("~".repeat(Math.max(0, filled - 1)))) +
+          colorFn("🍁"); // Apply purple color to the leaf
+        emptyStr = " ".repeat(Math.max(0, empty - 1));
+      }
+      left = "💨";
+      right = " ";
+      break;
+
     default:
       filledStr = "█".repeat(filled);
       emptyStr = "░".repeat(empty);
@@ -106,7 +126,10 @@ function renderBar(pct, width, style, colorFn) {
 
   // Color transitions based on percentage
   let barColor;
-  if (pct >= 100) {
+  if (style === "autumn") {
+    // Autumn coloring is handled inside the switch (trail vs leaf)
+    barColor = (s) => s;
+  } else if (pct >= 100) {
     barColor = colors.green;
   } else if (pct >= 75) {
     barColor = colors.cyan;
@@ -117,6 +140,20 @@ function renderBar(pct, width, style, colorFn) {
   }
 
   const pctStr = String(Math.round(pct)).padStart(3, " ") + "%";
+  const pctColored =
+    pct >= 100 ? colors.green(colors.bold(pctStr)) : colors.white(pctStr);
+
+  // Return logic
+  if (style === "racing" || style === "autumn") {
+    return (
+      colors.dim(colors.gray(left)) +
+      (style === "racing" ? colorFn(filledStr) : filledStr) +
+      colors.dim(colors.gray(emptyStr)) +
+      colors.dim(colors.gray(right)) +
+      " " +
+      pctColored
+    );
+  }
 
   return (
     colors.dim(colors.gray(left)) +
@@ -124,7 +161,7 @@ function renderBar(pct, width, style, colorFn) {
     colors.dim(colors.gray(emptyStr)) +
     colors.dim(colors.gray(right)) +
     " " +
-    (pct >= 100 ? colors.green(colors.bold(pctStr)) : colors.white(pctStr))
+    pctColored
   );
 }
 
@@ -141,7 +178,6 @@ module.exports = {
   },
 
   onMount(session) {
-    // Start the animation loop at ~15 fps
     session.startAnimation(() => {
       const state = session.screenState;
       state.tick++;
@@ -150,7 +186,6 @@ module.exports = {
       for (let i = 0; i < BARS.length; i++) {
         if (state.progresses[i] < 100) {
           allDone = false;
-          // Each bar advances at its own speed
           state.progresses[i] += BARS[i].speed;
           if (state.progresses[i] >= 100) {
             state.progresses[i] = 100;
@@ -161,8 +196,7 @@ module.exports = {
 
       // If all bars completed, reset after a pause
       if (allDone) {
-        // Wait 60 ticks (~4 seconds) then reset
-        if (state.tick % 60 === 0) {
+        if (state.tick % 100 === 0) {
           state.progresses = BARS.map(() => 0);
           state.completed = 0;
           state.tick = 0;
@@ -176,9 +210,22 @@ module.exports = {
   handleInput(session, event) {
     const state = session.screenState;
 
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
-      return;
+    if (event.type === "CHAR") {
+      if (event.char === "q" || event.char === "Q") {
+        session.navigate("menu");
+        return;
+      }
+      if (event.char === "i" || event.char === "I") {
+        state.accordionOpen = !state.accordionOpen;
+        session.render();
+        return;
+      }
+      if (event.char === "r" || event.char === "R") {
+        state.progresses = BARS.map(() => 0);
+        state.completed = 0;
+        state.tick = 0;
+        return;
+      }
     }
     if (event.type === "ESCAPE") {
       session.navigate("menu");
@@ -187,17 +234,6 @@ module.exports = {
     if (event.type === "CTRL_C") {
       session.destroy();
       return;
-    }
-    // 'r' to reset animation
-    if (event.type === "CHAR" && (event.char === "r" || event.char === "R")) {
-      state.progresses = BARS.map(() => 0);
-      state.completed = 0;
-      state.tick = 0;
-    }
-    // 'i' to toggle installation accordion
-    if (event.type === "CHAR" && (event.char === "i" || event.char === "I")) {
-      state.accordionOpen = !state.accordionOpen;
-      session.render();
     }
   },
 
@@ -226,35 +262,37 @@ module.exports = {
       const pct = state.progresses[i];
       const done = pct >= 100;
 
-      // Label line
+      // Label
       const labelPadded = bar.label.padEnd(14);
       let labelLine;
+
       if (done) {
         labelLine =
           colors.green(colors.bold(labelPadded)) +
           colors.green(colors.bold(" ✓ Complete"));
       } else {
-        labelLine =
-          colors.white(colors.bold(labelPadded)) +
-          colors.dim(colors.gray(" ●"));
-        // Animate the dots while in progress
+        // Spinner logic
         const dots = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
         const spinnerChar = dots[state.tick % dots.length];
-        labelLine =
-          colors.white(colors.bold(labelPadded)) +
-          " " +
-          BARS[i].color(spinnerChar);
-      }
 
+        // Use purple color for spinner if it's the leaf bar
+        const spinnerColored =
+          bar.style === "autumn"
+            ? bar.color(spinnerChar)
+            : bar.color(spinnerChar);
+
+        labelLine =
+          colors.white(colors.bold(labelPadded)) + " " + spinnerColored;
+      }
       lines.push(centerBlock([labelLine], cols)[0]);
 
-      // Bar line
+      // Bar
       const barRendered = renderBar(pct, bar.width, bar.style, bar.color);
       lines.push(centerBlock([barRendered], cols)[0]);
       lines.push("");
     }
 
-    // ── Status summary ──
+    // ── Status & Footer ──
     lines.push("");
     lines.push(centerBlock([colors.dim(colors.gray("─".repeat(44)))], cols)[0]);
 
@@ -298,7 +336,7 @@ module.exports = {
       );
       lines.push(
         centerBlock(
-          [colors.white("1. Install: ") + colors.yellow("npm install siddcn")],
+          [colors.white("1. Install: ") + colors.yellow("npm install side-ui")],
           cols,
         )[0],
       );
@@ -306,7 +344,7 @@ module.exports = {
         centerBlock(
           [
             colors.white("2. Import:  ") +
-              colors.green("const { ProgressBar } = require('siddcn')"),
+              colors.green("const { ProgressBar } = require('side-ui')"),
           ],
           cols,
         )[0],
@@ -338,6 +376,6 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\r\n"); // Fixed newline for raw mode
+    return lines.join("\r\n");
   },
 };
