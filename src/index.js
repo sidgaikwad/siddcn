@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { render } from "ink";
 import Loader from "./screens/loader.js";
-import MainMenu from "./screens/MainMenu.js";
+import MainMenu from "./screens/mainMenu.js";
 import ButtonsScreen from "./screens/ButtonsScreen.js";
 import ProgressScreen from "./screens/ProgressScreen.js";
 import SpinnersScreen from "./screens/SpinnersScreen.js";
