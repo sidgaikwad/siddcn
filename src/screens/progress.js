@@ -298,7 +298,7 @@ module.exports = {
       );
       lines.push(
         centerBlock(
-          [colors.white("1. Install: ") + colors.yellow("npm install side-ui")],
+          [colors.white("1. Install: ") + colors.yellow("npm install siddcn")],
           cols,
         )[0],
       );
@@ -306,7 +306,7 @@ module.exports = {
         centerBlock(
           [
             colors.white("2. Import:  ") +
-              colors.green("const { ProgressBar } = require('side-ui')"),
+              colors.green("const { ProgressBar } = require('siddcn')"),
           ],
           cols,
         )[0],
