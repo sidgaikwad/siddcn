@@ -7,7 +7,6 @@
 "use strict";
 
 const { colors, padEnd, center, visibleLength } = require("../ansi");
-const { drawBox } = require("../components/border");
 const { centerBlock } = require("../components/center");
 
 // ─── MENU ITEMS ───────────────────────────────────────────────────────────────
@@ -256,7 +255,7 @@ module.exports = {
         [
           colors.bold(
             colors.cyan("║") +
-              "     TermUI Component Library Showcase      " +
+              "      side-ui Component Library Showcase      " +
               colors.cyan("║"),
           ),
         ],
@@ -335,6 +334,7 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\n");
+    // CRITICAL FIX: Use \r\n instead of \n for raw mode SSH/TUI sessions
+    return lines.join("\r\n");
   },
 };
