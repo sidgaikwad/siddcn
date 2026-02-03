@@ -1,0 +1,28 @@
+{
+  "name": "examples",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Example TUI apps using siddcn components",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.tsx",
+    "dev:dashboard": "tsx examples/dashboard.tsx",
+    "dev:form": "tsx examples/form.tsx",
+    "dev:progress": "tsx examples/progress-demo.tsx",
+    "dev:playground": "tsx examples/playground.tsx",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "siddcn": "workspace:*",
+    "ink": "^4.4.1",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.0",
+    "tsx": "^4.7.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  }
+}
