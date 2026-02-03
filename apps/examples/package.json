@@ -10,6 +10,10 @@
     "dev:form": "tsx examples/form.tsx",
     "dev:progress": "tsx examples/progress-demo.tsx",
     "dev:playground": "tsx examples/playground.tsx",
+    "dev:table": "tsx examples/table-demo.tsx",
+    "dev:tree": "tsx examples/tree-demo.tsx",
+    "dev:multiselect": "tsx examples/multiselect-demo.tsx",
+    "dev:tabs": "tsx examples/tabs-demo.tsx",
     "build": "tsup",
     "typecheck": "tsc --noEmit"
   },
