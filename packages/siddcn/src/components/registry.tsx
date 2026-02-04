@@ -12,7 +12,7 @@ import {
 } from "../types";
 
 // Import component variants
-import { SimpleButton, PrimaryButton, DangerButton } from "./buttons";
+import { SimpleButton, PrimaryButton, DangerButton, GlowButton, PulseButton, IconButton } from "./buttons";
 import { LinearProgress, CircularProgress, StepProgress } from "./progress";
 import { StatusBadge, CountBadge, DotBadge } from "./badges";
 import { BarChart, LineChart } from "./charts";
@@ -167,6 +167,36 @@ export const componentRegistry: ComponentRegistry = {
         usage: `import { DangerButton } from 'siddcn';
 
 <DangerButton label="Delete" />`,
+      },
+      {
+        id: "glow",
+        name: "Glow Button",
+        description: "Animated glowing border button",
+        preview: GlowButton,
+        installCommand: "npx siddcn add button-glow",
+        usage: `import { GlowButton } from 'siddcn';
+
+<GlowButton label="Glow" />`,
+      },
+      {
+        id: "pulse",
+        name: "Pulse Button",
+        description: "Pulsating animated button",
+        preview: PulseButton,
+        installCommand: "npx siddcn add button-pulse",
+        usage: `import { PulseButton } from 'siddcn';
+
+<PulseButton label="Pulse" />`,
+      },
+      {
+        id: "icon",
+        name: "Icon Button",
+        description: "Button with leading icon",
+        preview: IconButton,
+        installCommand: "npx siddcn add button-icon",
+        usage: `import { IconButton } from 'siddcn';
+
+<IconButton label="Action" icon=">" />`,
       },
     ],
   },
