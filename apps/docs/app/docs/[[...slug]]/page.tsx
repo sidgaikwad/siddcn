@@ -1,15 +1,14 @@
-import { source, getPageContent } from '@/lib/source';
+import { source, getPageContent } from "@/lib/source";
 import {
   DocsPage,
   DocsBody,
   DocsDescription,
   DocsTitle,
-} from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
-import { compileMDX } from '@fumadocs/mdx-remote';
-import * as runtime from 'react/jsx-runtime';
-import matter from 'gray-matter';
+} from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import { compileMDX } from "@fumadocs/mdx-remote";
+import matter from "gray-matter";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -28,12 +27,16 @@ export default async function Page(props: {
     components: { ...defaultMdxComponents },
   });
 
+  // 1. Assign to a Capitalized variable
+  const Content = compiled.body;
+
   return (
     <DocsPage toc={compiled.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        {compiled.content}
+        {/* 2. Render as a component */}
+        <Content />
       </DocsBody>
     </DocsPage>
   );
