@@ -1,207 +1,206 @@
-import { ComponentCard } from "@/components/ComponentCard";
+import Link from "next/link";
 
+// Inline the data to ensure we have it for the new UI
 const components = [
   {
     id: "spinners",
     name: "Spinners",
-    icon: "*",
+    icon: "◐",
     description: "Loading animations",
-    variants: [
-      { id: "dots", name: "Dots Spinner", description: "Classic dots animation", preview: "Loading..." },
-      { id: "bounce", name: "Bouncing Spinner", description: "Bouncing animation", preview: "Processing..." },
-      { id: "pulse", name: "Pulse Spinner", description: "Pulsating animation", preview: "Working..." },
-      { id: "bar", name: "Bar Spinner", description: "Animated sliding bar", preview: "[====  ]" },
-      { id: "wave", name: "Wave Spinner", description: "Wave animation", preview: "~~~~~" },
-    ],
+    count: 5,
   },
   {
     id: "textinput",
     name: "Text Input",
-    icon: ">",
+    icon: "﹥",
     description: "Input fields & forms",
-    variants: [
-      { id: "basic", name: "Basic Input", description: "Simple text input", preview: "> Type..." },
-      { id: "password", name: "Password Input", description: "Masked password field", preview: "> ****" },
-      { id: "search", name: "Search Input", description: "Search-style input", preview: "@ Search..." },
-    ],
+    count: 3,
   },
   {
     id: "cards",
     name: "Cards",
-    icon: "[]",
+    icon: "□",
     description: "Container components",
-    variants: [
-      { id: "basic", name: "Basic Card", description: "Simple card", preview: "Card" },
-      { id: "info", name: "Info Card", description: "Information card", preview: "[i] Info" },
-      { id: "warning", name: "Warning Card", description: "Warning card", preview: "[!] Warning" },
-      { id: "success", name: "Success Card", description: "Success card", preview: "[+] Success" },
-      { id: "error", name: "Error Card", description: "Error card", preview: "[x] Error" },
-      { id: "glow", name: "Glow Card", description: "Animated glow card", preview: "*Card*" },
-    ],
+    count: 6,
   },
   {
     id: "select",
     name: "Select",
-    icon: "v",
+    icon: "▼",
     description: "Selection inputs",
-    variants: [
-      { id: "basic", name: "Basic Select", description: "Simple list selection", preview: "> Option 1" },
-      { id: "radio", name: "Radio Select", description: "Radio button style", preview: "(*) Option" },
-      { id: "dropdown", name: "Dropdown Select", description: "Collapsible dropdown", preview: "Select v" },
-    ],
+    count: 3,
   },
   {
     id: "backgrounds",
     name: "Backgrounds",
-    icon: ".",
+    icon: "░",
     description: "Animated effects",
-    variants: [
-      { id: "stars", name: "Twinkling Stars", description: "Animated starfield", preview: "*  . + *" },
-      { id: "matrix", name: "Matrix Rain", description: "Matrix-style characters", preview: "01010" },
-    ],
+    count: 2,
   },
   {
     id: "animatedtext",
     name: "Animated Text",
     icon: "A",
     description: "Text animations",
-    variants: [
-      { id: "typewriter", name: "Typewriter", description: "Typing effect", preview: "Typing..._" },
-      { id: "gradient", name: "Gradient Text", description: "Color cycling", preview: "Rainbow" },
-      { id: "pulse", name: "Pulsing Text", description: "Pulsating opacity", preview: "Pulse..." },
-      { id: "loading", name: "Loading Dots", description: "Animated ellipsis", preview: "Loading..." },
-    ],
+    count: 4,
   },
   {
     id: "notifications",
     name: "Notifications",
     icon: "!",
     description: "Toasts & alerts",
-    variants: [
-      { id: "toast", name: "Toast", description: "Toast notification", preview: "[+] Success!" },
-      { id: "banner", name: "Banner", description: "Full-width banner", preview: "-- Alert --" },
-      { id: "inline", name: "Inline", description: "Inline notification", preview: "(i) Note" },
-      { id: "progress", name: "Progress", description: "Progress notification", preview: "Uploading 45%" },
-    ],
+    count: 4,
   },
   {
     id: "dashboards",
     name: "Dashboards",
-    icon: "#",
+    icon: "▦",
     description: "System monitors",
-    variants: [
-      { id: "htop", name: "Htop Dashboard", description: "Htop-style layout", preview: "CPU [||||] 65%" },
-      { id: "network", name: "Network Dashboard", description: "Network monitoring", preview: "NET: 1.2MB/s" },
-      { id: "server", name: "Server Dashboard", description: "Server status", preview: "SRV: Online" },
-      { id: "vertical", name: "Vertical Dashboard", description: "Vertical layout", preview: "| Stats |" },
-      { id: "horizontal", name: "Horizontal Dashboard", description: "Horizontal layout", preview: "--- Stats ---" },
-      { id: "paged", name: "Paged Dashboard", description: "Multi-page layout", preview: "[1/3] Stats" },
-    ],
+    count: 6,
   },
   {
     id: "buttons",
     name: "Buttons",
-    icon: "O",
-    description: "Interactive button components with various styles",
-    variants: [
-      { id: "simple", name: "Simple Button", description: "A basic button component", preview: "[ Button ]" },
-      { id: "primary", name: "Primary Button", description: "A styled primary action button", preview: "[ Primary ]" },
-      { id: "danger", name: "Danger Button", description: "A button for destructive actions", preview: "[ Delete ]" },
-      { id: "glow", name: "Glow Button", description: "Animated glow border", preview: "*[ Glow ]*" },
-      { id: "pulse", name: "Pulse Button", description: "Pulsating animation", preview: "~ Pulse ~" },
-      { id: "icon", name: "Icon Button", description: "Button with icon", preview: "> Action" },
-    ],
+    icon: "○",
+    description: "Interactive button components",
+    count: 6,
   },
   {
     id: "progress",
     name: "Progress Bars",
-    icon: "|",
-    description: "Progress indicators and loading states",
-    variants: [
-      { id: "linear", name: "Linear Progress", description: "A horizontal progress bar", preview: "[========  ] 75%" },
-      { id: "circular", name: "Circular Progress", description: "A circular/spinner indicator", preview: "( 60% )" },
-      { id: "step", name: "Step Progress", description: "Multi-step progress indicator", preview: "[1] -> [2] -> [ ]" },
-    ],
+    icon: "║",
+    description: "Progress indicators",
+    count: 3,
   },
   {
     id: "badges",
     name: "Badges",
     icon: "*",
-    description: "Status indicators and labels",
-    variants: [
-      { id: "status", name: "Status Badge", description: "Display status with color coding", preview: "< Active >" },
-      { id: "count", name: "Count Badge", description: "Display numerical count", preview: "( 42 )" },
-      { id: "dot", name: "Dot Badge", description: "Simple dot indicator", preview: "* Online" },
-    ],
+    description: "Status indicators",
+    count: 3,
   },
   {
     id: "charts",
     name: "Charts",
-    icon: "^",
-    description: "Data visualization components",
-    variants: [
-      { id: "bar", name: "Bar Chart", description: "Display data as vertical bars", preview: "| | |  |" },
-      { id: "line", name: "Line Chart", description: "Display data as a line graph", preview: "_/\\_/" },
-    ],
+    icon: "📈",
+    description: "Data visualization",
+    count: 2,
   },
   {
     id: "trees",
     name: "Trees",
-    icon: "+",
-    description: "Hierarchical data structures",
-    variants: [
-      { id: "file", name: "File Tree", description: "File system hierarchy", preview: "+- src/\n   +- index.ts" },
-      { id: "data", name: "Data Tree", description: "Expandable data nodes", preview: "+- Root\n   +- Child" },
-    ],
+    icon: "⑂",
+    description: "Hierarchical data",
+    count: 2,
   },
   {
     id: "tabs",
     name: "Tabs",
-    icon: "=",
-    description: "Tabbed navigation with multiple styles",
-    variants: [
-      { id: "modern", name: "Modern Tabs", description: "Clean modern interface", preview: "[ Tab 1 ] Tab 2" },
-      { id: "rounded", name: "Rounded Tabs", description: "Tabs with rounded borders", preview: "( Tab 1 ) Tab 2" },
-      { id: "pills", name: "Pill Tabs", description: "Pill-shaped buttons", preview: "[Tab 1] [Tab 2]" },
-    ],
+    icon: "═",
+    description: "Tabbed navigation",
+    count: 3,
   },
   {
     id: "table",
     name: "Table",
-    icon: "#",
+    icon: "田",
     description: "Scrollable data grid",
-    variants: [
-      { id: "default", name: "Data Table", description: "Scrollable table with row selection", preview: "| Name | Status |" },
-    ],
+    count: 1,
   },
   {
     id: "multiselect",
     name: "Multi-Select",
-    icon: "x",
-    description: "Multiple item selection with limits",
-    variants: [
-      { id: "default", name: "Multi-Select List", description: "Select multiple items", preview: "[x] React\n[ ] Vue" },
-    ],
+    icon: "☑",
+    description: "Multiple item selection",
+    count: 1,
   },
 ];
 
 export default function ComponentsPage() {
   return (
-    <main className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-terminal-cyan">
-            Component Library
-          </h1>
-          <p className="mx-auto max-w-2xl text-terminal-text/70">
-            Browse all available TUI components. Each component can be previewed
-            in the terminal and installed with a single command.
-          </p>
+    <main className="min-h-screen bg-terminal-bg selection:bg-terminal-cyan selection:text-terminal-bg relative overflow-hidden">
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-0 pointer-events-none" />
+      <div
+        className="absolute inset-0 bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0 opacity-20 pointer-events-none border-terminal-cyan/5"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
+        }}
+      ></div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* System Header */}
+        <div className="mb-16 border-b border-terminal-cyan/30 pb-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="animate-pulse h-2 w-2 rounded-full bg-terminal-cyan shadow-[0_0_10px_rgba(0,255,255,0.8)]"></span>
+                <span className="text-xs font-mono text-terminal-cyan/70 tracking-widest">
+                  SYSTEM_ONLINE
+                </span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-terminal-cyan to-terminal-green tracking-tight font-mono">
+                COMPONENT_LIB
+              </h1>
+              <p className="mt-4 max-w-xl text-lg text-terminal-text/70 font-mono border-l-2 border-terminal-cyan/20 pl-4">
+                Accessing TUI modules...
+                <br />
+                {components.length} components loaded ready for deployment.
+              </p>
+            </div>
+
+            {/* Stats Box */}
+            <div className="border border-terminal-cyan/20 bg-terminal-bg/50 p-4 min-w-[200px] backdrop-blur-sm">
+              <div className="flex justify-between text-xs text-terminal-text/50 font-mono mb-2">
+                <span>MEMORY</span>
+                <span>64K</span>
+              </div>
+              <div className="w-full bg-terminal-text/10 h-1 mb-4">
+                <div className="bg-terminal-cyan h-full w-[45%]"></div>
+              </div>
+              <div className="text-right font-mono text-sm text-terminal-cyan">
+                v2.0.4-stable
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {components.map((component) => (
-            <ComponentCard key={component.id} {...component} />
+            <Link
+              key={component.id}
+              href={`/components/${component.id}`}
+              className="group relative overflow-hidden border border-terminal-cyan/20 bg-terminal-bg/40 p-6 transition-all duration-300 hover:border-terminal-cyan hover:bg-terminal-bg/80 hover:shadow-[0_0_30px_-5px_rgba(0,255,255,0.15)]"
+            >
+              {/* Corner Accents */}
+              <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-xs font-mono text-terminal-cyan">
+                  [↗]
+                </span>
+              </div>
+
+              <div className="flex items-start justify-between mb-4">
+                <div className="h-12 w-12 flex items-center justify-center rounded border border-terminal-cyan/10 bg-terminal-cyan/5 text-2xl text-terminal-cyan group-hover:scale-110 transition-transform duration-300">
+                  {component.icon}
+                </div>
+                <span className="font-mono text-xs text-terminal-text/40 border border-terminal-text/10 px-2 py-1 rounded">
+                  {component.count} VAR
+                </span>
+              </div>
+
+              <h3 className="mb-2 text-xl font-bold text-terminal-text group-hover:text-terminal-cyan transition-colors font-mono">
+                {component.name}
+              </h3>
+
+              <p className="text-sm text-terminal-text/60 font-mono line-clamp-2">
+                {component.description}
+              </p>
+
+              {/* Hover Line */}
+              <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-terminal-cyan transition-all duration-300 group-hover:w-full" />
+            </Link>
           ))}
         </div>
       </div>

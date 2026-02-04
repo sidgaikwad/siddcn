@@ -237,7 +237,8 @@ const tree = {
 export default function App() {
   return <FileTree data={tree} />;
 }`,
-        preview: "+- project/\n   +- src/\n   |  +- index.tsx\n   +- package.json",
+        preview:
+          "+- project/\n   +- src/\n   |  +- index.tsx\n   +- package.json",
       },
       data: {
         name: "Data Tree",
@@ -346,7 +347,8 @@ export default function App() {
             description: "Row selection callback",
           },
         ],
-        preview: "| Name       | Status  |\n|------------|--------|\n| John Doe   | Active |",
+        preview:
+          "| Name       | Status  |\n|------------|--------|\n| John Doe   | Active |",
       },
     },
   },
@@ -389,7 +391,8 @@ export default function App() {
             description: "Show selection progress",
           },
         ],
-        preview: "[x] React - UI Library\n[ ] Vue - Framework\n[x] Svelte - Compiler",
+        preview:
+          "[x] React - UI Library\n[ ] Vue - Framework\n[x] Svelte - Compiler",
       },
     },
   },
@@ -403,166 +406,197 @@ export default async function ComponentVariantPage({
   const { category, variant } = await params;
 
   const categoryData = componentData[category];
-  if (!categoryData) {
-    return (
-      <main className="min-h-screen px-4 py-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-2xl text-terminal-red">Category not found</h1>
-          <Link href="/components" className="mt-4 text-terminal-cyan">
-            Back to components
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  if (!categoryData) return <NotFound />; // Use a helper or inline nicely
 
   const variantData = categoryData.variants[variant];
-  if (!variantData) {
-    return (
-      <main className="min-h-screen px-4 py-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-2xl text-terminal-red">Variant not found</h1>
-          <Link href="/components" className="mt-4 text-terminal-cyan">
-            Back to components
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  if (!variantData) return <NotFound />;
 
   return (
-    <main className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl">
-        {/* Breadcrumb */}
-        <nav className="mb-8 flex items-center gap-2 text-sm text-terminal-text/60">
-          <Link href="/components" className="hover:text-terminal-cyan">
-            Components
-          </Link>
-          <span>/</span>
-          <Link
-            href={`/components/${category}`}
-            className="hover:text-terminal-cyan"
-          >
-            {categoryData.name}
-          </Link>
-          <span>/</span>
-          <span className="text-terminal-cyan">{variantData.name}</span>
+    <main className="min-h-screen bg-terminal-bg px-4 py-12 sm:px-6 lg:px-8 font-mono text-terminal-text selection:bg-terminal-cyan/30">
+      <div className="mx-auto max-w-7xl">
+        {/* Top Navigation Bar */}
+        <nav className="mb-8 flex items-center justify-between border-b border-terminal-cyan/20 pb-4">
+          <div className="flex items-center gap-2 text-sm">
+            <Link
+              href="/components"
+              className="text-terminal-text/50 hover:text-terminal-cyan"
+            >
+              components
+            </Link>
+            <span className="text-terminal-text/30">/</span>
+            <Link
+              href={`/components/${category}`}
+              className="text-terminal-text/50 hover:text-terminal-cyan"
+            >
+              {categoryData.name}
+            </Link>
+            <span className="text-terminal-text/30">/</span>
+            <span className="text-terminal-cyan font-bold bg-terminal-cyan/10 px-2 py-0.5 rounded">
+              {variantData.name}
+            </span>
+          </div>
+          <div className="text-xs text-terminal-text/40 hidden sm:block">
+            STATUS: READ_ONLY
+          </div>
         </nav>
 
-        {/* Header */}
-        <div className="mb-8">
-          <div className="mb-2 flex items-center gap-3">
-            <span className="text-3xl">{categoryData.icon}</span>
-            <h1 className="text-3xl font-bold text-terminal-cyan">
-              {variantData.name}
-            </h1>
-          </div>
-          <p className="text-lg text-terminal-text/70">
-            {variantData.description}
-          </p>
-        </div>
-
-        {/* Preview */}
-        <section className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold text-terminal-text">
-            Preview
-          </h2>
-          <div className="rounded-lg border border-terminal-cyan/30 bg-terminal-bg/80 p-6">
-            <pre className="font-mono text-terminal-green">
-              {variantData.preview}
-            </pre>
-          </div>
-        </section>
-
-        {/* Installation */}
-        <section className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold text-terminal-text">
-            Installation
-          </h2>
-          <CodeBlock
-            code={variantData.installCommand}
-            language="bash"
-            filename="Terminal"
-          />
-        </section>
-
-        {/* Usage */}
-        <section className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold text-terminal-text">
-            Usage
-          </h2>
-          <CodeBlock
-            code={variantData.usage}
-            language="tsx"
-            filename="App.tsx"
-          />
-        </section>
-
-        {/* Props */}
-        {variantData.props && variantData.props.length > 0 && (
-          <section className="mb-8">
-            <h2 className="mb-4 text-xl font-semibold text-terminal-text">
-              Props
-            </h2>
-            <div className="overflow-hidden rounded-lg border border-terminal-cyan/20">
-              <table className="w-full">
-                <thead className="bg-terminal-bg/50">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-terminal-cyan">
-                      Prop
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-terminal-cyan">
-                      Type
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-terminal-cyan">
-                      Required
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-terminal-cyan">
-                      Description
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {variantData.props.map((prop, idx) => (
-                    <tr
-                      key={prop.name}
-                      className={
-                        idx % 2 === 0 ? "bg-terminal-bg/30" : "bg-terminal-bg/10"
-                      }
-                    >
-                      <td className="px-4 py-3 font-mono text-sm text-terminal-green">
-                        {prop.name}
-                      </td>
-                      <td className="px-4 py-3 font-mono text-sm text-terminal-yellow">
-                        {prop.type}
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        {prop.required ? (
-                          <span className="text-terminal-red">Yes</span>
-                        ) : (
-                          <span className="text-terminal-text/50">No</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-terminal-text/70">
-                        {prop.description}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left Column: Header & Preview */}
+          <div className="lg:col-span-7 space-y-8">
+            <div>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="h-16 w-16 rounded border border-terminal-cyan/30 bg-terminal-cyan/5 flex items-center justify-center text-3xl text-terminal-cyan shadow-[0_0_15px_-3px_rgba(0,255,255,0.2)]">
+                  {categoryData.icon}
+                </div>
+                <div>
+                  <h1 className="text-4xl font-bold text-terminal-text mb-1">
+                    {variantData.name}
+                  </h1>
+                  <p className="text-lg text-terminal-text/60">
+                    {variantData.description}
+                  </p>
+                </div>
+              </div>
             </div>
-          </section>
-        )}
 
-        {/* Back link */}
-        <div className="mt-12 border-t border-terminal-cyan/20 pt-8">
-          <Link
-            href="/components"
-            className="text-terminal-cyan hover:underline"
-          >
-            ← Back to all components
-          </Link>
+            {/* Interactive Preview Window */}
+            <section className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-terminal-cyan to-terminal-green opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
+              <div className="relative rounded-lg border border-terminal-cyan/30 bg-black overflow-hidden">
+                {/* Fake Window Header */}
+                <div className="flex items-center justify-between px-4 py-2 bg-terminal-text/10 border-b border-terminal-text/10">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+                  </div>
+                  <div className="text-xs text-terminal-text/40 tracking-widest">
+                    LOCALHOST:3000
+                  </div>
+                </div>
+
+                {/* Preview Content */}
+                <div className="p-12 min-h-[300px] flex items-center justify-center bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-20">
+                  <div className="scale-125 transform">
+                    {/* Assuming the preview string is text, we render it. 
+                                    If you had real components, you'd map them here. 
+                                    For now, we style the text preview nicely. */}
+                    <pre className="font-mono text-terminal-cyan drop-shadow-[0_0_5px_rgba(0,255,255,0.5)] bg-black/50 p-6 border border-terminal-cyan/20 rounded">
+                      {variantData.preview}
+                    </pre>
+                  </div>
+                </div>
+
+                {/* Status Bar */}
+                <div className="bg-terminal-cyan text-black px-4 py-1 text-xs font-bold flex justify-between">
+                  <span>NORMAL</span>
+                  <span>100%</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Props Table */}
+            {variantData.props && variantData.props.length > 0 && (
+              <section>
+                <h2 className="mb-6 text-xl font-bold text-terminal-text flex items-center gap-2">
+                  <span className="text-terminal-cyan">#</span> API Reference
+                </h2>
+                <div className="rounded border border-terminal-text/20 overflow-hidden">
+                  <table className="w-full text-left text-sm">
+                    <thead className="bg-terminal-text/5 text-terminal-text/60 uppercase text-xs tracking-wider">
+                      <tr>
+                        <th className="px-6 py-4 font-medium">Prop</th>
+                        <th className="px-6 py-4 font-medium">Type</th>
+                        <th className="px-6 py-4 font-medium">Required</th>
+                        <th className="px-6 py-4 font-medium">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-terminal-text/10 bg-black/20">
+                      {variantData.props.map((prop: any, idx: number) => (
+                        <tr
+                          key={prop.name}
+                          className="hover:bg-terminal-cyan/5 transition-colors group"
+                        >
+                          <td className="px-6 py-4 font-mono text-terminal-cyan font-bold">
+                            {prop.name}
+                          </td>
+                          <td className="px-6 py-4 font-mono text-terminal-yellow text-xs">
+                            {prop.type}
+                          </td>
+                          <td className="px-6 py-4">
+                            {prop.required ? (
+                              <span className="inline-flex items-center rounded-sm bg-terminal-red/10 px-2 py-1 text-xs font-medium text-terminal-red ring-1 ring-inset ring-terminal-red/20">
+                                YES
+                              </span>
+                            ) : (
+                              <span className="text-terminal-text/30">-</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 text-terminal-text/70">
+                            {prop.description}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            )}
+          </div>
+
+          {/* Right Column: Code & Usage */}
+          <div className="lg:col-span-5 space-y-8">
+            {/* Installation Card */}
+            <div className="bg-terminal-bg border border-terminal-text/20 rounded-lg overflow-hidden">
+              <div className="px-4 py-3 border-b border-terminal-text/20 bg-terminal-text/5 flex items-center justify-between">
+                <span className="text-sm font-bold text-terminal-text/80">
+                  Installation
+                </span>
+                <span className="text-xs text-terminal-text/40">BASH</span>
+              </div>
+              <div className="p-4 bg-black">
+                <CodeBlock
+                  code={variantData.installCommand}
+                  language="bash"
+                  filename=""
+                />
+              </div>
+            </div>
+
+            {/* Usage Card */}
+            <div className="bg-terminal-bg border border-terminal-text/20 rounded-lg overflow-hidden">
+              <div className="px-4 py-3 border-b border-terminal-text/20 bg-terminal-text/5 flex items-center justify-between">
+                <span className="text-sm font-bold text-terminal-text/80">
+                  Usage
+                </span>
+                <span className="text-xs text-terminal-text/40">TSX</span>
+              </div>
+              <div className="p-4 bg-black">
+                <CodeBlock
+                  code={variantData.usage}
+                  language="tsx"
+                  filename=""
+                />
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </main>
+  );
+}
+
+function NotFound() {
+  return (
+    <main className="min-h-screen px-4 py-12">
+      <div className="mx-auto max-w-4xl text-center">
+        <h1 className="text-2xl text-terminal-red">DATA_CORRUPTED</h1>
+        <Link
+          href="/components"
+          className="mt-4 text-terminal-cyan hover:underline"
+        >
+          &lt; Return to Safety
+        </Link>
       </div>
     </main>
   );

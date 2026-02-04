@@ -187,16 +187,19 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-
   const data = componentData[category];
 
   if (!data) {
     return (
-      <main className="min-h-screen px-4 py-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-2xl text-terminal-red">Category not found</h1>
-          <Link href="/components" className="mt-4 text-terminal-cyan">
-            Back to components
+      <main className="min-h-screen flex items-center justify-center bg-terminal-bg text-terminal-red font-mono">
+        <div className="border border-terminal-red p-8 text-center max-w-md">
+          <h1 className="text-4xl mb-4">404 ERROR</h1>
+          <p>CATEGORY_NOT_FOUND: {category}</p>
+          <Link
+            href="/components"
+            className="mt-8 block hover:underline text-terminal-text"
+          >
+            [ Return to Root ]
           </Link>
         </div>
       </main>
@@ -204,54 +207,98 @@ export default async function CategoryPage({
   }
 
   return (
-    <main className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-terminal-bg px-4 py-12 sm:px-6 lg:px-8 font-mono">
       <div className="mx-auto max-w-7xl">
-        {/* Breadcrumb */}
-        <nav className="mb-8 flex items-center gap-2 text-sm text-terminal-text/60">
-          <Link href="/components" className="hover:text-terminal-cyan">
-            Components
+        {/* Breadcrumb / CLI Path */}
+        <nav className="mb-12 flex items-center gap-2 text-sm text-terminal-text/60 bg-terminal-text/5 p-3 rounded border border-terminal-text/10 w-fit">
+          <span className="text-terminal-green">$</span>
+          <Link
+            href="/components"
+            className="hover:text-terminal-cyan transition-colors"
+          >
+            ~/components
           </Link>
-          <span>/</span>
-          <span className="text-terminal-cyan">{data.name}</span>
+          <span className="text-terminal-text/30">/</span>
+          <span className="text-terminal-cyan font-bold">{category}</span>
+          <span className="animate-pulse inline-block w-2 h-4 bg-terminal-cyan/50 ml-1 align-middle"></span>
         </nav>
 
-        {/* Header */}
-        <div className="mb-12">
-          <div className="mb-2 flex items-center gap-3">
-            <span className="font-mono text-4xl text-terminal-cyan">
+        {/* Category Header */}
+        <div className="mb-16 relative">
+          <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-terminal-cyan to-transparent opacity-50"></div>
+          <div className="flex items-center gap-4 mb-4">
+            <span className="text-5xl text-terminal-cyan opacity-80">
               {data.icon}
             </span>
-            <h1 className="text-4xl font-bold text-terminal-cyan">{data.name}</h1>
+            <h1 className="text-5xl font-black text-terminal-text tracking-tight uppercase">
+              {data.name}
+            </h1>
           </div>
-          <p className="text-lg text-terminal-text/70">{data.description}</p>
+          <p className="text-xl text-terminal-text/70 max-w-2xl leading-relaxed">
+            {data.description}
+          </p>
         </div>
 
-        {/* Variants Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {data.variants.map((variant) => (
+        {/* Variants Layout */}
+        <div className="grid gap-8 lg:grid-cols-2">
+          {data.variants?.map((variant: any) => (
             <Link
               key={variant.id}
               href={`/components/${category}/${variant.id}`}
-              className="group block rounded-lg border border-terminal-cyan/20 bg-terminal-bg/50 p-6 transition-all hover:border-terminal-cyan/50"
+              className="group block rounded-none border border-terminal-cyan/30 bg-terminal-bg hover:bg-terminal-cyan/5 transition-all duration-300 overflow-hidden relative"
             >
-              <h3 className="mb-2 text-xl font-semibold text-terminal-cyan transition-colors group-hover:text-terminal-blue">
-                {variant.name}
-              </h3>
-              <p className="mb-4 text-sm text-terminal-text/70">
-                {variant.description}
-              </p>
-              <div className="rounded border border-terminal-cyan/10 bg-terminal-bg/80 p-3 font-mono text-sm text-terminal-green">
-                <pre className="whitespace-pre">{variant.preview}</pre>
+              {/* Decorators */}
+              <div className="absolute top-0 right-0 p-2 text-[10px] text-terminal-cyan/40 group-hover:text-terminal-cyan">
+                ID: {variant.id.toUpperCase()}
               </div>
+
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-2xl font-bold text-terminal-cyan group-hover:text-white transition-colors">
+                    {variant.name}
+                  </h3>
+                </div>
+
+                <p className="mb-6 text-sm text-terminal-text/70">
+                  {variant.description}
+                </p>
+
+                {/* Mini Preview Window */}
+                <div className="bg-black/40 border border-terminal-text/20 rounded mb-4">
+                  <div className="flex items-center gap-1.5 px-3 py-2 border-b border-terminal-text/10 bg-terminal-text/5">
+                    <div className="w-2 h-2 rounded-full bg-terminal-red/50"></div>
+                    <div className="w-2 h-2 rounded-full bg-terminal-yellow/50"></div>
+                    <div className="w-2 h-2 rounded-full bg-terminal-green/50"></div>
+                    <span className="ml-2 text-[10px] text-terminal-text/40">
+                      preview.tsx
+                    </span>
+                  </div>
+                  <div className="p-6 flex items-center justify-center font-mono text-sm text-terminal-green min-h-[100px]">
+                    <pre className="whitespace-pre">{variant.preview}</pre>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-xs text-terminal-cyan/60 font-bold group-hover:text-terminal-cyan">
+                  <span>VIEW_DETAILS</span>
+                  <span>--&gt;</span>
+                </div>
+              </div>
+
+              {/* Animated Border Bottom */}
+              <div className="absolute bottom-0 left-0 h-1 w-0 bg-terminal-cyan transition-all duration-500 group-hover:w-full"></div>
             </Link>
           ))}
         </div>
 
-        {/* Back link */}
-        <div className="mt-12 border-t border-terminal-cyan/20 pt-8">
-          <Link href="/components" className="text-terminal-cyan hover:underline">
-            ← Back to all components
+        {/* Footer Navigation */}
+        <div className="mt-20 border-t border-dashed border-terminal-text/20 pt-8 flex justify-between items-center text-sm">
+          <Link
+            href="/components"
+            className="text-terminal-text/60 hover:text-terminal-cyan font-mono"
+          >
+            &lt; cd ..
           </Link>
+          <span className="text-terminal-text/30">END_OF_BUFFER</span>
         </div>
       </div>
     </main>
