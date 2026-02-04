@@ -7,6 +7,7 @@ import {
 } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { compileMDX } from "@fumadocs/mdx-remote";
 import matter from "gray-matter";
 
@@ -24,7 +25,7 @@ export default async function Page(props: {
 
   const compiled = await compileMDX({
     source: mdxContent,
-    components: { ...defaultMdxComponents },
+    components: { ...defaultMdxComponents, Tabs, Tab },
   });
 
   // 1. Assign to a Capitalized variable
