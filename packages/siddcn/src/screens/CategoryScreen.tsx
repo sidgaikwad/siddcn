@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { getCategory } from '../components/registry';
 import { getTheme } from '../utils/theme';
-import { DiagonalFallingStars } from '../components/backgrounds';
+import { AutumnLeaves } from '../components/backgrounds';
 import type { ComponentVariant } from '../types';
 
 interface CategoryScreenProps {
@@ -74,13 +74,12 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
 
   return (
     <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
-      {/* Full Screen Diagonal Falling Stars Background */}
+      {/* Full Screen Autumn Leaves Background - Static, no re-renders */}
       <Box position="absolute" marginTop={0} marginLeft={0}>
-        <DiagonalFallingStars 
+        <AutumnLeaves 
           width={screenWidth} 
           height={screenHeight} 
-          starCount={12}
-          fps={10}
+          leafCount={18}
         />
       </Box>
       

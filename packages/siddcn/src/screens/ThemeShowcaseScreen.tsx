@@ -4,7 +4,7 @@ import { getTheme, setTheme, getThemeNames, Theme, themes as themeMap } from '..
 import { SimpleButton } from '../components/buttons';
 import { LinearProgress } from '../components/progress';
 import { StatusBadge } from '../components/badges';
-import { DiagonalFallingStars } from '../components/backgrounds';
+import { AutumnLeaves } from '../components/backgrounds';
 
 interface ThemeShowcaseScreenProps {
   onBack: () => void;
@@ -42,13 +42,12 @@ export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack
 
   return (
     <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
-      {/* Full Screen Diagonal Falling Stars Background */}
+      {/* Full Screen Autumn Leaves Background - Static, no re-renders */}
       <Box position="absolute" marginTop={0} marginLeft={0}>
-        <DiagonalFallingStars 
+        <AutumnLeaves 
           width={screenWidth} 
           height={screenHeight} 
-          starCount={10}
-          fps={10}
+          leafCount={15}
         />
       </Box>
       
