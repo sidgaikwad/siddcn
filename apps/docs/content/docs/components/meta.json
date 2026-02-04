@@ -9,6 +9,14 @@
     "trees",
     "tabs",
     "table",
-    "multiselect"
+    "multiselect",
+    "spinners",
+    "textinput",
+    "cards",
+    "select",
+    "backgrounds",
+    "animatedtext",
+    "notifications",
+    "dashboards"
   ]
 }
