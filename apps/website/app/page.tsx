@@ -10,13 +10,16 @@ export default function Home() {
   return (
     <main className="min-h-screen relative">
       <AnimatedBackground />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
         {/* Glow effects */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-glow" style={{ animationDelay: '1s' }} />
-        
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-glow"
+          style={{ animationDelay: "1s" }}
+        />
+
         <div className="mx-auto max-w-4xl text-center relative z-10">
           <FadeIn delay={0} direction="up">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 glass">
@@ -32,14 +35,14 @@ export default function Home() {
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl text-balance">
               Build terminal UIs
               <br />
-              <span className="gradient-text-blue">with React</span>
+              <span className="gradient-text-blue">with siddcn</span>
             </h1>
           </FadeIn>
 
           <FadeIn delay={200} direction="up">
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60 text-pretty">
-              Beautiful, extensible TUI components built with React Ink. 
-              Browse and preview components directly in your terminal via SSH or CLI.
+              Beautiful, extensible TUI components built with React Ink. Browse
+              and preview components directly in your terminal via SSH or CLI.
             </p>
           </FadeIn>
 
@@ -48,13 +51,25 @@ export default function Home() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <div className="code-block flex items-center gap-3 px-6 py-3 gradient-border">
                 <span className="text-white/40">$</span>
-                <code className="font-mono text-white">npm install -g siddcn</code>
-                <button 
+                <code className="font-mono text-white">
+                  npm install -g siddcn
+                </code>
+                <button
                   className="ml-2 text-white/40 transition-colors hover:text-white hover:scale-110 transform duration-200"
                   aria-label="Copy command"
                 >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
                   </svg>
                 </button>
               </div>
@@ -66,8 +81,18 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <ShimmerButton href="/docs" variant="primary">
                 Get Started
-                <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </ShimmerButton>
 
@@ -125,9 +150,9 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-white sm:text-4xl">
                 Component Library
               </h2>
-            <p className="mt-4 text-lg text-white/60">
+              <p className="mt-4 text-lg text-white/60">
                 17 categories, 50+ components, infinitely extensible
-            </p>
+              </p>
             </div>
           </FadeIn>
           <FadeIn delay={200} direction="up">
@@ -138,8 +163,18 @@ export default function Home() {
             <div className="mt-12 text-center">
               <ShimmerButton href="/components" variant="secondary">
                 View All Components
-                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="ml-2 h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </ShimmerButton>
             </div>
@@ -167,7 +202,9 @@ export default function Home() {
                   <div className="h-3 w-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors" />
                   <div className="h-3 w-3 rounded-full bg-green-500/80 hover:bg-green-400 transition-colors" />
                 </div>
-                <span className="ml-2 font-mono text-xs text-white/40">terminal</span>
+                <span className="ml-2 font-mono text-xs text-white/40">
+                  terminal
+                </span>
               </div>
 
               <pre className="overflow-x-auto p-6 font-mono text-sm">
@@ -218,28 +255,90 @@ Exit with q`}</code>
             </div>
 
             <div>
-              <h4 className="mb-4 text-sm font-semibold text-white">Documentation</h4>
+              <h4 className="mb-4 text-sm font-semibold text-white">
+                Documentation
+              </h4>
               <ul className="space-y-2 text-sm text-white/50">
-                <li><a href="http://localhost:3001/docs" className="hover:text-white transition-colors">Introduction</a></li>
-                <li><a href="http://localhost:3001/docs/installation" className="hover:text-white transition-colors">Installation</a></li>
-                <li><Link href="/components" className="hover:text-white transition-colors">Components</Link></li>
+                <li>
+                  <a
+                    href="http://localhost:3001/docs"
+                    className="hover:text-white transition-colors"
+                  >
+                    Introduction
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://localhost:3001/docs/installation"
+                    className="hover:text-white transition-colors"
+                  >
+                    Installation
+                  </a>
+                </li>
+                <li>
+                  <Link
+                    href="/components"
+                    className="hover:text-white transition-colors"
+                  >
+                    Components
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h4 className="mb-4 text-sm font-semibold text-white">Resources</h4>
+              <h4 className="mb-4 text-sm font-semibold text-white">
+                Resources
+              </h4>
               <ul className="space-y-2 text-sm text-white/50">
-                <li><Link href="/components" className="hover:text-white transition-colors">Component Library</Link></li>
-                <li><a href="http://localhost:3001/docs/adding-components" className="hover:text-white transition-colors">Add Components</a></li>
-                <li><Link href="/themes" className="hover:text-white transition-colors">Themes</Link></li>
+                <li>
+                  <Link
+                    href="/components"
+                    className="hover:text-white transition-colors"
+                  >
+                    Component Library
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="http://localhost:3001/docs/adding-components"
+                    className="hover:text-white transition-colors"
+                  >
+                    Add Components
+                  </a>
+                </li>
+                <li>
+                  <Link
+                    href="/themes"
+                    className="hover:text-white transition-colors"
+                  >
+                    Themes
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h4 className="mb-4 text-sm font-semibold text-white">Community</h4>
+              <h4 className="mb-4 text-sm font-semibold text-white">
+                Community
+              </h4>
               <ul className="space-y-2 text-sm text-white/50">
-                <li><a href="https://github.com/sidgaikwad/siddcn" className="hover:text-white transition-colors">GitHub</a></li>
-                <li><a href="https://npmjs.com/package/siddcn" className="hover:text-white transition-colors">npm</a></li>
+                <li>
+                  <a
+                    href="https://github.com/sidgaikwad/siddcn"
+                    className="hover:text-white transition-colors"
+                  >
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://npmjs.com/package/siddcn"
+                    className="hover:text-white transition-colors"
+                  >
+                    npm
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
