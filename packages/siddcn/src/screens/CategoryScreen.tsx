@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { getCategory } from '../components/registry';
 import { getTheme } from '../utils/theme';
-import { TwinklingStars } from '../components/backgrounds';
+import { DiagonalFallingStars } from '../components/backgrounds';
 import type { ComponentVariant } from '../types';
 
 interface CategoryScreenProps {
@@ -22,6 +22,11 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
   const theme = getTheme();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
+  
+  // Screen dimensions for full screen background
+  const screenWidth = 100;
+  const screenHeight = 30;
+  
   const maxVisibleRows = 3;
   const cols = 2;
 
@@ -68,10 +73,19 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
   const visibleEndRow = Math.min(scrollOffset + maxVisibleRows, totalRows);
 
   return (
-    <Box flexDirection="column" padding={1}>
-      {/* Stars decoration */}
-      <TwinklingStars width={80} density={0.08} />
+    <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
+      {/* Full Screen Diagonal Falling Stars Background */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={screenWidth} 
+          height={screenHeight} 
+          starCount={12}
+          fps={10}
+        />
+      </Box>
       
+      {/* Content Layer */}
+      <Box flexDirection="column" padding={1} position="relative">
       {/* Header */}
       <Box 
         borderStyle={theme.borderStyle} 
@@ -102,16 +116,16 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
         </Box>
       )}
 
-      {/* Component Grid */}
+      {/* Component Grid with more spacing */}
       <Box flexDirection="column">
         {Array.from({ length: visibleEndRow - visibleStartRow }).map((_, rowOffset) => {
           const rowIndex = visibleStartRow + rowOffset;
           return (
-            <Box key={rowIndex} marginBottom={1}>
+            <Box key={rowIndex} marginBottom={2}>
               {Array.from({ length: cols }).map((_, colIndex) => {
                 const index = rowIndex * cols + colIndex;
                 if (index >= category.variants.length) {
-                  return <Box key={colIndex} width={38} />;
+                  return <Box key={colIndex} width={45} />;
                 }
 
                 const variant = category.variants[index];
@@ -121,12 +135,12 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
                 return (
                   <Box
                     key={colIndex}
-                    width={38}
-                    marginRight={2}
+                    width={45}
+                    marginRight={3}
                     borderStyle={isSelected ? 'double' : 'single'}
                     borderColor={isSelected ? theme.colors.primary : theme.colors.border}
-                    paddingX={1}
-                    paddingY={0}
+                    paddingX={2}
+                    paddingY={1}
                     flexDirection="column"
                   >
                     {/* Variant Name with selection indicator */}
@@ -140,7 +154,7 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
                     </Box>
 
                     {/* Description */}
-                    <Box>
+                    <Box marginTop={1}>
                       <Text dimColor wrap="truncate-end">
                         {variant.description}
                       </Text>
@@ -172,7 +186,7 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
         </Box>
       )}
 
-      {/* Footer with current selection info */}
+      {/* Footer with current selection info and scrollbar indicator */}
       <Box marginTop={1} borderStyle="single" borderColor={theme.colors.border} paddingX={2}>
         <Box flexGrow={1}>
           <Text dimColor>
@@ -184,12 +198,10 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
           </Text>
         </Box>
         <Text dimColor>
-          [{selectedIndex + 1}/{category.variants.length}]
+          [{selectedIndex + 1}/{category.variants.length}] Row {Math.floor(selectedIndex / cols) + 1}/{totalRows}
         </Text>
       </Box>
-      
-      {/* Bottom stars */}
-      <TwinklingStars width={80} density={0.06} />
+      </Box>
     </Box>
   );
 };

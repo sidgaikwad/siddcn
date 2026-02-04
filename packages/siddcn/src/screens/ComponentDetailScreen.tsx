@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { getVariant } from '../components/registry';
 import { getTheme, setTheme, themes as themeMap } from '../utils/theme';
-import { TwinklingStars } from '../components/backgrounds';
+import { DiagonalFallingStars } from '../components/backgrounds';
 
 interface ComponentDetailScreenProps {
   categoryId: string;
@@ -80,12 +80,25 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
   }
 
   const PreviewComponent = variant.preview;
+  
+  // Screen dimensions for full screen background
+  const screenWidth = 100;
+  const screenHeight = 30;
 
   return (
-    <Box flexDirection="column" padding={1}>
-      {/* Stars decoration */}
-      <TwinklingStars width={70} density={0.1} />
+    <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
+      {/* Full Screen Diagonal Falling Stars Background */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={screenWidth} 
+          height={screenHeight} 
+          starCount={10}
+          fps={10}
+        />
+      </Box>
       
+      {/* Content Layer */}
+      <Box flexDirection="column" padding={1} position="relative">
       {/* Header */}
       <Box 
         borderStyle="double" 
@@ -238,9 +251,7 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
           Esc back | 'i' toggle install | 't' theme | 'c' copy | 'q' quit
         </Text>
       </Box>
-      
-      {/* Bottom stars */}
-      <TwinklingStars width={70} density={0.08} />
+      </Box>
     </Box>
   );
 };

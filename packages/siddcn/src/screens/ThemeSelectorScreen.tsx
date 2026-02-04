@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { getThemeNames, setTheme, getTheme, themes as themeMap } from '../utils/theme';
+import { DiagonalFallingStars } from '../components/backgrounds';
 
 interface ThemeSelectorScreenProps {
   onSelect: (themeName: string) => void;
@@ -13,6 +14,10 @@ export const ThemeSelectorScreen: React.FC<ThemeSelectorScreenProps> = ({ onSele
   const [selectedIndex, setSelectedIndex] = useState(
     Math.max(0, themeEntries.findIndex(([_, t]) => t.name === theme.name))
   );
+  
+  // Screen dimensions for full screen background
+  const screenWidth = 100;
+  const screenHeight = 30;
 
   useInput((input, key) => {
     if (key.upArrow || input === 'k') {
@@ -31,7 +36,19 @@ export const ThemeSelectorScreen: React.FC<ThemeSelectorScreenProps> = ({ onSele
   const [currentSelectedId, currentSelectedTheme] = themeEntries[selectedIndex];
 
   return (
-    <Box flexDirection="column" padding={2}>
+    <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
+      {/* Full Screen Diagonal Falling Stars Background */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={screenWidth} 
+          height={screenHeight} 
+          starCount={10}
+          fps={10}
+        />
+      </Box>
+      
+      {/* Content Layer */}
+      <Box flexDirection="column" padding={2} position="relative">
       <Box marginBottom={1}>
         <Text color={theme.colors.primary} bold>
           Choose Your Theme
@@ -56,7 +73,7 @@ export const ThemeSelectorScreen: React.FC<ThemeSelectorScreenProps> = ({ onSele
           const isCurrent = t.name === theme.name;
           
           return (
-            <Box key={themeId}>
+            <Box key={themeId} marginBottom={1}>
               <Text 
                 color={isSelected ? theme.colors.primary : theme.colors.text}
                 bold={isSelected}
@@ -91,10 +108,11 @@ export const ThemeSelectorScreen: React.FC<ThemeSelectorScreenProps> = ({ onSele
         </Box>
       </Box>
 
-      <Box marginTop={2}>
+      <Box marginTop={2} borderStyle="single" borderColor={theme.colors.border} paddingX={2}>
         <Text dimColor>
-          Navigate with up/down • Select with Enter • Back with Esc
+          Arrow Navigate | Enter Select | Esc Back
         </Text>
+      </Box>
       </Box>
     </Box>
   );
