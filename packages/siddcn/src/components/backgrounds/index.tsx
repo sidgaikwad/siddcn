@@ -247,3 +247,154 @@ export const TwinklingStars: React.FC<{ width?: number; density?: number }> = ({
     </Box>
   );
 };
+
+// Diagonal Falling Stars - creates shooting star trails from top-left to bottom-right
+export interface DiagonalStar {
+  x: number;
+  y: number;
+  length: number;
+  speed: number;
+  brightness: number;
+}
+
+export interface DiagonalFallingStarsProps {
+  width?: number;
+  height?: number;
+  starCount?: number;
+  fps?: number;
+}
+
+function createDiagonalStar(width: number, height: number, fromEdge = false): DiagonalStar {
+  // Stars start from top edge or left edge
+  const startFromTop = Math.random() > 0.5;
+  
+  return {
+    x: fromEdge 
+      ? (startFromTop ? Math.floor(Math.random() * width * 0.7) : 0)
+      : Math.floor(Math.random() * width),
+    y: fromEdge 
+      ? (startFromTop ? 0 : Math.floor(Math.random() * height * 0.5))
+      : Math.floor(Math.random() * height),
+    length: 3 + Math.floor(Math.random() * 8), // Trail length 3-10
+    speed: 0.3 + Math.random() * 0.5, // Variable diagonal speed
+    brightness: Math.random(),
+  };
+}
+
+export const DiagonalFallingStars: React.FC<DiagonalFallingStarsProps> = ({
+  width = 100,
+  height = 30,
+  starCount = 15,
+  fps = 12,
+}) => {
+  const theme = getTheme();
+  const [stars, setStars] = useState<DiagonalStar[]>(() => 
+    Array.from({ length: starCount }, () => createDiagonalStar(width, height))
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStars(prevStars => 
+        prevStars.map(star => {
+          const newX = star.x + star.speed;
+          const newY = star.y + star.speed * 0.6; // Move diagonally (more horizontal than vertical)
+          
+          // If star goes off screen (right or bottom), create new one from top-left area
+          if (newX >= width || newY >= height) {
+            return createDiagonalStar(width, height, true);
+          }
+          return { ...star, x: newX, y: newY };
+        })
+      );
+    }, 1000 / fps);
+
+    return () => clearInterval(interval);
+  }, [width, height, fps]);
+
+  // Create a 2D grid for rendering
+  const grid: { char: string; intensity: number }[][] = Array.from({ length: height }, () => 
+    Array.from({ length: width }, () => ({ char: ' ', intensity: 0 }))
+  );
+
+  // Trail characters from brightest to dimmest
+  const trailChars = ['*', '+', '.', '`', "'", ',', ' '];
+
+  // Place stars and their trails on the grid
+  stars.forEach(star => {
+    for (let i = 0; i < star.length; i++) {
+      const trailX = Math.floor(star.x - i * 0.8);
+      const trailY = Math.floor(star.y - i * 0.5);
+      
+      if (trailY >= 0 && trailY < height && trailX >= 0 && trailX < width) {
+        const charIndex = Math.min(Math.floor(i / 1.5), trailChars.length - 1);
+        const intensity = Math.max(0, 1 - (i / star.length));
+        
+        if (grid[trailY][trailX].intensity < intensity) {
+          grid[trailY][trailX] = { 
+            char: trailChars[charIndex], 
+            intensity: intensity * star.brightness 
+          };
+        }
+      }
+    }
+  });
+
+  const getColor = (intensity: number) => {
+    if (intensity > 0.7) return theme.colors.primary;
+    if (intensity > 0.4) return theme.colors.secondary;
+    if (intensity > 0.2) return theme.colors.dimText;
+    return theme.colors.border;
+  };
+
+  return (
+    <Box flexDirection="column">
+      {grid.map((row, rowIndex) => (
+        <Box key={rowIndex}>
+          {row.map((cell, colIndex) => (
+            <Text 
+              key={colIndex} 
+              color={cell.intensity > 0 ? getColor(cell.intensity) : undefined}
+              bold={cell.intensity > 0.7}
+              dimColor={cell.intensity === 0}
+            >
+              {cell.char}
+            </Text>
+          ))}
+        </Box>
+      ))}
+    </Box>
+  );
+};
+
+// Full screen background wrapper with diagonal falling stars
+export interface FullScreenBackgroundProps {
+  children: React.ReactNode;
+  width?: number;
+  height?: number;
+  starCount?: number;
+}
+
+export const FullScreenBackground: React.FC<FullScreenBackgroundProps> = ({
+  children,
+  width = 100,
+  height = 30,
+  starCount = 12,
+}) => {
+  return (
+    <Box flexDirection="column" width={width} minHeight={height}>
+      {/* Background stars layer */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={width} 
+          height={height} 
+          starCount={starCount}
+          fps={10}
+        />
+      </Box>
+      {/* Content layer */}
+      <Box flexDirection="column" position="relative">
+        {children}
+      </Box>
+    </Box>
+  );
+};

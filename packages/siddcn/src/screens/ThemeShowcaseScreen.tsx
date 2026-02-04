@@ -4,6 +4,7 @@ import { getTheme, setTheme, getThemeNames, Theme, themes as themeMap } from '..
 import { SimpleButton } from '../components/buttons';
 import { LinearProgress } from '../components/progress';
 import { StatusBadge } from '../components/badges';
+import { DiagonalFallingStars } from '../components/backgrounds';
 
 interface ThemeShowcaseScreenProps {
   onBack: () => void;
@@ -17,6 +18,10 @@ export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack
     Math.max(0, themeEntries.findIndex(([_, t]) => t.name === currentTheme.name))
   );
   const [showInstallInfo, setShowInstallInfo] = useState(false);
+  
+  // Screen dimensions for full screen background
+  const screenWidth = 100;
+  const screenHeight = 30;
 
   const [selectedThemeId, selectedTheme] = themeEntries[selectedThemeIndex];
 
@@ -36,10 +41,22 @@ export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack
   });
 
   return (
-    <Box flexDirection="column" padding={1}>
+    <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
+      {/* Full Screen Diagonal Falling Stars Background */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={screenWidth} 
+          height={screenHeight} 
+          starCount={10}
+          fps={10}
+        />
+      </Box>
+      
+      {/* Content Layer */}
+      <Box flexDirection="column" padding={1} position="relative">
       {/* Header */}
       <Box borderStyle="double" borderColor="cyan" paddingX={2} paddingY={1} marginBottom={1}>
-        <Text bold color="cyan">🎨 Theme Showcase & Installer</Text>
+        <Text bold color="cyan">Theme Showcase & Installer</Text>
       </Box>
 
       <Box marginBottom={1}>
@@ -155,8 +172,9 @@ export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack
       {/* Controls */}
       <Box borderStyle="single" borderColor={currentTheme.colors.border} paddingX={2}>
         <Text dimColor>
-          ↑↓ Navigate   Enter Apply   i Install Info   q Back
+          Arrow Navigate | Enter Apply | i Install Info | q Back
         </Text>
+      </Box>
       </Box>
     </Box>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Text } from "ink";
 import Spinner from "ink-spinner";
 import gradient from "gradient-string";
+import { DiagonalFallingStars } from '../components/backgrounds';
 
 interface LoaderScreenProps {
   onComplete: () => void;
@@ -10,6 +11,10 @@ interface LoaderScreenProps {
 export const LoaderScreen: React.FC<LoaderScreenProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState("Initializing...");
+  
+  // Screen dimensions for full screen background
+  const screenWidth = 100;
+  const screenHeight = 30;
 
   useEffect(() => {
     let isMounted = true;
@@ -55,7 +60,19 @@ export const LoaderScreen: React.FC<LoaderScreenProps> = ({ onComplete }) => {
   const empty = barLength - filled;
 
   return (
-    <Box flexDirection="column" padding={2} alignItems="center" width="100%">
+    <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
+      {/* Full Screen Diagonal Falling Stars Background */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={screenWidth} 
+          height={screenHeight} 
+          starCount={15}
+          fps={10}
+        />
+      </Box>
+      
+      {/* Content Layer */}
+      <Box flexDirection="column" padding={2} alignItems="center" width="100%" position="relative">
       <Box justifyContent="center" marginBottom={2}>
         <Text>
           {gradient.pastel.multiline(`
@@ -104,6 +121,7 @@ export const LoaderScreen: React.FC<LoaderScreenProps> = ({ onComplete }) => {
           <Text> </Text>
           <Text color="yellow">{progress}%</Text>
         </Box>
+      </Box>
       </Box>
     </Box>
   );

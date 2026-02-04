@@ -6,7 +6,7 @@ import { getTheme } from '../utils/theme';
 import { SimpleButton } from '../components/buttons';
 import { LinearProgress } from '../components/progress';
 import { StatusBadge } from '../components/badges';
-import { TwinklingStars } from '../components/backgrounds';
+import { DiagonalFallingStars } from '../components/backgrounds';
 
 interface ShowcaseItem {
   id: string;
@@ -25,6 +25,10 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
   const theme = getTheme();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
+  
+  // Screen dimensions for full screen background
+  const screenWidth = 100;
+  const screenHeight = 30;
   
   // Maximum visible rows for scrolling
   const maxVisibleRows = 4;
@@ -184,10 +188,19 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
   const visibleEndRow = Math.min(scrollOffset + maxVisibleRows, totalRows);
 
   return (
-    <Box flexDirection="column" padding={2}>
-      {/* Animated Stars Background */}
-      <TwinklingStars width={70} density={0.12} />
+    <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
+      {/* Full Screen Diagonal Falling Stars Background */}
+      <Box position="absolute" marginTop={0} marginLeft={0}>
+        <DiagonalFallingStars 
+          width={screenWidth} 
+          height={screenHeight} 
+          starCount={15}
+          fps={10}
+        />
+      </Box>
       
+      {/* Content Layer */}
+      <Box flexDirection="column" padding={2} position="relative">
       {/* Title */}
       <Box
         borderStyle={theme.borderStyle}
@@ -200,9 +213,6 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
           siddcn Component Library Showcase
         </Text>
       </Box>
-
-      {/* Second row of stars */}
-      <TwinklingStars width={70} density={0.08} />
 
       <Box marginBottom={2} justifyContent="center">
         <Text dimColor>
@@ -221,16 +231,16 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
         </Box>
       )}
 
-      {/* Scrollable Grid */}
+      {/* Scrollable Grid with more spacing */}
       <Box flexDirection="column">
         {Array.from({ length: visibleEndRow - visibleStartRow }).map((_, rowOffset) => {
           const row = visibleStartRow + rowOffset;
           return (
-            <Box key={row} marginBottom={1}>
+            <Box key={row} marginBottom={2}>
               {[0, 1, 2].map((col) => {
                 const index = row * cols + col;
                 if (index >= items.length) {
-                  return <Box key={col} width={28} />;
+                  return <Box key={col} width={30} />;
                 }
 
                 const item = items[index];
@@ -239,23 +249,23 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
                 return (
                   <Box
                     key={col}
-                    width={28}
-                    marginRight={1}
-                    borderStyle={isSelected ? 'bold' : 'single'}
+                    width={30}
+                    marginRight={2}
+                    borderStyle={isSelected ? 'double' : 'single'}
                     borderColor={isSelected ? theme.colors.primary : theme.colors.border}
-                    paddingX={1}
-                    paddingY={0}
+                    paddingX={2}
+                    paddingY={1}
                     flexDirection="column"
                   >
                     {/* Title with icon */}
                     <Box>
                       <Text color={isSelected ? theme.colors.primary : theme.colors.text}>
-                        {item.icon} <Text bold>{item.title}</Text>
+                        {isSelected ? '> ' : '  '}{item.icon} <Text bold>{item.title}</Text>
                       </Text>
                     </Box>
 
                     {/* Subtitle/Description */}
-                    <Box>
+                    <Box marginTop={1}>
                       <Text dimColor wrap="truncate">{item.subtitle.split('\n')[0]}</Text>
                     </Box>
                   </Box>
@@ -273,15 +283,16 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
         </Box>
       )}
 
-      {/* Footer */}
-      <Box marginTop={2} justifyContent="center">
+      {/* Footer with scroll indicator */}
+      <Box marginTop={2} justifyContent="space-between" borderStyle="single" borderColor={theme.colors.border} paddingX={2}>
         <Text dimColor>
           {items.length} components - Arrow keys navigate - Enter select - Ctrl+C quit
         </Text>
+        <Text dimColor>
+          [{selectedIndex + 1}/{items.length}] Row {Math.floor(selectedIndex / cols) + 1}/{totalRows}
+        </Text>
       </Box>
-      
-      {/* Bottom stars decoration */}
-      <TwinklingStars width={70} density={0.1} />
+      </Box>
     </Box>
   );
 };
