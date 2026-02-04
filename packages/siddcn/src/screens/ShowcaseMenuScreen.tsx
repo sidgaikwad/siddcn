@@ -6,7 +6,7 @@ import { getTheme } from '../utils/theme';
 import { SimpleButton } from '../components/buttons';
 import { LinearProgress } from '../components/progress';
 import { StatusBadge } from '../components/badges';
-import { DiagonalFallingStars } from '../components/backgrounds';
+import { AutumnLeaves } from '../components/backgrounds';
 
 interface ShowcaseItem {
   id: string;
@@ -147,6 +147,13 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
       icon: '!',
       preview: <Text color={theme.colors.success}>[+] Done</Text>,
     },
+    {
+      id: 'dashboards',
+      title: 'Dashboards',
+      subtitle: 'System\nMonitors',
+      icon: '~',
+      preview: <Text color={theme.colors.primary}>CPU [|||| ]</Text>,
+    },
   ];
 
   // Calculate total rows
@@ -189,13 +196,12 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
 
   return (
     <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
-      {/* Full Screen Diagonal Falling Stars Background */}
+      {/* Full Screen Autumn Leaves Background - Static, no re-renders */}
       <Box position="absolute" marginTop={0} marginLeft={0}>
-        <DiagonalFallingStars 
+        <AutumnLeaves 
           width={screenWidth} 
           height={screenHeight} 
-          starCount={15}
-          fps={10}
+          leafCount={20}
         />
       </Box>
       

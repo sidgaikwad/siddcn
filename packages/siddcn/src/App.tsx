@@ -26,7 +26,8 @@ export const App: React.FC<AppProps> = ({ onExit }) => {
     accordionOpen: false
   });
 
-  // Global keyboard shortcuts
+  // Global keyboard shortcuts - only for 'q' to quit
+  // NOTE: ESC navigation is handled by individual screens to ensure proper step-by-step back navigation
   useInput((input, key) => {
     // Exit on 'q' (but not in loader)
     if (input === 'q' && state.screen !== 'loader') {
@@ -39,10 +40,8 @@ export const App: React.FC<AppProps> = ({ onExit }) => {
       setState(prev => ({ ...prev, screen: 'theme-showcase' as any }));
     }
 
-    // Back navigation with Escape
-    if (key.escape) {
-      handleBack();
-    }
+    // NOTE: ESC is NOT handled globally - each screen handles its own back navigation
+    // This ensures pressing ESC goes back one step, not all the way to main menu
   });
 
   const handleLoaderComplete = () => {

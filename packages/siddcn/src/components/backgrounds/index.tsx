@@ -398,3 +398,129 @@ export const FullScreenBackground: React.FC<FullScreenBackgroundProps> = ({
     </Box>
   );
 };
+
+// Autumn Leaves - Static falling leaves background (NO re-renders after initial render)
+export interface AutumnLeaf {
+  x: number;
+  y: number;
+  char: string;
+  color: string;
+}
+
+export interface AutumnLeavesProps {
+  width?: number;
+  height?: number;
+  leafCount?: number;
+}
+
+const LEAF_CHARS = ['🍂', '🍁', '🍃', '❦', '✿', '❀', '⚘'];
+const LEAF_ASCII = ['@', '*', '%', '#', '&', 'o', '~', '^'];
+const LEAF_COLORS = ['#D2691E', '#8B4513', '#CD853F', '#A0522D', '#B8860B', '#DAA520', '#F4A460'];
+
+function createAutumnLeaf(width: number, height: number): AutumnLeaf {
+  return {
+    x: Math.floor(Math.random() * width),
+    y: Math.floor(Math.random() * height),
+    char: LEAF_ASCII[Math.floor(Math.random() * LEAF_ASCII.length)],
+    color: LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)],
+  };
+}
+
+// Static autumn leaves - renders once, no animation/re-renders
+export const AutumnLeaves: React.FC<AutumnLeavesProps> = ({
+  width = 100,
+  height = 30,
+  leafCount = 25,
+}) => {
+  const theme = getTheme();
+  
+  // Create leaves once using useMemo - NO state, NO effects, NO re-renders
+  const leaves = React.useMemo(() => 
+    Array.from({ length: leafCount }, () => createAutumnLeaf(width, height)),
+    [width, height, leafCount]
+  );
+
+  // Create a 2D grid for rendering
+  const grid = React.useMemo(() => {
+    const g: (AutumnLeaf | null)[][] = Array.from({ length: height }, () => 
+      Array.from({ length: width }, () => null)
+    );
+
+    // Place leaves on the grid
+    leaves.forEach(leaf => {
+      if (leaf.y >= 0 && leaf.y < height && leaf.x >= 0 && leaf.x < width) {
+        g[leaf.y][leaf.x] = leaf;
+      }
+    });
+    
+    return g;
+  }, [leaves, width, height]);
+
+  return (
+    <Box flexDirection="column">
+      {grid.map((row, rowIndex) => (
+        <Box key={rowIndex}>
+          {row.map((cell, colIndex) => (
+            <Text 
+              key={colIndex} 
+              color={cell ? cell.color : undefined}
+              dimColor={!cell}
+            >
+              {cell ? cell.char : ' '}
+            </Text>
+          ))}
+        </Box>
+      ))}
+    </Box>
+  );
+};
+
+// Static diagonal pattern - NO animations, NO re-renders
+export interface StaticDiagonalPatternProps {
+  width?: number;
+  height?: number;
+  density?: number;
+}
+
+export const StaticDiagonalPattern: React.FC<StaticDiagonalPatternProps> = ({
+  width = 100,
+  height = 30,
+  density = 0.08,
+}) => {
+  const theme = getTheme();
+  
+  // Create pattern once using useMemo - completely static
+  const grid = React.useMemo(() => {
+    const chars = ['*', '+', '.', '`', "'", ',', '~', '^'];
+    const g: { char: string; bright: boolean }[][] = Array.from({ length: height }, () => 
+      Array.from({ length: width }, () => {
+        if (Math.random() < density) {
+          return { 
+            char: chars[Math.floor(Math.random() * chars.length)], 
+            bright: Math.random() > 0.5 
+          };
+        }
+        return { char: ' ', bright: false };
+      })
+    );
+    return g;
+  }, [width, height, density]);
+
+  return (
+    <Box flexDirection="column">
+      {grid.map((row, rowIndex) => (
+        <Box key={rowIndex}>
+          {row.map((cell, colIndex) => (
+            <Text 
+              key={colIndex} 
+              color={cell.char !== ' ' ? (cell.bright ? theme.colors.primary : theme.colors.dimText) : undefined}
+              dimColor={cell.char === ' '}
+            >
+              {cell.char}
+            </Text>
+          ))}
+        </Box>
+      ))}
+    </Box>
+  );
+};
