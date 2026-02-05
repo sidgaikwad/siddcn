@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
 
-// Inline the data to ensure we have it for the new UI
+import { useState } from "react";
+import Link from "next/link";
+import { AnimatedBackground } from "@/components/AnimatedBackground"; // Assuming you have this from previous steps
+import { FadeIn } from "@/components/FadeIn"; // Assuming you have this
+
+// Full Data
 const components = [
   {
     id: "spinners",
@@ -116,22 +121,35 @@ const components = [
   },
 ];
 
-export default function ComponentsPage() {
-  return (
-    <main className="min-h-screen bg-terminal-bg selection:bg-terminal-cyan selection:text-terminal-bg relative overflow-hidden">
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-0 pointer-events-none" />
-      <div
-        className="absolute inset-0 bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0 opacity-20 pointer-events-none border-terminal-cyan/5"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
-        }}
-      ></div>
+const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL || "http://localhost:3001";
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* System Header */}
-        <div className="mb-16 border-b border-terminal-cyan/30 pb-8">
+export default function ComponentsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredComponents = components.filter((c) =>
+    c.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  return (
+    <main className="min-h-screen bg-[#0a0a0a] font-mono text-terminal-text selection:bg-terminal-cyan selection:text-black relative flex flex-col">
+      {/* Background Effects */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] opacity-20" />
+        <div
+          className="absolute inset-0 bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-10 border-terminal-cyan/5"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #333 1px, transparent 1px), linear-gradient(to bottom, #333 1px, transparent 1px)",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 w-full flex-grow">
+        {/* --- SYSTEM HEADER (Preserved Structure) --- */}
+        <div className="mb-12 border-b-2 border-terminal-cyan/20 pb-8 relative">
+          {/* Decorative Corner */}
+          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-terminal-cyan opacity-50"></div>
+
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -140,70 +158,243 @@ export default function ComponentsPage() {
                   SYSTEM_ONLINE
                 </span>
               </div>
-              <h1 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-terminal-cyan to-terminal-green tracking-tight font-mono">
+              <h1 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-terminal-cyan via-white to-terminal-cyan tracking-tight font-mono drop-shadow-[0_0_10px_rgba(0,255,255,0.3)]">
                 COMPONENT_LIB
               </h1>
-              <p className="mt-4 max-w-xl text-lg text-terminal-text/70 font-mono border-l-2 border-terminal-cyan/20 pl-4">
-                Accessing TUI modules...
-                <br />
-                {components.length} components loaded ready for deployment.
-              </p>
+
+              {/* Retro Navigation Links */}
+              <div className="mt-6 flex gap-4 text-sm font-bold text-terminal-text/60">
+                <Link
+                  href="/"
+                  className="hover:text-terminal-cyan transition-colors"
+                >
+                  [ ROOT ]
+                </Link>
+                <Link
+                  href="/docs"
+                  className="hover:text-terminal-cyan transition-colors"
+                >
+                  [ MANUAL ]
+                </Link>
+                <Link
+                  href="/themes"
+                  className="hover:text-terminal-cyan transition-colors"
+                >
+                  [ THEMES ]
+                </Link>
+              </div>
             </div>
 
-            {/* Stats Box */}
-            <div className="border border-terminal-cyan/20 bg-terminal-bg/50 p-4 min-w-[200px] backdrop-blur-sm">
-              <div className="flex justify-between text-xs text-terminal-text/50 font-mono mb-2">
-                <span>MEMORY</span>
-                <span>64K</span>
+            {/* Stats & Search Box */}
+            <div className="flex flex-col gap-4 min-w-[300px]">
+              {/* Stats */}
+              <div className="border border-terminal-cyan/20 bg-black/50 p-3 backdrop-blur-sm">
+                <div className="flex justify-between text-xs text-terminal-text/50 font-mono mb-2">
+                  <span>MEMORY</span>
+                  <span>64K</span>
+                </div>
+                <div className="w-full bg-terminal-text/10 h-1 mb-2">
+                  <div className="bg-terminal-cyan h-full w-[45%] animate-pulse"></div>
+                </div>
               </div>
-              <div className="w-full bg-terminal-text/10 h-1 mb-4">
-                <div className="bg-terminal-cyan h-full w-[45%]"></div>
-              </div>
-              <div className="text-right font-mono text-sm text-terminal-cyan">
-                v2.0.4-stable
+
+              {/* CLI Search Input */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-terminal-cyan font-bold pointer-events-none">
+                  &gt;_
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="filter_modules..."
+                  className="w-full bg-black/80 border border-terminal-text/20 py-2 pl-10 pr-4 text-terminal-text focus:outline-none focus:border-terminal-cyan focus:ring-1 focus:ring-terminal-cyan placeholder-terminal-text/30 font-mono text-sm transition-all"
+                />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Grid */}
+        {/* --- GRID --- */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {components.map((component) => (
-            <Link
-              key={component.id}
-              href={`/components/${component.id}`}
-              className="group relative overflow-hidden border border-terminal-cyan/20 bg-terminal-bg/40 p-6 transition-all duration-300 hover:border-terminal-cyan hover:bg-terminal-bg/80 hover:shadow-[0_0_30px_-5px_rgba(0,255,255,0.15)]"
-            >
-              {/* Corner Accents */}
-              <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-xs font-mono text-terminal-cyan">
-                  [↗]
-                </span>
-              </div>
-
-              <div className="flex items-start justify-between mb-4">
-                <div className="h-12 w-12 flex items-center justify-center rounded border border-terminal-cyan/10 bg-terminal-cyan/5 text-2xl text-terminal-cyan group-hover:scale-110 transition-transform duration-300">
-                  {component.icon}
+          {filteredComponents.map((component, idx) => (
+            <FadeIn key={component.id} delay={idx * 30} direction="up">
+              <Link
+                href={`/components/${component.id}`}
+                className="group relative h-full flex flex-col overflow-hidden border border-terminal-cyan/10 bg-terminal-bg/40 p-6 transition-all duration-300 hover:border-terminal-cyan hover:bg-black hover:shadow-[0_0_20px_-5px_rgba(0,255,255,0.2)]"
+              >
+                {/* Corner Accents (Hidden by default, visible on hover) */}
+                <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-xs font-mono text-terminal-cyan">
+                    [↗]
+                  </span>
                 </div>
-                <span className="font-mono text-xs text-terminal-text/40 border border-terminal-text/10 px-2 py-1 rounded">
-                  {component.count} VAR
-                </span>
-              </div>
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-terminal-cyan/0 group-hover:border-terminal-cyan transition-colors"></div>
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-terminal-cyan/0 group-hover:border-terminal-cyan transition-colors"></div>
 
-              <h3 className="mb-2 text-xl font-bold text-terminal-text group-hover:text-terminal-cyan transition-colors font-mono">
-                {component.name}
-              </h3>
+                <div className="flex items-start justify-between mb-4">
+                  <div className="h-12 w-12 flex items-center justify-center rounded-sm border border-terminal-cyan/20 bg-terminal-cyan/5 text-2xl text-terminal-cyan group-hover:scale-110 group-hover:bg-terminal-cyan/10 transition-all duration-300">
+                    {component.icon}
+                  </div>
+                  <span className="font-mono text-[10px] text-terminal-text/40 border border-terminal-text/10 px-1.5 py-0.5">
+                    ID: {component.count.toString().padStart(2, "0")}
+                  </span>
+                </div>
 
-              <p className="text-sm text-terminal-text/60 font-mono line-clamp-2">
-                {component.description}
-              </p>
+                <h3 className="mb-2 text-xl font-bold text-terminal-text group-hover:text-terminal-cyan transition-colors font-mono">
+                  {component.name}
+                </h3>
 
-              {/* Hover Line */}
-              <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-terminal-cyan transition-all duration-300 group-hover:w-full" />
-            </Link>
+                <p className="text-sm text-terminal-text/60 font-mono line-clamp-2 group-hover:text-terminal-text/80">
+                  {component.description}
+                </p>
+
+                {/* Animated Bottom Scanline */}
+                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-terminal-cyan transition-all duration-500 group-hover:w-full shadow-[0_0_10px_#0ff]" />
+              </Link>
+            </FadeIn>
           ))}
         </div>
+
+        {/* Empty State */}
+        {filteredComponents.length === 0 && (
+          <div className="py-20 text-center border border-dashed border-terminal-text/20 mt-8">
+            <p className="text-terminal-red font-mono text-lg">
+              ERROR: MODULE_NOT_FOUND
+            </p>
+            <p className="text-terminal-text/40 text-sm mt-2">
+              Query "{searchQuery}" returned 0 results.
+            </p>
+            <button
+              onClick={() => setSearchQuery("")}
+              className="mt-4 text-terminal-cyan hover:underline text-sm"
+            >
+              [ RESET_SEARCH ]
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* --- RETRO FOOTER --- */}
+      <footer className="border-t-2 border-terminal-cyan/20 bg-[#050505] relative z-10 mt-auto">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 font-mono text-sm">
+            {/* Branding Column */}
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-4 h-4 bg-terminal-cyan"></div>
+                <span className="font-bold text-lg text-white tracking-widest">
+                  SIDDCN
+                </span>
+              </div>
+              <p className="text-terminal-text/50 max-w-xs mb-6">
+                High-performance TUI components.
+                <br />
+                Built for the React Ink ecosystem.
+                <br />
+                MIT License.
+              </p>
+              <div className="text-xs text-terminal-text/30">
+                EST. 2026 // SYSTEM_ID: #8821
+              </div>
+            </div>
+
+            {/* Links Column 1 */}
+            <div>
+              <h4 className="text-terminal-cyan font-bold mb-4 uppercase tracking-wider border-b border-terminal-cyan/20 pb-1 w-fit">
+                Directory
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/"
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/components"
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    Components
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/themes"
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    Themes
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/docs/cli"
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    CLI
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Links Column 2 */}
+            <div>
+              <h4 className="text-terminal-cyan font-bold mb-4 uppercase tracking-wider border-b border-terminal-cyan/20 pb-1 w-fit">
+                Network
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href="https://github.com/sidgaikwad/siddcn"
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://npmjs.com/package/siddcn"
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    NPM
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`${DOCS_URL}/docs`}
+                    className="text-terminal-text/60 hover:text-white hover:translate-x-1 transition-all inline-block"
+                  >
+                    {" "}
+                    Docs
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Status Bar Footer */}
+          <div className="mt-12 border-t border-terminal-text/10 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-terminal-text/40 font-mono">
+            <div>COPYRIGHT © {new Date().getFullYear()} SIDDCN</div>
+            <div className="flex gap-6 mt-2 md:mt-0">
+              <span className="flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-green-500/50"></span>{" "}
+                SERVER: ONLINE
+              </span>
+              <span>LATENCY: 14ms</span>
+              <span>VER: 2.0.4</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
