@@ -15,6 +15,262 @@ const componentData: Record<
     }[];
   }
 > = {
+  // --- NEW MISSING CATEGORIES ---
+  spinners: {
+    name: "Spinners",
+    icon: "◐",
+    description: "Loading indicators and activity animations",
+    variants: [
+      {
+        id: "dots",
+        name: "Dots Spinner",
+        description: "Classic dots animation",
+        preview: "Loading...",
+      },
+      {
+        id: "line",
+        name: "Line Spinner",
+        description: "Rotating line character",
+        preview: "/ - \\ |",
+      },
+      {
+        id: "progress-bar",
+        name: "Progress Bar",
+        description: "Indeterminate sliding bar",
+        preview: "[====    ]",
+      },
+      {
+        id: "bouncing",
+        name: "Bouncing Ball",
+        description: "Bouncing character animation",
+        preview: "(o)     ",
+      },
+      {
+        id: "clock",
+        name: "Clock Spinner",
+        description: "Rotating clock hands",
+        preview: "🕛 🕐 🕑",
+      },
+    ],
+  },
+  textinput: {
+    name: "Text Input",
+    icon: "﹥",
+    description: "Input fields for capturing user text",
+    variants: [
+      {
+        id: "basic",
+        name: "Basic Input",
+        description: "Simple text field",
+        preview: "> Type here...",
+      },
+      {
+        id: "password",
+        name: "Password Input",
+        description: "Masked input for secrets",
+        preview: "Password: ****",
+      },
+      {
+        id: "search",
+        name: "Search Bar",
+        description: "Input with search prefix",
+        preview: "🔍 Search...",
+      },
+    ],
+  },
+  cards: {
+    name: "Cards",
+    icon: "□",
+    description: "Container components for grouping content",
+    variants: [
+      {
+        id: "simple",
+        name: "Simple Card",
+        description: "Basic bordered container",
+        preview: "┌────────┐\n│ Content│\n└────────┘",
+      },
+      {
+        id: "titled",
+        name: "Titled Card",
+        description: "Card with header title",
+        preview: "┌─ Title ─┐\n│ Body    │\n└─────────┘",
+      },
+      {
+        id: "alert",
+        name: "Alert Card",
+        description: "Card for important messages",
+        preview: "(!) Alert \n Check logs",
+      },
+      {
+        id: "stats",
+        name: "Stats Card",
+        description: "Display numerical data",
+        preview: "CPU: 45%\n[||||  ]",
+      },
+      {
+        id: "info",
+        name: "Info Box",
+        description: "Information display container",
+        preview: "ℹ️ Info   \n Read-only",
+      },
+      {
+        id: "error",
+        name: "Error Box",
+        description: "Error message container",
+        preview: "❌ Error  \n Failed!",
+      },
+    ],
+  },
+  select: {
+    name: "Select",
+    icon: "▼",
+    description: "Selection inputs and dropdowns",
+    variants: [
+      {
+        id: "list",
+        name: "List Select",
+        description: "Vertical list selection",
+        preview: "> Option A\n  Option B",
+      },
+      {
+        id: "radio",
+        name: "Radio Group",
+        description: "Radio button selection",
+        preview: "(*) Yes\n( ) No",
+      },
+      {
+        id: "dropdown",
+        name: "Dropdown",
+        description: "Collapsible selection list",
+        preview: "Select ▼",
+      },
+    ],
+  },
+  backgrounds: {
+    name: "Backgrounds",
+    icon: "░",
+    description: "Full-screen animated backgrounds",
+    variants: [
+      {
+        id: "matrix",
+        name: "Matrix Rain",
+        description: "Falling code characters",
+        preview: "1 0 1 0\n0 1 1 0",
+      },
+      {
+        id: "stars",
+        name: "Starfield",
+        description: "Moving star animation",
+        preview: ".  * . \n * .  *",
+      },
+    ],
+  },
+  animatedtext: {
+    name: "Animated Text",
+    icon: "A",
+    description: "Text effects and animations",
+    variants: [
+      {
+        id: "typewriter",
+        name: "Typewriter",
+        description: "Typing effect character by character",
+        preview: "Typing..._",
+      },
+      {
+        id: "gradient",
+        name: "Gradient Text",
+        description: "RGB color cycle effect",
+        preview: "RAINBOW",
+      },
+      {
+        id: "glitch",
+        name: "Glitch Text",
+        description: "Random character corruption",
+        preview: "Sys$#em",
+      },
+      {
+        id: "pulse",
+        name: "Pulse Text",
+        description: "Opacity pulsing effect",
+        preview: "Loading...",
+      },
+    ],
+  },
+  notifications: {
+    name: "Notifications",
+    icon: "!",
+    description: "Toast messages and alerts",
+    variants: [
+      {
+        id: "toast",
+        name: "Toast",
+        description: "Temporary popup message",
+        preview: "[✔ Saved]",
+      },
+      {
+        id: "banner",
+        name: "Banner",
+        description: "Full width alert bar",
+        preview: "⚠ WARNING ⚠",
+      },
+      {
+        id: "spinner-toast",
+        name: "Loading Toast",
+        description: "Toast with spinner",
+        preview: "⟳ Working",
+      },
+      {
+        id: "error-toast",
+        name: "Error Toast",
+        description: "Error notification",
+        preview: "✖ Failed",
+      },
+    ],
+  },
+  dashboards: {
+    name: "Dashboards",
+    icon: "▦",
+    description: "Complex layouts for system monitoring",
+    variants: [
+      {
+        id: "server",
+        name: "Server Monitor",
+        description: "CPU/RAM resource layout",
+        preview: "CPU [||] 20%\nRAM [||] 40%",
+      },
+      {
+        id: "network",
+        name: "Network Stats",
+        description: "Upload/Download speed layout",
+        preview: "▲ 1.2 MB/s\n▼ 4.5 MB/s",
+      },
+      {
+        id: "process",
+        name: "Process List",
+        description: "Table of active processes",
+        preview: "PID  NAME\n123  node",
+      },
+      {
+        id: "docker",
+        name: "Docker Containers",
+        description: "Container status grid",
+        preview: "ID   STATUS\na1b  Up 2h",
+      },
+      {
+        id: "logs",
+        name: "Log Viewer",
+        description: "Scrolling log output",
+        preview: "[INFO] Start\n[WARN] Slow",
+      },
+      {
+        id: "minimal",
+        name: "Minimal Dash",
+        description: "Clean simple metrics",
+        preview: "OK | 20ms",
+      },
+    ],
+  },
+  // --- EXISTING CATEGORIES ---
   buttons: {
     name: "Buttons",
     icon: "O",

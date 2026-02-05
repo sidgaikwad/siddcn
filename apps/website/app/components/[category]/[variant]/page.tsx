@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 
-// Component data
+// Component data - Updated with ALL categories
 const componentData: Record<
   string,
   {
@@ -25,6 +25,304 @@ const componentData: Record<
     >;
   }
 > = {
+  // --- NEW CATEGORIES ---
+  spinners: {
+    name: "Spinners",
+    icon: "◐",
+    variants: {
+      dots: {
+        name: "Dots Spinner",
+        description: "Classic dots animation",
+        installCommand: "npx siddcn add spinner-dots",
+        usage: `import { Dots } from 'siddcn';\n\nexport default function App() {\n  return <Dots color="green" />;\n}`,
+        props: [
+          {
+            name: "color",
+            type: "string",
+            required: false,
+            description: "Color of the dots",
+          },
+        ],
+        preview: "Loading...",
+      },
+      line: {
+        name: "Line Spinner",
+        description: "Rotating line character",
+        installCommand: "npx siddcn add spinner-line",
+        usage: `import { LineSpinner } from 'siddcn';\n\nexport default function App() {\n  return <LineSpinner />;\n}`,
+        preview: "/ - \\ |",
+      },
+      "progress-bar": {
+        name: "Progress Bar",
+        description: "Indeterminate sliding bar",
+        installCommand: "npx siddcn add spinner-progress",
+        usage: `import { ProgressBar } from 'siddcn';\n\nexport default function App() {\n  return <ProgressBar />;\n}`,
+        preview: "[====    ]",
+      },
+      bouncing: {
+        name: "Bouncing Ball",
+        description: "Bouncing character animation",
+        installCommand: "npx siddcn add spinner-bounce",
+        usage: `import { BouncingBall } from 'siddcn';\n\nexport default function App() {\n  return <BouncingBall />;\n}`,
+        preview: "(o)     ",
+      },
+      clock: {
+        name: "Clock Spinner",
+        description: "Rotating clock hands",
+        installCommand: "npx siddcn add spinner-clock",
+        usage: `import { Clock } from 'siddcn';\n\nexport default function App() {\n  return <Clock />;\n}`,
+        preview: "🕛 🕐 🕑",
+      },
+    },
+  },
+  textinput: {
+    name: "Text Input",
+    icon: "﹥",
+    variants: {
+      basic: {
+        name: "Basic Input",
+        description: "Simple text field",
+        installCommand: "npx siddcn add input-basic",
+        usage: `import { TextInput } from 'siddcn';\n\nexport default function App() {\n  return <TextInput placeholder="Type here..." />;\n}`,
+        props: [
+          {
+            name: "placeholder",
+            type: "string",
+            required: false,
+            description: "Placeholder text",
+          },
+        ],
+        preview: "> Type here...",
+      },
+      password: {
+        name: "Password Input",
+        description: "Masked input for secrets",
+        installCommand: "npx siddcn add input-password",
+        usage: `import { PasswordInput } from 'siddcn';\n\nexport default function App() {\n  return <PasswordInput />;\n}`,
+        preview: "Password: ****",
+      },
+      search: {
+        name: "Search Bar",
+        description: "Input with search prefix",
+        installCommand: "npx siddcn add input-search",
+        usage: `import { SearchInput } from 'siddcn';\n\nexport default function App() {\n  return <SearchInput onSubmit={console.log} />;\n}`,
+        preview: "🔍 Search...",
+      },
+    },
+  },
+  cards: {
+    name: "Cards",
+    icon: "□",
+    variants: {
+      simple: {
+        name: "Simple Card",
+        description: "Basic bordered container",
+        installCommand: "npx siddcn add card-simple",
+        usage: `import { Card } from 'siddcn';\n\nexport default function App() {\n  return <Card>Content</Card>;\n}`,
+        preview: "┌────────┐\n│ Content│\n└────────┘",
+      },
+      titled: {
+        name: "Titled Card",
+        description: "Card with header title",
+        installCommand: "npx siddcn add card-titled",
+        usage: `import { TitledCard } from 'siddcn';\n\nexport default function App() {\n  return <TitledCard title="Title">Body</TitledCard>;\n}`,
+        preview: "┌─ Title ─┐\n│ Body    │\n└─────────┘",
+      },
+      alert: {
+        name: "Alert Card",
+        description: "Card for important messages",
+        installCommand: "npx siddcn add card-alert",
+        usage: `import { Alert } from 'siddcn';\n\nexport default function App() {\n  return <Alert type="warning">Check logs</Alert>;\n}`,
+        preview: "(!) Alert \n Check logs",
+      },
+      stats: {
+        name: "Stats Card",
+        description: "Display numerical data",
+        installCommand: "npx siddcn add card-stats",
+        usage: `import { Stats } from 'siddcn';\n\nexport default function App() {\n  return <Stats label="CPU" value="45%" />;\n}`,
+        preview: "CPU: 45%\n[||||  ]",
+      },
+      info: {
+        name: "Info Box",
+        description: "Information display container",
+        installCommand: "npx siddcn add card-info",
+        usage: `import { InfoBox } from 'siddcn';\n\nexport default function App() {\n  return <InfoBox>Read-only</InfoBox>;\n}`,
+        preview: "ℹ️ Info   \n Read-only",
+      },
+      error: {
+        name: "Error Box",
+        description: "Error message container",
+        installCommand: "npx siddcn add card-error",
+        usage: `import { ErrorBox } from 'siddcn';\n\nexport default function App() {\n  return <ErrorBox>Failed!</ErrorBox>;\n}`,
+        preview: "❌ Error  \n Failed!",
+      },
+    },
+  },
+  select: {
+    name: "Select",
+    icon: "▼",
+    variants: {
+      list: {
+        name: "List Select",
+        description: "Vertical list selection",
+        installCommand: "npx siddcn add select-list",
+        usage: `import { Select } from 'siddcn';\n\nexport default function App() {\n  return <Select options={['A', 'B']} />;\n}`,
+        preview: "> Option A\n  Option B",
+      },
+      radio: {
+        name: "Radio Group",
+        description: "Radio button selection",
+        installCommand: "npx siddcn add select-radio",
+        usage: `import { RadioGroup } from 'siddcn';\n\nexport default function App() {\n  return <RadioGroup options={['Yes', 'No']} />;\n}`,
+        preview: "(*) Yes\n( ) No",
+      },
+      dropdown: {
+        name: "Dropdown",
+        description: "Collapsible selection list",
+        installCommand: "npx siddcn add select-dropdown",
+        usage: `import { Dropdown } from 'siddcn';\n\nexport default function App() {\n  return <Dropdown placeholder="Select" />;\n}`,
+        preview: "Select ▼",
+      },
+    },
+  },
+  backgrounds: {
+    name: "Backgrounds",
+    icon: "░",
+    variants: {
+      matrix: {
+        name: "Matrix Rain",
+        description: "Falling code characters",
+        installCommand: "npx siddcn add bg-matrix",
+        usage: `import { MatrixBg } from 'siddcn';\n\nexport default function App() {\n  return <MatrixBg />;\n}`,
+        preview: "1 0 1 0\n0 1 1 0",
+      },
+      stars: {
+        name: "Starfield",
+        description: "Moving star animation",
+        installCommand: "npx siddcn add bg-stars",
+        usage: `import { Starfield } from 'siddcn';\n\nexport default function App() {\n  return <Starfield />;\n}`,
+        preview: ".  * . \n * .  *",
+      },
+    },
+  },
+  animatedtext: {
+    name: "Animated Text",
+    icon: "A",
+    variants: {
+      typewriter: {
+        name: "Typewriter",
+        description: "Typing effect character by character",
+        installCommand: "npx siddcn add text-typewriter",
+        usage: `import { Typewriter } from 'siddcn';\n\nexport default function App() {\n  return <Typewriter text="Hello World" />;\n}`,
+        preview: "Typing..._",
+      },
+      gradient: {
+        name: "Gradient Text",
+        description: "RGB color cycle effect",
+        installCommand: "npx siddcn add text-gradient",
+        usage: `import { GradientText } from 'siddcn';\n\nexport default function App() {\n  return <GradientText>RAINBOW</GradientText>;\n}`,
+        preview: "RAINBOW",
+      },
+      glitch: {
+        name: "Glitch Text",
+        description: "Random character corruption",
+        installCommand: "npx siddcn add text-glitch",
+        usage: `import { GlitchText } from 'siddcn';\n\nexport default function App() {\n  return <GlitchText>System</GlitchText>;\n}`,
+        preview: "Sys$#em",
+      },
+      pulse: {
+        name: "Pulse Text",
+        description: "Opacity pulsing effect",
+        installCommand: "npx siddcn add text-pulse",
+        usage: `import { PulseText } from 'siddcn';\n\nexport default function App() {\n  return <PulseText>Loading...</PulseText>;\n}`,
+        preview: "Loading...",
+      },
+    },
+  },
+  notifications: {
+    name: "Notifications",
+    icon: "!",
+    variants: {
+      toast: {
+        name: "Toast",
+        description: "Temporary popup message",
+        installCommand: "npx siddcn add notify-toast",
+        usage: `import { Toast } from 'siddcn';\n\nexport default function App() {\n  return <Toast message="Saved" />;\n}`,
+        preview: "[✔ Saved]",
+      },
+      banner: {
+        name: "Banner",
+        description: "Full width alert bar",
+        installCommand: "npx siddcn add notify-banner",
+        usage: `import { Banner } from 'siddcn';\n\nexport default function App() {\n  return <Banner type="warning">WARNING</Banner>;\n}`,
+        preview: "⚠ WARNING ⚠",
+      },
+      "spinner-toast": {
+        name: "Loading Toast",
+        description: "Toast with spinner",
+        installCommand: "npx siddcn add notify-loading",
+        usage: `import { LoadingToast } from 'siddcn';\n\nexport default function App() {\n  return <LoadingToast>Working</LoadingToast>;\n}`,
+        preview: "⟳ Working",
+      },
+      "error-toast": {
+        name: "Error Toast",
+        description: "Error notification",
+        installCommand: "npx siddcn add notify-error",
+        usage: `import { ErrorToast } from 'siddcn';\n\nexport default function App() {\n  return <ErrorToast>Failed</ErrorToast>;\n}`,
+        preview: "✖ Failed",
+      },
+    },
+  },
+  dashboards: {
+    name: "Dashboards",
+    icon: "▦",
+    variants: {
+      server: {
+        name: "Server Monitor",
+        description: "CPU/RAM resource layout",
+        installCommand: "npx siddcn add dash-server",
+        usage: `import { ServerDash } from 'siddcn';\n\nexport default function App() {\n  return <ServerDash />;\n}`,
+        preview: "CPU [||] 20%\nRAM [||] 40%",
+      },
+      network: {
+        name: "Network Stats",
+        description: "Upload/Download speed layout",
+        installCommand: "npx siddcn add dash-net",
+        usage: `import { NetworkDash } from 'siddcn';\n\nexport default function App() {\n  return <NetworkDash />;\n}`,
+        preview: "▲ 1.2 MB/s\n▼ 4.5 MB/s",
+      },
+      process: {
+        name: "Process List",
+        description: "Table of active processes",
+        installCommand: "npx siddcn add dash-proc",
+        usage: `import { ProcessList } from 'siddcn';\n\nexport default function App() {\n  return <ProcessList />;\n}`,
+        preview: "PID  NAME\n123  node",
+      },
+      docker: {
+        name: "Docker Containers",
+        description: "Container status grid",
+        installCommand: "npx siddcn add dash-docker",
+        usage: `import { DockerDash } from 'siddcn';\n\nexport default function App() {\n  return <DockerDash />;\n}`,
+        preview: "ID   STATUS\na1b  Up 2h",
+      },
+      logs: {
+        name: "Log Viewer",
+        description: "Scrolling log output",
+        installCommand: "npx siddcn add dash-logs",
+        usage: `import { LogViewer } from 'siddcn';\n\nexport default function App() {\n  return <LogViewer />;\n}`,
+        preview: "[INFO] Start\n[WARN] Slow",
+      },
+      minimal: {
+        name: "Minimal Dash",
+        description: "Clean simple metrics",
+        installCommand: "npx siddcn add dash-min",
+        usage: `import { MinDash } from 'siddcn';\n\nexport default function App() {\n  return <MinDash />;\n}`,
+        preview: "OK | 20ms",
+      },
+    },
+  },
+
+  // --- ORIGINAL CATEGORIES ---
   buttons: {
     name: "Buttons",
     icon: "O",
@@ -406,7 +704,7 @@ export default async function ComponentVariantPage({
   const { category, variant } = await params;
 
   const categoryData = componentData[category];
-  if (!categoryData) return <NotFound />; // Use a helper or inline nicely
+  if (!categoryData) return <NotFound />;
 
   const variantData = categoryData.variants[variant];
   if (!variantData) return <NotFound />;
@@ -478,9 +776,6 @@ export default async function ComponentVariantPage({
                 {/* Preview Content */}
                 <div className="p-12 min-h-[300px] flex items-center justify-center bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-20">
                   <div className="scale-125 transform">
-                    {/* Assuming the preview string is text, we render it. 
-                                    If you had real components, you'd map them here. 
-                                    For now, we style the text preview nicely. */}
                     <pre className="font-mono text-terminal-cyan drop-shadow-[0_0_5px_rgba(0,255,255,0.5)] bg-black/50 p-6 border border-terminal-cyan/20 rounded">
                       {variantData.preview}
                     </pre>
