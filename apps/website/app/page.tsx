@@ -119,9 +119,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- Terminal Demo Section --- */}
+      {/* --- Terminal Demo Section (UPDATED) --- */}
       <section className="relative py-24 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           {/* Decorative background for the terminal */}
           <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
@@ -136,13 +136,102 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={200} direction="up">
-            {/* Glass Container for the Demo */}
-            <div className="relative rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm shadow-2xl overflow-hidden ring-1 ring-white/5">
-              <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-              <TerminalDemo />
+          {/* GRID LAYOUT: Terminal on Right, Info on Left */}
+          {/* Left: The New Content "Beside" it */}
+          <div className="grid lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="lg:col-span-4 space-y-4">
+              <FadeIn delay={400} direction="left">
+                {/* Info Card 1 */}
+                <div className="p-5 rounded-lg border border-white/5 bg-white/5 backdrop-blur-md hover:border-emerald-500/30 transition-colors group">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 rounded bg-emerald-500/10 text-emerald-400 group-hover:text-emerald-300">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="font-semibold text-white">Zero Runtime</h3>
+                  </div>
+                  <p className="text-sm text-slate-400">
+                    Runs directly in Node.js. No browser required. Light speed
+                    startup.
+                  </p>
+                </div>
+
+                {/* Info Card 2 */}
+                <div className="p-5 rounded-lg border border-white/5 bg-white/5 backdrop-blur-md hover:border-blue-500/30 transition-colors group">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 rounded bg-blue-500/10 text-blue-400 group-hover:text-blue-300">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="font-semibold text-white">
+                      TypeScript First
+                    </h3>
+                  </div>
+                  <p className="text-sm text-slate-400">
+                    Built with React Ink. Full type safety for all components
+                    and props.
+                  </p>
+                </div>
+
+                {/* Info Card 3 */}
+                <div className="p-5 rounded-lg border border-white/5 bg-white/5 backdrop-blur-md hover:border-purple-500/30 transition-colors group">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 rounded bg-purple-500/10 text-purple-400 group-hover:text-purple-300">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="font-semibold text-white">Themeable</h3>
+                  </div>
+                  <p className="text-sm text-slate-400">
+                    Customize colors, borders, and spacing with standard
+                    Tailwind classes.
+                  </p>
+                </div>
+              </FadeIn>
             </div>
-          </FadeIn>
+            {/* Right: The Terminal */}
+            <div className="lg:col-span-8">
+              <FadeIn delay={200} direction="right">
+                <div className="relative rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm shadow-2xl overflow-hidden ring-1 ring-white/5 h-[500px]">
+                  <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+                  <TerminalDemo />
+                </div>
+              </FadeIn>
+            </div>
+          </div>
         </div>
       </section>
 
