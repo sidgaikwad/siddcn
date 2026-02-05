@@ -1,198 +1,275 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
-// Grid Items Data matching your screenshot
+// Grid Items with Colors and Links
 const GRID_ITEMS = [
-  { id: "btn", label: "Buttons", desc: "Styled variants", icon: "◉" },
-  { id: "sel", label: "Select", desc: "Single-select", icon: "◎" },
-  { id: "mul", label: "Multi-Select", desc: "Checkboxes", icon: "☑" },
-  { id: "txt", label: "Text Input", desc: "Live typing", icon: "✎" },
-  { id: "tre", label: "Tree", desc: "Hierarchy", icon: "◫" },
-  { id: "tab", label: "Tabs", desc: "Tab interface", icon: "⊟" },
-  { id: "tbl", label: "Table", desc: "Data grid", icon: "▦" },
-  { id: "crd", label: "Cards", desc: "Panel layout", icon: "◇" },
-  { id: "bdg", label: "Badges", desc: "Status tags", icon: "◆" },
+  {
+    id: "button",
+    label: "Buttons",
+    desc: "Styled variants",
+    icon: "◉",
+    color: "text-emerald-400",
+    border: "group-hover:border-emerald-500/50",
+  },
+  {
+    id: "select",
+    label: "Select",
+    desc: "Single-select",
+    icon: "◎",
+    color: "text-blue-400",
+    border: "group-hover:border-blue-500/50",
+  },
+  {
+    id: "checkbox",
+    label: "Multi-Select",
+    desc: "Checkboxes",
+    icon: "☑",
+    color: "text-purple-400",
+    border: "group-hover:border-purple-500/50",
+  },
+  {
+    id: "input",
+    label: "Text Input",
+    desc: "Live typing",
+    icon: "✎",
+    color: "text-amber-400",
+    border: "group-hover:border-amber-500/50",
+  },
+  {
+    id: "tree",
+    label: "Tree",
+    desc: "Hierarchy",
+    icon: "◫",
+    color: "text-pink-400",
+    border: "group-hover:border-pink-500/50",
+  },
+  {
+    id: "tabs",
+    label: "Tabs",
+    desc: "Tab interface",
+    icon: "⊟",
+    color: "text-cyan-400",
+    border: "group-hover:border-cyan-500/50",
+  },
+  {
+    id: "table",
+    label: "Table",
+    desc: "Data grid",
+    icon: "▦",
+    color: "text-rose-400",
+    border: "group-hover:border-rose-500/50",
+  },
+  {
+    id: "card",
+    label: "Cards",
+    desc: "Panel layout",
+    icon: "◇",
+    color: "text-indigo-400",
+    border: "group-hover:border-indigo-500/50",
+  },
+  {
+    id: "badge",
+    label: "Badges",
+    desc: "Status tags",
+    icon: "◆",
+    color: "text-lime-400",
+    border: "group-hover:border-lime-500/50",
+  },
 ];
 
 export function TerminalDemo() {
+  const router = useRouter();
   const [view, setView] = useState<"boot" | "grid">("boot");
-  const [bootLines, setBootLines] = useState<string[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [bootStep, setBootStep] = useState(0);
 
-  // Boot Sequence Animation
+  // --- Actions ---
+  const reboot = useCallback(() => {
+    setView("boot");
+    setBootStep(0);
+  }, []);
+
+  const handleNavigate = (id: string) => {
+    // Navigate to the actual component page
+    router.push(`/components/${id}`);
+  };
+
+  // --- Boot Sequence ---
   useEffect(() => {
-    if (view === "grid") return;
+    if (view !== "boot") return;
 
-    const bootSequence = [
-      { text: "$ siddcn", delay: 500 },
-      { text: "Initializing core...", delay: 800 },
-      { text: "Loading registry [████████] 100%", delay: 800 },
-      { text: "Compiling assets...", delay: 600 },
-      { text: "Launching grid view...", delay: 600 },
-    ];
+    const timers: NodeJS.Timeout[] = [];
 
-    let timeouts: NodeJS.Timeout[] = [];
-    let accumulatedDelay = 0;
+    timers.push(setTimeout(() => setBootStep(1), 500)); // Logo
+    timers.push(setTimeout(() => setBootStep(2), 1200)); // Loading bar
+    timers.push(setTimeout(() => setView("grid"), 3000)); // Show grid
 
-    bootSequence.forEach(({ text, delay }, index) => {
-      accumulatedDelay += delay;
-      const timeout = setTimeout(() => {
-        setBootLines((prev) => [...prev, text]);
-        // Switch to grid view after last line
-        if (index === bootSequence.length - 1) {
-          setTimeout(() => setView("grid"), 800);
-        }
-      }, accumulatedDelay);
-      timeouts.push(timeout);
-    });
-
-    return () => timeouts.forEach(clearTimeout);
+    return () => timers.forEach(clearTimeout);
   }, [view]);
 
-  // Grid Navigation Animation
+  // --- Keyboard Shortcuts ---
   useEffect(() => {
-    if (view !== "grid") return;
-
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % GRID_ITEMS.length);
-    }, 1200); // Move selection every 1.2s
-
-    return () => clearInterval(interval);
-  }, [view]);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === "r") reboot();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [reboot]);
 
   return (
-    <div className="relative mx-auto max-w-4xl group">
+    <div className="relative mx-auto w-full max-w-4xl h-full group">
       {/* Glow effect */}
       <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0c0c0c] shadow-2xl">
+      <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0c0c0c] shadow-2xl h-full flex flex-col">
         {/* Terminal Header */}
-        <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3 bg-white/[0.03]">
+        <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3 bg-white/[0.03] shrink-0">
           <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded-full bg-[#ff5f56]" />
+            <button
+              onClick={reboot}
+              className="h-3 w-3 rounded-full bg-[#ff5f56] hover:bg-[#ff5f56]/80 transition-colors"
+              title="Reboot (R)"
+            />
             <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
             <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
           </div>
           <div className="flex-1 text-center font-mono text-xs text-white/30">
             siddcn — bash — 80x24
           </div>
+          <div className="text-[10px] text-white/20 font-mono">
+            {view === "grid" ? "GRID VIEW" : "BOOT"}
+          </div>
         </div>
 
         {/* Terminal Content Area */}
-        <div className="h-[450px] p-6 font-mono text-sm relative">
+        <div className="flex-1 p-6 font-mono text-sm relative flex flex-col">
           <AnimatePresence mode="wait">
-            {/* View 1: Boot Sequence */}
+            {/* --- VIEW 1: BOOT SEQUENCE --- */}
             {view === "boot" && (
               <motion.div
                 key="boot"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="space-y-2"
+                exit={{ opacity: 0, filter: "blur(10px)" }}
+                className="h-full flex flex-col items-center justify-center space-y-6 text-center"
               >
-                {bootLines.map((line, i) => (
-                  <div
-                    key={i}
-                    className={`${i === 0 ? "text-emerald-400" : "text-slate-300"}`}
+                {bootStep >= 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-emerald-500 font-bold leading-none tracking-tighter"
                   >
-                    {line}
+                    <pre className="text-[10px] sm:text-xs md:text-sm whitespace-pre">
+                      {`   _____ __    __    __           
+  / ___// /___/ /___/ /________  
+  \\__ \\/ / __  / __  / ___/ __ \\ 
+ ___/ / / /_/ / /_/ / /__/ / / / 
+/____/_/\\__,_/\\__,_/\\___/_/ /_/  `}
+                    </pre>
+                  </motion.div>
+                )}
+
+                {bootStep >= 1 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="space-y-1"
+                  >
+                    <div className="text-white font-bold text-lg">
+                      siddcn UI
+                    </div>
+                    <div className="text-slate-500 text-xs">v1.0.0-beta</div>
+                  </motion.div>
+                )}
+
+                {bootStep >= 2 && (
+                  <div className="w-64 space-y-2">
+                    <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-emerald-500"
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                      />
+                    </div>
+                    <div className="flex justify-between text-[10px] text-slate-500 uppercase">
+                      <span>Loading modules</span>
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1 }}
+                      >
+                        OK
+                      </motion.span>
+                    </div>
                   </div>
-                ))}
-                <motion.span
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.8 }}
-                  className="inline-block w-2 h-4 bg-emerald-500 ml-1 align-middle"
-                />
+                )}
               </motion.div>
             )}
 
-            {/* View 2: Component Grid */}
+            {/* --- VIEW 2: GRID INTERACTIVE (No Scrollbar) --- */}
             {view === "grid" && (
               <motion.div
                 key="grid"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
                 className="h-full flex flex-col"
               >
-                {/* Header Title */}
-                <div className="flex justify-center mb-6">
-                  <div className="border-y-2 border-x-2 border-cyan-500/50 px-6 py-1 text-cyan-400 font-bold tracking-wider relative">
-                    <div className="absolute top-0 left-0 -mt-1 -ml-1 w-2 h-2 border-t-2 border-l-2 border-cyan-400"></div>
-                    <div className="absolute top-0 right-0 -mt-1 -mr-1 w-2 h-2 border-t-2 border-r-2 border-cyan-400"></div>
-                    <div className="absolute bottom-0 left-0 -mb-1 -ml-1 w-2 h-2 border-b-2 border-l-2 border-cyan-400"></div>
-                    <div className="absolute bottom-0 right-0 -mb-1 -mr-1 w-2 h-2 border-b-2 border-r-2 border-cyan-400"></div>
-                    siddcn Component Library Showcase
+                {/* Header */}
+                <div className="flex justify-center mb-4 shrink-0">
+                  <div className="border-y border-x border-white/10 bg-white/5 px-6 py-1 text-slate-300 font-bold tracking-wider text-xs uppercase relative">
+                    Select a component
+                    <div className="absolute top-0 left-0 -mt-px -ml-px w-1.5 h-1.5 border-t border-l border-white/30"></div>
+                    <div className="absolute top-0 right-0 -mt-px -mr-px w-1.5 h-1.5 border-t border-r border-white/30"></div>
+                    <div className="absolute bottom-0 left-0 -mb-px -ml-px w-1.5 h-1.5 border-b border-l border-white/30"></div>
+                    <div className="absolute bottom-0 right-0 -mb-px -mr-px w-1.5 h-1.5 border-b border-r border-white/30"></div>
                   </div>
                 </div>
 
-                <div className="text-center text-slate-500 text-xs mb-6">
-                  Navigate the grid with arrow keys · Enter to explore
-                </div>
-
-                {/* THE GRID */}
-                <div className="grid grid-cols-3 gap-3">
-                  {GRID_ITEMS.map((item, idx) => {
-                    const isActive = idx === activeIndex;
-                    return (
-                      <div
-                        key={item.id}
-                        className={`
-                          relative p-3 border transition-all duration-300
-                          ${
-                            isActive
-                              ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_-5px_rgba(34,211,238,0.3)]"
-                              : "border-white/10 text-slate-500"
-                          }
-                        `}
-                      >
-                        {/* Corner markers for active item */}
-                        {isActive && (
-                          <>
-                            <div className="absolute top-0 left-0 w-1 h-1 bg-cyan-400" />
-                            <div className="absolute top-0 right-0 w-1 h-1 bg-cyan-400" />
-                            <div className="absolute bottom-0 left-0 w-1 h-1 bg-cyan-400" />
-                            <div className="absolute bottom-0 right-0 w-1 h-1 bg-cyan-400" />
-                          </>
-                        )}
-
-                        <div className="flex items-center gap-2 mb-1">
-                          <span
-                            className={
-                              isActive ? "text-cyan-400" : "text-slate-600"
-                            }
-                          >
-                            {item.icon}
-                          </span>
-                          <span
-                            className={`font-bold ${isActive ? "text-white" : "text-slate-500"}`}
-                          >
-                            {item.label}
-                          </span>
-                        </div>
-
-                        <div className="text-xs truncate pl-5">
-                          {isActive ? (
-                            <span className="text-cyan-300/70">
-                              [ {item.label} ]
-                            </span>
-                          ) : (
-                            <span className="opacity-50">{item.desc}</span>
-                          )}
-                        </div>
+                {/* Grid - Adjusted gap and padding to fit perfectly without scroll */}
+                <div className="grid grid-cols-3 gap-3 flex-1 min-h-0">
+                  {GRID_ITEMS.map((item) => (
+                    <motion.button
+                      key={item.id}
+                      onClick={() => handleNavigate(item.id)}
+                      whileHover={{
+                        scale: 1.02,
+                        backgroundColor: "rgba(255,255,255,0.03)",
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`
+                        relative p-3 border border-white/5 text-left rounded 
+                        transition-all duration-200 group flex flex-col justify-center
+                        hover:bg-white/[0.02] ${item.border}
+                      `}
+                    >
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span
+                          className={`${item.color} opacity-80 group-hover:opacity-100 transition-opacity`}
+                        >
+                          {item.icon}
+                        </span>
+                        <span className="font-bold text-slate-400 group-hover:text-white transition-colors">
+                          {item.label}
+                        </span>
                       </div>
-                    );
-                  })}
+                      <div className="text-xs text-slate-600 pl-6 truncate group-hover:text-slate-500">
+                        {item.desc}
+                      </div>
+                    </motion.button>
+                  ))}
                 </div>
 
-                {/* Footer Status Line */}
-                <div className="mt-auto border-t border-white/10 pt-3 flex justify-between text-xs font-mono text-slate-500">
-                  <span>{GRID_ITEMS.length} components</span>
-                  <span className="text-emerald-500 animate-pulse">
-                    ● Connected
-                  </span>
-                  <span>Ctrl+C quit</span>
+                <div className="mt-4 pt-2 border-t border-white/10 flex justify-between text-[10px] text-slate-600 font-mono shrink-0">
+                  <span>9 modules loaded</span>
+                  <button
+                    onClick={reboot}
+                    className="hover:text-white transition-colors"
+                  >
+                    [R] REBOOT SYSTEM
+                  </button>
                 </div>
               </motion.div>
             )}
