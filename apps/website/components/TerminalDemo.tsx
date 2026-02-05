@@ -1,129 +1,204 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+// Grid Items Data matching your screenshot
+const GRID_ITEMS = [
+  { id: "btn", label: "Buttons", desc: "Styled variants", icon: "◉" },
+  { id: "sel", label: "Select", desc: "Single-select", icon: "◎" },
+  { id: "mul", label: "Multi-Select", desc: "Checkboxes", icon: "☑" },
+  { id: "txt", label: "Text Input", desc: "Live typing", icon: "✎" },
+  { id: "tre", label: "Tree", desc: "Hierarchy", icon: "◫" },
+  { id: "tab", label: "Tabs", desc: "Tab interface", icon: "⊟" },
+  { id: "tbl", label: "Table", desc: "Data grid", icon: "▦" },
+  { id: "crd", label: "Cards", desc: "Panel layout", icon: "◇" },
+  { id: "bdg", label: "Badges", desc: "Status tags", icon: "◆" },
+];
 
 export function TerminalDemo() {
-  const [step, setStep] = useState(0)
-  const [output, setOutput] = useState<string[]>([])
-  const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [view, setView] = useState<"boot" | "grid">("boot");
+  const [bootLines, setBootLines] = useState<string[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const sequence = [
-    { delay: 500, text: '$ siddcn', type: 'input' },
-    { delay: 1000, text: 'Initializing...', type: 'output' },
-    { delay: 800, text: '[████████████████████] 100%', type: 'progress' },
-    { delay: 500, text: '', type: 'output' },
-    { delay: 300, text: 'Component Categories', type: 'title' },
-    { delay: 300, text: '━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'separator' },
-    { delay: 200, text: '  Buttons', type: 'menu' },
-    { delay: 200, text: '  Progress Bars', type: 'menu' },
-    { delay: 200, text: '  Badges', type: 'menu' },
-    { delay: 200, text: '  Charts', type: 'menu' },
-    { delay: 200, text: '  Trees', type: 'menu' },
-  ]
-
+  // Boot Sequence Animation
   useEffect(() => {
-    if (step < sequence.length) {
-      const timer = setTimeout(() => {
-        setOutput(prev => [...prev, sequence[step].text])
-        setStep(step + 1)
-      }, sequence[step].delay)
+    if (view === "grid") return;
 
-      return () => clearTimeout(timer)
-    } else {
-      // Animate menu selection
-      const menuItems = sequence.filter(s => s.type === 'menu').length
-      const selectionTimer = setInterval(() => {
-        setSelectedIndex(prev => {
-          if (prev >= menuItems - 1) {
-            clearInterval(selectionTimer)
-            setTimeout(() => {
-              setStep(0)
-              setOutput([])
-              setSelectedIndex(-1)
-            }, 2000)
-            return prev
-          }
-          return prev + 1
-        })
-      }, 600)
-      return () => clearInterval(selectionTimer)
-    }
-  }, [step])
+    const bootSequence = [
+      { text: "$ siddcn", delay: 500 },
+      { text: "Initializing core...", delay: 800 },
+      { text: "Loading registry [████████] 100%", delay: 800 },
+      { text: "Compiling assets...", delay: 600 },
+      { text: "Launching grid view...", delay: 600 },
+    ];
 
-  const getLineClass = (index: number) => {
-    const item = sequence[index]
-    if (!item) return 'text-white/70'
-    
-    // Check if this is a menu item and if it's selected
-    const menuStartIndex = sequence.findIndex(s => s.type === 'menu')
-    if (item.type === 'menu') {
-      const menuIndex = index - menuStartIndex
-      if (menuIndex === selectedIndex) {
-        return 'text-emerald-400 bg-emerald-400/10 -mx-4 px-4 py-0.5 rounded'
-      }
-    }
-    
-    switch (item.type) {
-      case 'input':
-        return 'text-emerald-400'
-      case 'title':
-        return 'text-white font-medium'
-      case 'separator':
-        return 'text-white/20'
-      case 'menu':
-        return 'text-white/60 transition-colors duration-200'
-      case 'progress':
-        return 'text-blue-400'
-      default:
-        return 'text-white/70'
-    }
-  }
+    let timeouts: NodeJS.Timeout[] = [];
+    let accumulatedDelay = 0;
+
+    bootSequence.forEach(({ text, delay }, index) => {
+      accumulatedDelay += delay;
+      const timeout = setTimeout(() => {
+        setBootLines((prev) => [...prev, text]);
+        // Switch to grid view after last line
+        if (index === bootSequence.length - 1) {
+          setTimeout(() => setView("grid"), 800);
+        }
+      }, accumulatedDelay);
+      timeouts.push(timeout);
+    });
+
+    return () => timeouts.forEach(clearTimeout);
+  }, [view]);
+
+  // Grid Navigation Animation
+  useEffect(() => {
+    if (view !== "grid") return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % GRID_ITEMS.length);
+    }, 1200); // Move selection every 1.2s
+
+    return () => clearInterval(interval);
+  }, [view]);
 
   return (
-    <div className="relative mx-auto max-w-3xl group">
-      {/* Glow effect on hover */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      <div className="relative code-block overflow-hidden gradient-border">
+    <div className="relative mx-auto max-w-4xl group">
+      {/* Glow effect */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0c0c0c] shadow-2xl">
         {/* Terminal Header */}
-        <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3 bg-black/50">
+        <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3 bg-white/[0.03]">
           <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded-full bg-red-500/80 hover:bg-red-400 transition-colors cursor-pointer" />
-            <div className="h-3 w-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors cursor-pointer" />
-            <div className="h-3 w-3 rounded-full bg-green-500/80 hover:bg-green-400 transition-colors cursor-pointer" />
+            <div className="h-3 w-3 rounded-full bg-[#ff5f56]" />
+            <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
+            <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
           </div>
-          <span className="ml-2 font-mono text-xs text-white/40">
-            siddcn
-          </span>
-          <div className="ml-auto flex items-center gap-2">
-            <span className="text-xs text-white/30">zsh</span>
+          <div className="flex-1 text-center font-mono text-xs text-white/30">
+            siddcn — bash — 80x24
           </div>
         </div>
 
-        {/* Terminal Content */}
-        <div className="min-h-[360px] p-6 font-mono text-sm bg-gradient-to-b from-black/50 to-black/30">
-          {output.map((line, idx) => (
-            <div key={idx} className={`${getLineClass(idx)} mb-1 transition-all duration-200`}>
-              {line}
-              {idx === output.length - 1 && step < sequence.length && (
-                <span className="ml-1 inline-block h-4 w-1.5 animate-pulse bg-white/70" />
-              )}
-            </div>
-          ))}
-          {output.length === 0 && (
-            <span className="inline-block h-4 w-1.5 animate-pulse bg-white/70" />
-          )}
-        </div>
-      </div>
+        {/* Terminal Content Area */}
+        <div className="h-[450px] p-6 font-mono text-sm relative">
+          <AnimatePresence mode="wait">
+            {/* View 1: Boot Sequence */}
+            {view === "boot" && (
+              <motion.div
+                key="boot"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="space-y-2"
+              >
+                {bootLines.map((line, i) => (
+                  <div
+                    key={i}
+                    className={`${i === 0 ? "text-emerald-400" : "text-slate-300"}`}
+                  >
+                    {line}
+                  </div>
+                ))}
+                <motion.span
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ repeat: Infinity, duration: 0.8 }}
+                  className="inline-block w-2 h-4 bg-emerald-500 ml-1 align-middle"
+                />
+              </motion.div>
+            )}
 
-      {/* Floating hint */}
-      <div className="absolute -bottom-8 right-4 flex items-center gap-2 text-sm text-white/30">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/50" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400/80" />
-        </span>
-        Live demo
+            {/* View 2: Component Grid */}
+            {view === "grid" && (
+              <motion.div
+                key="grid"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="h-full flex flex-col"
+              >
+                {/* Header Title */}
+                <div className="flex justify-center mb-6">
+                  <div className="border-y-2 border-x-2 border-cyan-500/50 px-6 py-1 text-cyan-400 font-bold tracking-wider relative">
+                    <div className="absolute top-0 left-0 -mt-1 -ml-1 w-2 h-2 border-t-2 border-l-2 border-cyan-400"></div>
+                    <div className="absolute top-0 right-0 -mt-1 -mr-1 w-2 h-2 border-t-2 border-r-2 border-cyan-400"></div>
+                    <div className="absolute bottom-0 left-0 -mb-1 -ml-1 w-2 h-2 border-b-2 border-l-2 border-cyan-400"></div>
+                    <div className="absolute bottom-0 right-0 -mb-1 -mr-1 w-2 h-2 border-b-2 border-r-2 border-cyan-400"></div>
+                    siddcn Component Library Showcase
+                  </div>
+                </div>
+
+                <div className="text-center text-slate-500 text-xs mb-6">
+                  Navigate the grid with arrow keys · Enter to explore
+                </div>
+
+                {/* THE GRID */}
+                <div className="grid grid-cols-3 gap-3">
+                  {GRID_ITEMS.map((item, idx) => {
+                    const isActive = idx === activeIndex;
+                    return (
+                      <div
+                        key={item.id}
+                        className={`
+                          relative p-3 border transition-all duration-300
+                          ${
+                            isActive
+                              ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_-5px_rgba(34,211,238,0.3)]"
+                              : "border-white/10 text-slate-500"
+                          }
+                        `}
+                      >
+                        {/* Corner markers for active item */}
+                        {isActive && (
+                          <>
+                            <div className="absolute top-0 left-0 w-1 h-1 bg-cyan-400" />
+                            <div className="absolute top-0 right-0 w-1 h-1 bg-cyan-400" />
+                            <div className="absolute bottom-0 left-0 w-1 h-1 bg-cyan-400" />
+                            <div className="absolute bottom-0 right-0 w-1 h-1 bg-cyan-400" />
+                          </>
+                        )}
+
+                        <div className="flex items-center gap-2 mb-1">
+                          <span
+                            className={
+                              isActive ? "text-cyan-400" : "text-slate-600"
+                            }
+                          >
+                            {item.icon}
+                          </span>
+                          <span
+                            className={`font-bold ${isActive ? "text-white" : "text-slate-500"}`}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+
+                        <div className="text-xs truncate pl-5">
+                          {isActive ? (
+                            <span className="text-cyan-300/70">
+                              [ {item.label} ]
+                            </span>
+                          ) : (
+                            <span className="opacity-50">{item.desc}</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Footer Status Line */}
+                <div className="mt-auto border-t border-white/10 pt-3 flex justify-between text-xs font-mono text-slate-500">
+                  <span>{GRID_ITEMS.length} components</span>
+                  <span className="text-emerald-500 animate-pulse">
+                    ● Connected
+                  </span>
+                  <span>Ctrl+C quit</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
-  )
+  );
 }

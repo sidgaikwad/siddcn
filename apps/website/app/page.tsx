@@ -6,82 +6,94 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { FadeIn } from "@/components/FadeIn";
 import { ShimmerButton } from "@/components/ShimmerButton";
 
-// Define the Docs URL with a fallback for development
+// Define the Docs URL with a fallback
 const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL || "http://localhost:3001";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative bg-[#030303] overflow-hidden selection:bg-emerald-500/30">
+      {/* --- Global Effects --- */}
       <AnimatedBackground />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
-        {/* Glow effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-glow" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
-        />
+      {/* Scanline Overlay */}
+      <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] mix-blend-overlay opacity-20" />
 
-        <div className="mx-auto max-w-4xl text-center relative z-10">
+      {/* Retro Grid Floor Effect */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+
+      {/* --- Hero Section --- */}
+      <section className="relative px-4 py-24 sm:px-6 sm:py-32 lg:px-8 z-10">
+        {/* Main Glow Spotlights */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-blue-500/20 rounded-[100%] blur-[120px] opacity-30 animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-500/10 rounded-[100%] blur-[100px] mix-blend-screen" />
+
+        <div className="mx-auto max-w-5xl text-center relative">
           <FadeIn delay={0} direction="up">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 glass">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs font-medium text-emerald-300 backdrop-blur-md shadow-[0_0_20px_-10px_rgba(16,185,129,0.5)] transition-transform hover:scale-105">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
-              Now available on npm
+              v1.0 Now available on npm
             </div>
           </FadeIn>
 
           <FadeIn delay={100} direction="up">
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl text-balance">
+            <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-7xl lg:text-8xl text-balance drop-shadow-2xl">
               Build terminal UIs
               <br />
-              <span className="gradient-text-blue">with siddcn</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 animate-gradient-x">
+                with siddcn
+              </span>
             </h1>
           </FadeIn>
 
           <FadeIn delay={200} direction="up">
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60 text-pretty">
-              Beautiful, extensible TUI components built with React Ink. Browse
-              and preview components directly in your terminal via SSH or CLI.
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-400 text-pretty">
+              Beautiful, extensible TUI components built with{" "}
+              <span className="text-emerald-400 font-mono">React Ink</span>.
+              Browse and preview components directly in your terminal via SSH or
+              CLI.
             </p>
           </FadeIn>
 
-          {/* Quick Start Commands */}
+          {/* Quick Start with "Glowing" Border */}
           <FadeIn delay={300} direction="up">
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <div className="code-block flex items-center gap-3 px-6 py-3 gradient-border">
-                <span className="text-white/40">$</span>
-                <code className="font-mono text-white">
-                  npm install -g siddcn
-                </code>
-                <button
-                  className="ml-2 text-white/40 transition-colors hover:text-white hover:scale-110 transform duration-200"
-                  aria-label="Copy command"
-                >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row">
+              <div className="relative group">
+                <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-emerald-600 to-blue-600 opacity-40 blur transition duration-200 group-hover:opacity-75" />
+                <div className="relative flex items-center gap-4 rounded-lg bg-black/90 px-8 py-4 ring-1 ring-white/10 backdrop-blur">
+                  <span className="text-emerald-500 font-bold select-none">
+                    $
+                  </span>
+                  <code className="font-mono text-lg text-white">
+                    npm install -g siddcn
+                  </code>
+                  <button
+                    className="ml-4 text-white/40 transition-colors hover:text-white"
+                    aria-label="Copy command"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </FadeIn>
 
-          {/* CTA Buttons */}
           <FadeIn delay={400} direction="up">
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
               <ShimmerButton href="/docs" variant="primary">
                 Get Started
                 <svg
@@ -94,7 +106,7 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M9 5l7 7-7 7"
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>
               </ShimmerButton>
@@ -107,35 +119,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Terminal Demo */}
-      <section className="border-y border-white/5 px-4 py-24 sm:px-6 lg:px-8 relative">
-        <div className="mx-auto max-w-5xl">
+      {/* --- Terminal Demo Section --- */}
+      <section className="relative py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          {/* Decorative background for the terminal */}
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
+
           <FadeIn direction="up">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            <div className="mb-12 text-center relative z-10">
+              <h2 className="text-4xl font-bold text-white tracking-tight">
                 See it in action
               </h2>
-              <p className="mt-4 text-lg text-white/60">
+              <p className="mt-4 text-lg text-slate-400">
                 Experience the beautiful TUI interface
               </p>
             </div>
           </FadeIn>
+
           <FadeIn delay={200} direction="up">
-            <TerminalDemo />
+            {/* Glass Container for the Demo */}
+            <div className="relative rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm shadow-2xl overflow-hidden ring-1 ring-white/5">
+              <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+              <TerminalDemo />
+            </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="px-4 py-24 sm:px-6 lg:px-8 relative">
+      {/* --- Features Grid --- */}
+      <section className="py-24 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto max-w-7xl">
           <FadeIn direction="up">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold text-white sm:text-4xl">
-                Why siddcn?
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl font-bold text-white">
+                Why <span className="text-emerald-400">siddcn</span>?
               </h2>
-              <p className="mt-4 text-lg text-white/60">
-                Built for developers who love the terminal
+              <p className="mt-4 text-lg text-slate-400">
+                Built for developers who live in the terminal
               </p>
             </div>
           </FadeIn>
@@ -145,25 +165,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Component Preview */}
-      <section className="border-y border-white/5 px-4 py-24 sm:px-6 lg:px-8 relative">
+      {/* --- Component Library Preview --- */}
+      <section className="border-y border-white/5 bg-white/[0.02] px-4 py-24 sm:px-6 lg:px-8 relative">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
         <div className="mx-auto max-w-7xl">
           <FadeIn direction="up">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl font-bold text-white">
                 Component Library
               </h2>
-              <p className="mt-4 text-lg text-white/60">
-                17 categories, 50+ components, infinitely extensible
+              <p className="mt-4 text-lg text-slate-400">
+                17 categories,{" "}
+                <span className="text-white font-semibold">50+ components</span>
+                , infinitely extensible
               </p>
             </div>
           </FadeIn>
+
           <FadeIn delay={200} direction="up">
             <ComponentGrid />
           </FadeIn>
 
           <FadeIn delay={400} direction="up">
-            <div className="mt-12 text-center">
+            <div className="mt-16 text-center">
               <ShimmerButton href="/components" variant="secondary">
                 View All Components
                 <svg
@@ -176,7 +201,7 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M9 5l7 7-7 7"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
               </ShimmerButton>
@@ -185,51 +210,71 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SSH Connection Guide */}
-      <section className="px-4 py-24 sm:px-6 lg:px-8 relative">
-        <div className="mx-auto max-w-3xl text-center">
+      {/* --- SSH Section (The "Cool" Part) --- */}
+      <section className="px-4 py-32 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background glow specific to SSH */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="mx-auto max-w-4xl text-center relative z-10">
           <FadeIn direction="up">
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">
-              Connect anywhere
-            </h2>
-            <p className="mt-4 text-lg text-white/60">
-              Browse components remotely via SSH
+            <h2 className="text-4xl font-bold text-white">Connect anywhere</h2>
+            <p className="mt-4 text-lg text-slate-400">
+              Browse components remotely via SSH. No installation required to
+              preview.
             </p>
           </FadeIn>
 
           <FadeIn delay={200} direction="up">
-            <div className="code-block mt-8 overflow-hidden text-left gradient-border">
-              <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3">
-                <div className="flex gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-red-500/80 hover:bg-red-400 transition-colors" />
-                  <div className="h-3 w-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors" />
-                  <div className="h-3 w-3 rounded-full bg-green-500/80 hover:bg-green-400 transition-colors" />
+            <div className="mt-10 relative mx-auto max-w-2xl transform transition-all hover:scale-[1.01]">
+              {/* Glowing Border Container */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl opacity-30 blur-sm group-hover:opacity-60 transition duration-500" />
+
+              <div className="relative rounded-xl bg-[#1a1b26] border border-white/10 overflow-hidden shadow-2xl text-left">
+                {/* Mac-style Window Header */}
+                <div className="flex items-center gap-2 border-b border-white/5 bg-[#1f2335] px-4 py-3">
+                  <div className="flex gap-2">
+                    <div className="h-3 w-3 rounded-full bg-[#ff5f56]" />
+                    <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
+                    <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
+                  </div>
+                  <div className="flex-1 text-center text-xs font-mono text-white/30">
+                    user@localhost:~
+                  </div>
                 </div>
-                <span className="ml-2 font-mono text-xs text-white/40">
-                  terminal
-                </span>
+
+                {/* Content */}
+                <div className="p-6 font-mono text-sm leading-relaxed">
+                  <div className="flex gap-2 text-emerald-400 font-bold">
+                    <span>$</span>
+                    <span className="text-white typing-effect">
+                      ssh localhost -p 2222
+                    </span>
+                  </div>
+                  <div className="mt-4 text-purple-400">
+                    Component Categories
+                  </div>
+                  <div className="text-slate-500">
+                    ━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  </div>
+                  <div className="text-white/80 space-y-1 mt-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-emerald-500">❯</span> Buttons
+                    </div>
+                    <div className="pl-4 text-slate-400">Progress Bars</div>
+                    <div className="pl-4 text-slate-400">Badges</div>
+                    <div className="pl-4 text-slate-400">Charts</div>
+                    <div className="pl-4 text-slate-400">Trees</div>
+                  </div>
+                  <div className="mt-6 text-slate-500 italic text-xs">
+                    Navigate with arrow keys • Select with Enter • Exit with q
+                  </div>
+                </div>
               </div>
-
-              <pre className="overflow-x-auto p-6 font-mono text-sm">
-                <code className="text-white/80">{`$ ssh localhost -p 2222
-
-Component Categories
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Buttons
-  Progress Bars
-  Badges
-  Charts
-  Trees
-
-Navigate with arrow keys
-Select with Enter
-Exit with q`}</code>
-              </pre>
             </div>
           </FadeIn>
 
           <FadeIn delay={400} direction="up">
-            <div className="mt-8 flex justify-center gap-4">
+            <div className="mt-10 flex justify-center gap-4">
               <ShimmerButton href="/docs/ssh-setup" variant="secondary">
                 Setup Guide
               </ShimmerButton>
@@ -241,113 +286,85 @@ Exit with q`}</code>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 px-4 py-16 sm:px-6 lg:px-8 relative z-10">
+      {/* --- Footer --- */}
+      <footer className="border-t border-white/10 bg-black px-4 py-16 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 md:grid-cols-4">
-            <div>
+            <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded bg-white">
-                  <span className="text-sm font-bold text-black">S</span>
+                <div className="flex h-8 w-8 items-center justify-center rounded bg-white shadow-lg shadow-white/20">
+                  <span className="text-lg font-bold text-black">S</span>
                 </div>
-                <span className="font-semibold text-white">siddcn</span>
+                <span className="font-bold text-xl text-white tracking-tight">
+                  siddcn
+                </span>
               </div>
-              <p className="mt-4 text-sm text-white/50">
-                Terminal UI components for modern developers
+              <p className="text-sm text-slate-400 max-w-xs">
+                The ultimate Terminal UI component library for modern
+                developers.
               </p>
             </div>
 
-            <div>
-              <h4 className="mb-4 text-sm font-semibold text-white">
-                Documentation
-              </h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li>
-                  <a
-                    href={`${DOCS_URL}/docs`}
-                    className="hover:text-white transition-colors"
-                  >
-                    Introduction
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`${DOCS_URL}/docs/installation`}
-                    className="hover:text-white transition-colors"
-                  >
-                    Installation
-                  </a>
-                </li>
-                <li>
-                  <Link
-                    href="/components"
-                    className="hover:text-white transition-colors"
-                  >
-                    Components
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="mb-4 text-sm font-semibold text-white">
-                Resources
-              </h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li>
-                  <Link
-                    href="/components"
-                    className="hover:text-white transition-colors"
-                  >
-                    Component Library
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href={`${DOCS_URL}/docs/adding-components`}
-                    className="hover:text-white transition-colors"
-                  >
-                    Add Components
-                  </a>
-                </li>
-                <li>
-                  <Link
-                    href="/themes"
-                    className="hover:text-white transition-colors"
-                  >
-                    Themes
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="mb-4 text-sm font-semibold text-white">
-                Community
-              </h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li>
-                  <a
-                    href="https://github.com/sidgaikwad/siddcn"
-                    className="hover:text-white transition-colors"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://npmjs.com/package/siddcn"
-                    className="hover:text-white transition-colors"
-                  >
-                    npm
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {/* Links Columns */}
+            {[
+              {
+                title: "Documentation",
+                links: [
+                  { label: "Introduction", href: `${DOCS_URL}/docs` },
+                  {
+                    label: "Installation",
+                    href: `${DOCS_URL}/docs/installation`,
+                  },
+                  { label: "Components", href: "/components" },
+                ],
+              },
+              {
+                title: "Resources",
+                links: [
+                  { label: "Component Library", href: "/components" },
+                  {
+                    label: "Add Components",
+                    href: `${DOCS_URL}/docs/adding-components`,
+                  },
+                  { label: "Themes", href: "/themes" },
+                ],
+              },
+              {
+                title: "Community",
+                links: [
+                  {
+                    label: "GitHub",
+                    href: "https://github.com/sidgaikwad/siddcn",
+                  },
+                  { label: "NPM", href: "https://npmjs.com/package/siddcn" },
+                ],
+              },
+            ].map((col) => (
+              <div key={col.title}>
+                <h4 className="mb-4 text-sm font-semibold text-white tracking-wide uppercase opacity-90">
+                  {col.title}
+                </h4>
+                <ul className="space-y-3 text-sm text-slate-400">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="hover:text-emerald-400 transition-colors duration-200"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-12 border-t border-white/5 pt-8 text-center text-sm text-white/40">
+          <div className="mt-16 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
             <p>Built with React Ink. MIT License.</p>
+            <p className="mt-2 md:mt-0">
+              © {new Date().getFullYear()} siddcn. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
