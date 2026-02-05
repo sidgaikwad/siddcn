@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 
 // Same Grid Items as your main terminal for consistency
 const GRID_ITEMS = [
@@ -17,6 +17,10 @@ const GRID_ITEMS = [
 ];
 
 export function SshTerminal() {
+  const containerRef = useRef(null);
+  // Trigger when 20% of the component is visible, only once
+  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
+
   const [view, setView] = useState<"input" | "loader" | "grid">("input");
   const [typedText, setTypedText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -31,9 +35,9 @@ export function SshTerminal() {
     setBootStep(0);
   }, []);
 
-  // --- 1. Typing Animation ---
+  // --- 1. Typing Animation (Wait for isInView) ---
   useEffect(() => {
-    if (view !== "input") return;
+    if (!isInView || view !== "input") return;
 
     let currentIndex = 0;
     const typeInterval = setInterval(() => {
@@ -44,10 +48,10 @@ export function SshTerminal() {
         clearInterval(typeInterval);
         setTimeout(() => setView("loader"), 600);
       }
-    }, 40); // Faster typing speed
+    }, 40);
 
     return () => clearInterval(typeInterval);
-  }, [view]);
+  }, [view, isInView]); // Added isInView dependency
 
   // --- Blinking Cursor ---
   useEffect(() => {
@@ -70,15 +74,17 @@ export function SshTerminal() {
   }, [view]);
 
   return (
-    <div className="relative mx-auto max-w-2xl transform transition-all hover:scale-[1.01] duration-500">
-      {/* Glowing Border Container - Slightly different hue (Purple/Pink) for SSH vibe */}
+    <div
+      ref={containerRef}
+      className="relative mx-auto max-w-2xl transform transition-all hover:scale-[1.01] duration-500"
+    >
+      {/* Glowing Border Container */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl blur opacity-50 group-hover:opacity-75 transition duration-500" />
 
       <div className="relative rounded-xl bg-[#0c0c0c] border border-white/10 overflow-hidden shadow-2xl h-[400px] flex flex-col">
         {/* Header */}
         <div className="flex items-center gap-2 border-b border-white/5 bg-white/[0.03] px-4 py-3 shrink-0">
           <div className="flex gap-2">
-            {/* The 'Close' button acts as Reboot here too */}
             <button
               onClick={reboot}
               className="h-3 w-3 rounded-full bg-[#ff5f56] hover:bg-red-400 transition-colors"
@@ -118,7 +124,7 @@ export function SshTerminal() {
               </motion.div>
             )}
 
-            {/* VIEW 2: LOADER (Same as Demo) */}
+            {/* VIEW 2: LOADER */}
             {view === "loader" && (
               <motion.div
                 key="loader"
@@ -147,7 +153,7 @@ export function SshTerminal() {
                   <div className="w-48 space-y-2">
                     <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
                       <motion.div
-                        className="h-full bg-purple-500" // Purple bar for SSH distinction
+                        className="h-full bg-purple-500"
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 1.2, ease: "easeInOut" }}
@@ -162,7 +168,7 @@ export function SshTerminal() {
               </motion.div>
             )}
 
-            {/* VIEW 3: GRID (Using Grid Items) */}
+            {/* VIEW 3: GRID */}
             {view === "grid" && (
               <motion.div
                 key="grid"
@@ -197,7 +203,7 @@ export function SshTerminal() {
                   ))}
                 </div>
 
-                {/* Footer with Proper Button */}
+                {/* Footer */}
                 <div className="mt-auto pt-3 border-t border-white/5 flex justify-between items-center">
                   <div className="text-[10px] text-slate-600 font-mono">
                     <span className="w-1.5 h-1.5 inline-block rounded-full bg-emerald-500 animate-pulse mr-2" />

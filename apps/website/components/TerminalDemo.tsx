@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion"; // Import useInView
 import { useRouter } from "next/navigation";
 
-// Items data - No colors here, style is handled in the component for consistency
 const GRID_ITEMS = [
   { id: "button", label: "Buttons", desc: "Styled variants", icon: "◉" },
   { id: "select", label: "Select", desc: "Single-select", icon: "◎" },
@@ -19,6 +18,10 @@ const GRID_ITEMS = [
 
 export function TerminalDemo() {
   const router = useRouter();
+  const containerRef = useRef(null);
+  // Trigger boot only when visible
+  const isInView = useInView(containerRef, { once: true, amount: 0.3 });
+
   const [view, setView] = useState<"boot" | "grid">("boot");
   const [bootStep, setBootStep] = useState(0);
 
@@ -32,9 +35,9 @@ export function TerminalDemo() {
     router.push(`/components/${id}`);
   };
 
-  // --- Boot Sequence ---
+  // --- Boot Sequence (Waits for isInView) ---
   useEffect(() => {
-    if (view !== "boot") return;
+    if (!isInView || view !== "boot") return;
 
     const timers: NodeJS.Timeout[] = [];
     timers.push(setTimeout(() => setBootStep(1), 500));
@@ -42,10 +45,13 @@ export function TerminalDemo() {
     timers.push(setTimeout(() => setView("grid"), 3000));
 
     return () => timers.forEach(clearTimeout);
-  }, [view]);
+  }, [view, isInView]);
 
   return (
-    <div className="relative mx-auto w-full max-w-4xl h-full group">
+    <div
+      ref={containerRef}
+      className="relative mx-auto w-full max-w-4xl h-full group"
+    >
       {/* Glow effect - STRICTLY EMERALD NOW */}
       <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-emerald-900/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -56,7 +62,7 @@ export function TerminalDemo() {
             <button
               onClick={reboot}
               className="h-3 w-3 rounded-full bg-[#ff5f56] hover:bg-[#ff5f56]/80 transition-colors"
-              title="Reboot (R)"
+              title="Reboot"
             />
             <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
             <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
