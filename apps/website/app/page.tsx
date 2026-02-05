@@ -437,10 +437,16 @@ export default function Home() {
               {/* Action Buttons inside the column */}
               <FadeIn delay={600} direction="up">
                 <div className="flex gap-3 pt-2">
-                  <ShimmerButton href="/docs/ssh-setup" variant="secondary">
+                  <ShimmerButton
+                    href={`${DOCS_URL}/docs/ssh-setup`}
+                    variant="secondary"
+                  >
                     Setup Guide
                   </ShimmerButton>
-                  <ShimmerButton href="/docs/quickstart" variant="primary">
+                  <ShimmerButton
+                    href={`${DOCS_URL}/docs/quickstart`}
+                    variant="primary"
+                  >
                     Quick Start
                   </ShimmerButton>
                 </div>
