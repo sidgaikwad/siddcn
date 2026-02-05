@@ -1,8 +1,9 @@
-import React from "react"
+import React from "react";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrainsMono = JetBrains_Mono({
@@ -28,9 +29,8 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased gradient-bg`}
       >
         <Navigation />
-        <div className="grid-pattern min-h-screen">
-          {children}
-        </div>
+        <div className="grid-pattern min-h-screen">{children}</div>
+        <Footer />
       </body>
     </html>
   );
