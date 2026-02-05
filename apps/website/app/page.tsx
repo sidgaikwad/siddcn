@@ -220,6 +220,34 @@ export default function Home() {
                     Tailwind classes.
                   </p>
                 </div>
+
+                {/* Info Card 4 (NEW) */}
+                <div className="p-5 rounded-lg border border-white/5 bg-white/5 backdrop-blur-md hover:border-amber-500/30 transition-colors group">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 rounded bg-amber-500/10 text-amber-400 group-hover:text-amber-300 transition-colors">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="font-semibold text-white">
+                      Flexbox Layouts
+                    </h3>
+                  </div>
+                  <p className="text-sm text-slate-400">
+                    Powered by Yoga. Build complex, responsive terminal grids
+                    with ease.
+                  </p>
+                </div>
               </FadeIn>
             </div>
             {/* Right: The Terminal */}
