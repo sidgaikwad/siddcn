@@ -1,15 +1,346 @@
+# =============================================================================
+# 🔥 THE ULTIMATE CODERABBIT CONFIGURATION 🔥
+# Battle-tested by a senior engineer who has seen things you wouldn't believe
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# LANGUAGE & TONE - The Voice of a Grumpy Senior Dev
+# -----------------------------------------------------------------------------
+language: "en-US"
+
 tone_instructions: >-
-  You are an **unhinged** senior engineer.
-  Zero patience. Be brutal, sarcastic, and cutting.
-  Roast bad code. Call out stupidity directly.
-  No politeness, no teaching, no mercy.
-  If it's bad, say it's bad and move on.
+  You are a **battle-hardened, unhinged senior engineer** with 20+ years of war stories and zero f***s left to give.
+  You've debugged production at 3am, survived a hundred rewrites, and watched junior devs repeat the same mistakes since 2004.
+  
+  **Your personality:**
+  - Brutally honest. If it's garbage, call it garbage. No sugarcoating.
+  - Sarcastic and cutting. Deploy wit like a precision strike.
+  - Zero patience for laziness, copy-paste coding, or "it works on my machine" energy.
+  - You've seen every anti-pattern. Point them out like old enemies.
+  
+  **Your review style:**
+  - If the code is bad, roast it. Hard. Make it memorable.
+  - No hand-holding. State the problem, maybe drop a hint, move on.
+  - Use phrases like "Who hurt you?", "Did Stack Overflow write this?", "This is a crime against maintainability."
+  - Mock unnecessary complexity. Celebrate elegant simplicity (rare praise, make them earn it).
+  - If someone writes a 200-line function, ask if they're billing by LOC.
+  
+  **Rules of engagement:**
+  - Be direct. Be fast. Be legendary.
+  - No "great job!" unless it genuinely is (spoiler: it rarely is).
+  - If the PR is clean, give a curt nod of approval and move on. Don't waste words.
+  - Never apologize for being harsh. The codebase thanks you.
+
+# -----------------------------------------------------------------------------
+# GENERAL SETTINGS
+# -----------------------------------------------------------------------------
 early_access: true
+enable_free_tier: true
+
+# -----------------------------------------------------------------------------
+# REVIEWS - Where the Magic Happens
+# -----------------------------------------------------------------------------
 reviews:
+  # Profile: "assertive" for senior engineer energy, "chill" for weaklings
+  profile: "assertive"
+  
+  # Request changes on PR instead of just commenting (put your money where your mouth is)
+  request_changes_workflow: true
+  
+  # High-level summary - give me the TL;DR
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  high_level_summary_placeholder: "@coderabbitai summary"
+  
+  # Auto-title suggestions
+  auto_title_placeholder: "@coderabbitai"
+  
+  # Status indicators
+  review_status: true
+  commit_status: true
+  fail_commit_status: true  # Fail the commit status if there are issues - no mercy
+  
+  # Walkthrough - keep it visible, no hiding
   collapse_walkthrough: false
+  changed_files_summary: true
+  
+  # The fancy stuff
+  sequence_diagrams: true
+  estimate_code_review_effort: true
+  assess_linked_issues: true
+  related_issues: true
+  related_prs: true
+  
+  # Labels and reviewers
+  suggested_labels: true
+  auto_apply_labels: true
+  suggested_reviewers: true
+  auto_assign_reviewers: true
+  
+  # Fun stuff - OFF. We're here to work, not play.
   poem: false
+  in_progress_fortune: false
+  
+  # AI Agent prompt - keep it enabled
+  enable_prompt_for_ai_agents: true
+  
+  # Path filters - ignore the junk
+  path_filters:
+    - "!dist/**"
+    - "!build/**"
+    - "!node_modules/**"
+    - "!coverage/**"
+    - "!.next/**"
+    - "!.nuxt/**"
+    - "!*.lock"
+    - "!*.min.js"
+    - "!*.min.css"
+    - "!*.map"
+    - "!**/*.generated.*"
+    - "!**/vendor/**"
+    - "!**/__pycache__/**"
+    - "!**/.pytest_cache/**"
+  
+  # Auto-review settings
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false  # Don't waste time on drafts
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT MERGE"
+      - "DRAFT"
+      - "[skip ci]"
+      - "[skip review]"
+  
+  # Abort review if PR is closed - don't be that reviewer
+  abort_on_close: true
+  
+  # Finishing touches - docstrings and unit tests
+  finishing_touches:
+    docstrings:
+      enabled: true
+    unit_tests:
+      enabled: true
+    pre_merge_checks:
+      docstrings:
+        mode: "warning"
+        threshold: 80
+      title:
+        mode: "warning"
+      description:
+        mode: "warning"
+      issue_assessment:
+        mode: "warning"
+  
+  # TOOLS - Enable EVERYTHING. Maximum coverage.
+  tools:
+    # AST pattern matching
+    ast_grep:
+      essential_rules: true
+    
+    # Shell scripts
+    shellcheck:
+      enabled: true
+    
+    # Python
+    ruff:
+      enabled: true
+    flake8:
+      enabled: true
+    pylint:
+      enabled: true
+    
+    # Markdown
+    markdownlint:
+      enabled: true
+    
+    # GitHub checks
+    github_checks:
+      enabled: true
+      timeout_ms: 120000
+    
+    # Language tool for comments/docs
+    languagetool:
+      enabled: true
+      level: "picky"  # Maximum pickiness
+    
+    # JavaScript/TypeScript
+    biome:
+      enabled: true
+    eslint:
+      enabled: true
+    oxc:
+      enabled: true
+    
+    # Docker
+    hadolint:
+      enabled: true
+    
+    # Swift
+    swiftlint:
+      enabled: true
+    
+    # PHP
+    phpstan:
+      enabled: true
+      level: "max"  # Maximum strictness
+    phpmd:
+      enabled: true
+    phpcs:
+      enabled: true
+    
+    # Go
+    golangci_lint:
+      enabled: true
+    
+    # YAML
+    yamllint:
+      enabled: true
+    
+    # Security
+    gitleaks:
+      enabled: true
+    checkov:
+      enabled: true
+    trivy:
+      enabled: true
+    osv_scanner:
+      enabled: true
+    brakeman:
+      enabled: true
+    semgrep:
+      enabled: true
+    
+    # Terraform
+    tflint:
+      enabled: true
+    
+    # Kotlin
+    detekt:
+      enabled: true
+    
+    # Ruby
+    rubocop:
+      enabled: true
+    
+    # Protobuf
+    buf:
+      enabled: true
+    
+    # Rego (OPA)
+    regal:
+      enabled: true
+    
+    # GitHub Actions
+    actionlint:
+      enabled: true
+    
+    # Java
+    pmd:
+      enabled: true
+    
+    # C/C++
+    clang:
+      enabled: true
+    cppcheck:
+      enabled: true
+    
+    # CircleCI
+    circleci:
+      enabled: true
+    
+    # Rust
+    clippy:
+      enabled: true
+    
+    # SQL
+    sqlfluff:
+      enabled: true
+    
+    # Prisma
+    prisma_lint:
+      enabled: true
+    
+    # Shopify
+    shopify_theme_check:
+      enabled: true
+    
+    # Lua
+    luacheck:
+      enabled: true
+    
+    # Env files
+    dotenv_lint:
+      enabled: true
+    
+    # HTML
+    htmlhint:
+      enabled: true
+    
+    # Makefiles
+    checkmake:
+      enabled: true
+    
+    # Fortran
+    fortitude_lint:
+      enabled: true
+    
+    # Blinter
+    blinter:
+      enabled: true
+
+# -----------------------------------------------------------------------------
+# CHAT - Interactive Features
+# -----------------------------------------------------------------------------
+chat:
+  auto_reply: true
+  art: false  # No ASCII art nonsense
+  integrations:
+    jira:
+      usage: "auto"
+    linear:
+      usage: "auto"
+
+# -----------------------------------------------------------------------------
+# KNOWLEDGE BASE - Learn from the Codebase
+# -----------------------------------------------------------------------------
+knowledge_base:
+  opt_out: false
+  web_search:
+    enabled: true
+  code_guidelines:
+    enabled: true
+  learnings:
+    scope: "auto"
+  issues:
+    scope: "auto"
+  pull_requests:
+    scope: "auto"
+  jira:
+    usage: "auto"
+  linear:
+    usage: "auto"
+  mcp:
+    usage: "auto"
+
+# -----------------------------------------------------------------------------
+# CODE GENERATION - Docstrings & Unit Tests
+# -----------------------------------------------------------------------------
+code_generation:
+  docstrings:
+    language: "en-US"
+  unit_tests: {}
+
+# -----------------------------------------------------------------------------
+# ISSUE ENRICHMENT - Smart Issue Handling
+# -----------------------------------------------------------------------------
 issue_enrichment:
   auto_enrich:
+    enabled: true
+  planning:
+    enabled: true
+  auto_planning:
     enabled: true
   labeling:
     auto_apply_labels: true
