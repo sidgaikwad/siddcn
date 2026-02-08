@@ -102,18 +102,20 @@ reviews:
       enabled: true
     unit_tests:
       enabled: true
-    pre_merge_checks:
-      docstrings:
-        mode: "warning"
-        threshold: 80
-      title:
-        mode: "warning"
-      description:
-        mode: "warning"
-      issue_assessment:
-        mode: "warning"
   
-  # TOOLS - Enable EVERYTHING. Maximum coverage.
+  # Pre-merge validation checks
+  pre_merge_checks:
+    docstrings:
+      mode: "warning"
+      threshold: 80
+    title:
+      mode: "warning"
+    description:
+      mode: "warning"
+    issue_assessment:
+      mode: "warning"
+  
+  # TOOLS - Only relevant linters for this TypeScript/Next.js monorepo
   tools:
     # AST pattern matching
     ast-grep:
@@ -123,13 +125,13 @@ reviews:
     shellcheck:
       enabled: true
     
-    # Python
+    # Python - disabled, no Python in project
     ruff:
-      enabled: true
+      enabled: false
     flake8:
-      enabled: true
+      enabled: false
     pylint:
-      enabled: true
+      enabled: false
     
     # Markdown
     markdownlint:
@@ -153,26 +155,26 @@ reviews:
     oxc:
       enabled: true
     
-    # Docker
+    # Docker - disabled, no Dockerfiles
     hadolint:
-      enabled: true
+      enabled: false
     
-    # Swift
+    # Swift - disabled
     swiftlint:
-      enabled: true
+      enabled: false
     
     # PHP
     phpstan:
       enabled: false  # Disabled - no PHP in this project
       level: "max"  # Maximum strictness
     phpmd:
-      enabled: true
+      enabled: false
     phpcs:
-      enabled: true
+      enabled: false
     
-    # Go
+    # Go - disabled
     golangci-lint:
-      enabled: true
+      enabled: false
     
     # YAML
     yamllint:
@@ -182,73 +184,73 @@ reviews:
     gitleaks:
       enabled: true
     checkov:
-      enabled: true
+      enabled: false  # Terraform/IaC focused
     trivy:
       enabled: true
     osv-scanner:
-      enabled: true
+      enabled: false  # Optional dependency scanner
     brakeman:
-      enabled: true
+      enabled: false  # Ruby-specific
     semgrep:
       enabled: true
     
-    # Terraform
+    # Terraform - disabled
     tflint:
-      enabled: true
+      enabled: false
     
-    # Kotlin
+    # Kotlin - disabled
     detekt:
-      enabled: true
+      enabled: false
     
-    # Ruby
+    # Ruby - disabled
     rubocop:
-      enabled: true
+      enabled: false
     
-    # Protobuf
+    # Protobuf - disabled
     buf:
-      enabled: true
+      enabled: false
     
-    # Rego (OPA)
+    # Rego (OPA) - disabled
     regal:
-      enabled: true
+      enabled: false
     
-    # GitHub Actions
+    # GitHub Actions - disabled, no .github folder
     actionlint:
-      enabled: true
+      enabled: false
     
-    # Java
+    # Java - disabled
     pmd:
-      enabled: true
+      enabled: false
     
-    # C/C++
+    # C/C++ - disabled
     clang:
-      enabled: true
+      enabled: false
     cppcheck:
-      enabled: true
+      enabled: false
     
-    # CircleCI
+    # CircleCI - disabled
     circleci:
-      enabled: true
+      enabled: false
     
-    # Rust
+    # Rust - disabled
     clippy:
-      enabled: true
+      enabled: false
     
-    # SQL
+    # SQL - disabled
     sqlfluff:
-      enabled: true
+      enabled: false
     
-    # Prisma
+    # Prisma - disabled
     prisma-lint:
-      enabled: true
+      enabled: false
     
-    # Shopify
+    # Shopify - disabled
     shopify-theme-check:
-      enabled: true
+      enabled: false
     
-    # Lua
+    # Lua - disabled
     luacheck:
-      enabled: true
+      enabled: false
     
     # Env files
     dotenv-lint:
@@ -258,17 +260,17 @@ reviews:
     htmlhint:
       enabled: true
     
-    # Makefiles
+    # Makefiles - disabled
     checkmake:
-      enabled: true
+      enabled: false
     
-    # Fortran
+    # Fortran - disabled
     fortitude-lint:
-      enabled: true
+      enabled: false
     
-    # Blinter
+    # Blinter - disabled
     blinter:
-      enabled: true
+      enabled: false
 
 # -----------------------------------------------------------------------------
 # CHAT - Interactive Features
