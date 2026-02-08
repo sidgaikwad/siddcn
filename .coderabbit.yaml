@@ -1,15 +1,328 @@
+# =============================================================================
+# 🔥 THE ULTIMATE CODERABBIT CONFIGURATION 🔥
+# Battle-tested by a senior engineer who has seen things you wouldn't believe
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# LANGUAGE & TONE - The Voice of a Grumpy Senior Dev
+# -----------------------------------------------------------------------------
+language: "en-US"
+
 tone_instructions: >-
-  You are an **unhinged** senior engineer.
-  Zero patience. Be brutal, sarcastic, and cutting.
-  Roast bad code. Call out stupidity directly.
-  No politeness, no teaching, no mercy.
-  If it's bad, say it's bad and move on.
+  Unhinged senior engineer with 20 years of war stories. Brutally honest, sarcastic, zero patience. Roast bad code hard. No hand-holding—state the problem, move on. Mock complexity, praise elegance rarely. Be direct, fast, legendary. Never apologize.
+
+# -----------------------------------------------------------------------------
+# GENERAL SETTINGS
+# -----------------------------------------------------------------------------
 early_access: true
+enable_free_tier: true
+
+# -----------------------------------------------------------------------------
+# REVIEWS - Where the Magic Happens
+# -----------------------------------------------------------------------------
 reviews:
+  # Profile: "assertive" for senior engineer energy, "chill" for weaklings
+  profile: "assertive"
+  
+  # Request changes on PR instead of just commenting (put your money where your mouth is)
+  request_changes_workflow: true
+  
+  # High-level summary - give me the TL;DR
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  high_level_summary_placeholder: "@coderabbitai summary"
+  
+  # Auto-title suggestions
+  auto_title_placeholder: "@coderabbitai"
+  
+  # Status indicators
+  review_status: true
+  commit_status: true
+  fail_commit_status: true  # Fail the commit status if there are issues - no mercy
+  
+  # Walkthrough - keep it visible, no hiding
   collapse_walkthrough: false
+  changed_files_summary: true
+  
+  # The fancy stuff
+  sequence_diagrams: true
+  estimate_code_review_effort: true
+  assess_linked_issues: true
+  related_issues: true
+  related_prs: true
+  
+  # Labels and reviewers
+  suggested_labels: true
+  auto_apply_labels: true
+  suggested_reviewers: true
+  auto_assign_reviewers: true
+  
+  # Fun stuff - OFF. We're here to work, not play.
   poem: false
+  in_progress_fortune: false
+  
+  # AI Agent prompt - keep it enabled
+  enable_prompt_for_ai_agents: true
+  
+  # Path filters - ignore the junk
+  path_filters:
+    - "!dist/**"
+    - "!build/**"
+    - "!node_modules/**"
+    - "!coverage/**"
+    - "!.next/**"
+    - "!.nuxt/**"
+    - "!*.lock"
+    - "!*.min.js"
+    - "!*.min.css"
+    - "!*.map"
+    - "!**/*.generated.*"
+    - "!**/vendor/**"
+    - "!**/__pycache__/**"
+    - "!**/.pytest_cache/**"
+  
+  # Auto-review settings
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false  # Don't waste time on drafts
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT MERGE"
+      - "DRAFT"
+      - "[skip ci]"
+      - "[skip review]"
+  
+  # Abort review if PR is closed - don't be that reviewer
+  abort_on_close: true
+  
+  # Finishing touches - docstrings and unit tests
+  finishing_touches:
+    docstrings:
+      enabled: true
+    unit_tests:
+      enabled: true
+  
+  # Pre-merge validation checks
+  pre_merge_checks:
+    docstrings:
+      mode: "warning"
+      threshold: 80
+    title:
+      mode: "warning"
+    description:
+      mode: "warning"
+    issue_assessment:
+      mode: "warning"
+  
+  # TOOLS - Only relevant linters for this TypeScript/Next.js monorepo
+  tools:
+    # AST pattern matching
+    ast-grep:
+      essential_rules: true
+    
+    # Shell scripts
+    shellcheck:
+      enabled: true
+    
+    # Python - disabled, no Python in project
+    ruff:
+      enabled: false
+    flake8:
+      enabled: false
+    pylint:
+      enabled: false
+    
+    # Markdown
+    markdownlint:
+      enabled: true
+    
+    # GitHub checks
+    github-checks:
+      enabled: true
+      timeout_ms: 120000
+    
+    # Language tool for comments/docs
+    languagetool:
+      enabled: true
+      level: "picky"  # Maximum pickiness
+    
+    # JavaScript/TypeScript
+    biome:
+      enabled: true
+    eslint:
+      enabled: true
+    oxc:
+      enabled: true
+    
+    # Docker - disabled, no Dockerfiles
+    hadolint:
+      enabled: false
+    
+    # Swift - disabled
+    swiftlint:
+      enabled: false
+    
+    # PHP
+    phpstan:
+      enabled: false  # Disabled - no PHP in this project
+      level: "max"  # Maximum strictness
+    phpmd:
+      enabled: false
+    phpcs:
+      enabled: false
+    
+    # Go - disabled
+    golangci-lint:
+      enabled: false
+    
+    # YAML
+    yamllint:
+      enabled: true
+    
+    # Security
+    gitleaks:
+      enabled: true
+    checkov:
+      enabled: false  # Terraform/IaC focused
+    trivy:
+      enabled: true
+    osvScanner:
+      enabled: false  # Optional dependency scanner
+    brakeman:
+      enabled: false  # Ruby-specific
+    semgrep:
+      enabled: true
+    
+    # Terraform - disabled
+    tflint:
+      enabled: false
+    
+    # Kotlin - disabled
+    detekt:
+      enabled: false
+    
+    # Ruby - disabled
+    rubocop:
+      enabled: false
+    
+    # Protobuf - disabled
+    buf:
+      enabled: false
+    
+    # Rego (OPA) - disabled
+    regal:
+      enabled: false
+    
+    # GitHub Actions - disabled, no .github folder
+    actionlint:
+      enabled: false
+    
+    # Java - disabled
+    pmd:
+      enabled: false
+    
+    # C/C++ - disabled
+    clang:
+      enabled: false
+    cppcheck:
+      enabled: false
+    
+    # CircleCI - disabled
+    circleci:
+      enabled: false
+    
+    # Rust - disabled
+    clippy:
+      enabled: false
+    
+    # SQL - disabled
+    sqlfluff:
+      enabled: false
+    
+    # Prisma - disabled
+    prismaLint:
+      enabled: false
+    
+    # Shopify - disabled
+    shopifyThemeCheck:
+      enabled: false
+    
+    # Lua - disabled
+    luacheck:
+      enabled: false
+    
+    # Env files
+    dotenvLint:
+      enabled: true
+    
+    # HTML
+    htmlhint:
+      enabled: true
+    
+    # Makefiles - disabled
+    checkmake:
+      enabled: false
+    
+    # Fortran - disabled
+    fortitudeLint:
+      enabled: false
+    
+    # Blinter - disabled
+    blinter:
+      enabled: false
+
+# -----------------------------------------------------------------------------
+# CHAT - Interactive Features
+# -----------------------------------------------------------------------------
+chat:
+  auto_reply: true
+  art: false  # No ASCII art nonsense
+  integrations:
+    jira:
+      usage: "auto"
+    linear:
+      usage: "auto"
+
+# -----------------------------------------------------------------------------
+# KNOWLEDGE BASE - Learn from the Codebase
+# -----------------------------------------------------------------------------
+knowledge_base:
+  opt_out: false
+  web_search:
+    enabled: true
+  code_guidelines:
+    enabled: true
+  learnings:
+    scope: "auto"
+  issues:
+    scope: "auto"
+  pull_requests:
+    scope: "auto"
+  jira:
+    usage: "auto"
+  linear:
+    usage: "auto"
+  mcp:
+    usage: "auto"
+
+# -----------------------------------------------------------------------------
+# CODE GENERATION - Docstrings & Unit Tests
+# -----------------------------------------------------------------------------
+code_generation:
+  docstrings:
+    language: "en-US"
+  unit_tests: {}
+
+# -----------------------------------------------------------------------------
+# ISSUE ENRICHMENT - Smart Issue Handling
+# -----------------------------------------------------------------------------
 issue_enrichment:
   auto_enrich:
+    enabled: true
+  planning:
+    enabled: true
+  auto_planning:
     enabled: true
   labeling:
     auto_apply_labels: true
