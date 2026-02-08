@@ -187,7 +187,7 @@ reviews:
       enabled: false  # Terraform/IaC focused
     trivy:
       enabled: true
-    osv-scanner:
+    osvScanner:
       enabled: false  # Optional dependency scanner
     brakeman:
       enabled: false  # Ruby-specific
@@ -241,11 +241,11 @@ reviews:
       enabled: false
     
     # Prisma - disabled
-    prisma-lint:
+    prismaLint:
       enabled: false
     
     # Shopify - disabled
-    shopify-theme-check:
+    shopifyThemeCheck:
       enabled: false
     
     # Lua - disabled
@@ -253,7 +253,7 @@ reviews:
       enabled: false
     
     # Env files
-    dotenv-lint:
+    dotenvLint:
       enabled: true
     
     # HTML
@@ -265,7 +265,7 @@ reviews:
       enabled: false
     
     # Fortran - disabled
-    fortitude-lint:
+    fortitudeLint:
       enabled: false
     
     # Blinter - disabled
