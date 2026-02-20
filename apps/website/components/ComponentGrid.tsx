@@ -147,24 +147,24 @@ export function ComponentGrid() {
           <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r ${category.color} blur opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
           <AnimatedCard className="relative h-full">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="font-medium text-white group-hover:text-blue-50 transition-colors">
+              <h3 className="font-medium text-zinc-900 dark:text-white group-hover:text-zinc-600 dark:group-hover:text-blue-50 transition-colors">
                 {category.name}
               </h3>
-              <span className="rounded-full bg-white/5 px-2 py-0.5 text-xs text-white/40 group-hover:bg-white/10 group-hover:text-white/60 transition-all">
+              <span className="rounded-full bg-zinc-200 dark:bg-white/5 px-2 py-0.5 text-xs text-zinc-500 dark:text-white/40 group-hover:bg-zinc-300 dark:group-hover:bg-white/10 group-hover:text-zinc-700 dark:group-hover:text-white/60 transition-all">
                 {category.count}
               </span>
             </div>
 
-            <p className="mb-4 text-sm text-white/50 group-hover:text-white/60 transition-colors">
+            <p className="mb-4 text-sm text-zinc-600 dark:text-white/50 group-hover:text-zinc-900 dark:group-hover:text-white/60 transition-colors">
               {category.description}
             </p>
 
-            <div className="rounded-lg border border-white/5 bg-black/50 p-3 font-mono text-xs text-emerald-400/80 group-hover:border-emerald-500/20 group-hover:text-emerald-400 transition-all">
+            <div className="rounded-lg border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-black/50 p-3 font-mono text-xs text-emerald-600 dark:text-emerald-400/80 group-hover:border-emerald-300 dark:group-hover:border-emerald-500/20 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-all">
               <pre className="whitespace-pre">{category.preview}</pre>
             </div>
 
             <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-              <svg className="h-4 w-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-4 w-4 text-zinc-400 dark:text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
