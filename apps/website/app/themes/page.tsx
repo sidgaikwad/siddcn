@@ -85,10 +85,10 @@ export default function ThemesPage() {
     <main className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-terminal-cyan">
+          <h1 className="mb-4 text-4xl font-bold text-emerald-600 dark:text-emerald-400">
             Theme Gallery
           </h1>
-          <p className="mx-auto max-w-2xl text-terminal-text/70">
+          <p className="mx-auto max-w-2xl text-zinc-900 dark:text-zinc-300/70">
             Siddcn comes with 6 beautiful built-in themes. Click on any theme to
             preview it, or create your own custom theme.
           </p>
@@ -123,8 +123,8 @@ export default function ThemesPage() {
                   <div
                     className={`relative h-full rounded-lg border p-4 transition-all ${
                       isActive
-                        ? "border-terminal-cyan/50 bg-terminal-bg"
-                        : "border-terminal-cyan/20 bg-terminal-bg/50 group-hover:border-terminal-cyan/40"
+                        ? "border-emerald-400 dark:border-emerald-500/30/50 bg-zinc-50 dark:bg-[#0c0c0c]"
+                        : "border-emerald-400 dark:border-emerald-500/30/20 bg-zinc-50 dark:bg-[#0c0c0c]/50 group-hover:border-emerald-400 dark:border-emerald-500/30/40"
                     }`}
                   >
                     <div
@@ -135,14 +135,14 @@ export default function ThemesPage() {
                     <h3
                       className={`font-semibold transition-colors ${
                         isActive
-                          ? "text-terminal-cyan"
-                          : "text-terminal-text group-hover:text-white"
+                          ? "text-emerald-600 dark:text-emerald-400"
+                          : "text-zinc-900 dark:text-zinc-300 group-hover:text-zinc-900 dark:text-white"
                       }`}
                     >
                       {theme.name}
                     </h3>
 
-                    <p className="mt-1 text-sm text-terminal-text/60 group-hover:text-terminal-text/80 transition-colors">
+                    <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-300/60 group-hover:text-zinc-900 dark:text-zinc-300/80 transition-colors">
                       {theme.description}
                     </p>
 
@@ -158,7 +158,7 @@ export default function ThemesPage() {
 
                     {/* Active Indicator Arrow */}
                     {isActive && (
-                      <div className="absolute bottom-3 right-3 text-terminal-cyan animate-pulse">
+                      <div className="absolute bottom-3 right-3 text-emerald-600 dark:text-emerald-400 animate-pulse">
                         <svg
                           className="h-4 w-4"
                           fill="none"
@@ -181,8 +181,8 @@ export default function ThemesPage() {
           </div>
 
           {/* Theme Preview - No changes needed here, keeping logic same */}
-          <div className="rounded-lg border border-terminal-cyan/30 bg-terminal-bg/80 p-6 sticky top-6 h-fit backdrop-blur-sm">
-            <h3 className="mb-4 text-xl font-semibold text-terminal-cyan">
+          <div className="rounded-lg border border-emerald-400 dark:border-emerald-500/30/30 bg-zinc-50 dark:bg-[#0c0c0c]/80 p-6 sticky top-6 h-fit backdrop-blur-sm">
+            <h3 className="mb-4 text-xl font-semibold text-emerald-600 dark:text-emerald-400">
               Preview: {selectedTheme.name}
             </h3>
 
@@ -200,7 +200,7 @@ export default function ThemesPage() {
                 <span style={{ color: selectedTheme.colors.primary }}>
                   siddcn
                 </span>
-                <span className="text-terminal-text/60">
+                <span className="text-zinc-900 dark:text-zinc-300/60">
                   {" "}
                   Component Library
                 </span>
@@ -217,16 +217,16 @@ export default function ThemesPage() {
                 <div style={{ color: selectedTheme.colors.primary }}>
                   {">"} Buttons
                 </div>
-                <div className="text-terminal-text/60"> Progress</div>
-                <div className="text-terminal-text/60"> Badges</div>
+                <div className="text-zinc-900 dark:text-zinc-300/60"> Progress</div>
+                <div className="text-zinc-900 dark:text-zinc-300/60"> Badges</div>
               </div>
 
               <div className="mb-4">
                 <span style={{ color: selectedTheme.colors.success }}>
                   [========
                 </span>
-                <span className="text-terminal-text/40">{"  ]"}</span>
-                <span className="text-terminal-text/60"> 75%</span>
+                <span className="text-zinc-900 dark:text-zinc-300/40">{"  ]"}</span>
+                <span className="text-zinc-900 dark:text-zinc-300/60"> 75%</span>
               </div>
 
               <div className="flex gap-2">
@@ -251,7 +251,7 @@ export default function ThemesPage() {
               </div>
             </div>
 
-            <div className="mt-4 text-sm text-terminal-text/60">
+            <div className="mt-4 text-sm text-zinc-900 dark:text-zinc-300/60">
               <p>
                 <strong>Border Style:</strong> {selectedTheme.borderStyle}
               </p>
@@ -260,13 +260,13 @@ export default function ThemesPage() {
             <div className="mt-6 flex gap-4">
               <Link
                 href="/docs/themes"
-                className="rounded-lg bg-terminal-cyan px-4 py-2 text-sm font-semibold text-terminal-bg transition-colors hover:bg-terminal-cyan/80"
+                className="rounded-lg bg-emerald-200 dark:bg-emerald-400/20 px-4 py-2 text-sm font-semibold text-terminal-bg transition-colors hover:bg-emerald-200 dark:bg-emerald-400/20/80"
               >
                 Theme Documentation
               </Link>
               <Link
                 href="/docs/adding-components"
-                className="rounded-lg border border-terminal-cyan px-4 py-2 text-sm font-semibold text-terminal-cyan transition-colors hover:bg-terminal-cyan/10"
+                className="rounded-lg border border-emerald-400 dark:border-emerald-500/30 px-4 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 transition-colors hover:bg-emerald-200 dark:bg-emerald-400/20/10"
               >
                 Create Custom Theme
               </Link>
