@@ -27,7 +27,7 @@ export function AnimatedCard({ children, className = '' }: AnimatedCardProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className={`relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04] ${className}`}
+      className={`relative overflow-hidden rounded-xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/[0.02] p-6 transition-all duration-300 hover:border-zinc-300 dark:hover:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/[0.04] ${className}`}
     >
       {/* Gradient follow effect */}
       {isHovering && (
