@@ -131,12 +131,12 @@ export default function ComponentsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-[#0a0a0a] font-mono text-zinc-900 dark:text-zinc-300 selection:bg-emerald-200 dark:bg-emerald-400/20 selection:text-black relative flex flex-col">
+    <main className="min-h-screen bg-[#0a0a0a] font-mono text-neutral-300 selection:bg-cyan-400 selection:text-black relative flex flex-col">
       {/* Background Effects */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] opacity-20" />
         <div
-          className="absolute inset-0 bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-10 border-emerald-400 dark:border-emerald-500/30/5"
+          className="absolute inset-0 bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-10 border-cyan-400/5"
           style={{
             backgroundImage:
               "linear-gradient(to right, #333 1px, transparent 1px), linear-gradient(to bottom, #333 1px, transparent 1px)",
@@ -146,39 +146,39 @@ export default function ComponentsPage() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 w-full flex-grow">
         {/* --- SYSTEM HEADER (Preserved Structure) --- */}
-        <div className="mb-12 border-b-2 border-emerald-400 dark:border-emerald-500/30/20 pb-8 relative">
+        <div className="mb-12 border-b-2 border-cyan-400/20 pb-8 relative">
           {/* Decorative Corner */}
-          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-emerald-400 dark:border-emerald-500/30 opacity-50"></div>
+          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyan-400 opacity-50"></div>
 
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="animate-pulse h-2 w-2 rounded-full bg-emerald-200 dark:bg-emerald-400/20 shadow-[0_0_10px_rgba(0,255,255,0.8)]"></span>
-                <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400/70 tracking-widest">
+                <span className="animate-pulse h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.8)]"></span>
+                <span className="text-xs font-mono text-cyan-400/70 tracking-widest">
                   SYSTEM_ONLINE
                 </span>
               </div>
-              <h1 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-terminal-cyan via-white to-terminal-cyan tracking-tight font-mono drop-shadow-[0_0_10px_rgba(0,255,255,0.3)]">
+              <h1 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-cyan-400 tracking-tight font-mono drop-shadow-[0_0_10px_rgba(0,255,255,0.3)]">
                 COMPONENT_LIB
               </h1>
 
               {/* Retro Navigation Links */}
-              <div className="mt-6 flex gap-4 text-sm font-bold text-zinc-900 dark:text-zinc-300/60">
+              <div className="mt-6 flex gap-4 text-sm font-bold text-neutral-300/60">
                 <Link
                   href="/"
-                  className="hover:text-emerald-600 dark:text-emerald-400 transition-colors"
+                  className="hover:text-cyan-400 transition-colors"
                 >
                   [ ROOT ]
                 </Link>
                 <Link
                   href="/docs"
-                  className="hover:text-emerald-600 dark:text-emerald-400 transition-colors"
+                  className="hover:text-cyan-400 transition-colors"
                 >
                   [ MANUAL ]
                 </Link>
                 <Link
                   href="/themes"
-                  className="hover:text-emerald-600 dark:text-emerald-400 transition-colors"
+                  className="hover:text-cyan-400 transition-colors"
                 >
                   [ THEMES ]
                 </Link>
@@ -188,19 +188,19 @@ export default function ComponentsPage() {
             {/* Stats & Search Box */}
             <div className="flex flex-col gap-4 min-w-[300px]">
               {/* Stats */}
-              <div className="border border-emerald-400 dark:border-emerald-500/30/20 bg-white/50 dark:bg-black/50 p-3 backdrop-blur-sm">
-                <div className="flex justify-between text-xs text-zinc-900 dark:text-zinc-300/50 font-mono mb-2">
+              <div className="border border-cyan-400/20 bg-black/50 p-3 backdrop-blur-sm">
+                <div className="flex justify-between text-xs text-neutral-300/50 font-mono mb-2">
                   <span>MEMORY</span>
                   <span>64K</span>
                 </div>
-                <div className="w-full bg-zinc-900 dark:bg-zinc-100/10 h-1 mb-2">
-                  <div className="bg-emerald-200 dark:bg-emerald-400/20 h-full w-[45%] animate-pulse"></div>
+                <div className="w-full bg-neutral-300/10 h-1 mb-2">
+                  <div className="bg-cyan-400 h-full w-[45%] animate-pulse"></div>
                 </div>
               </div>
 
               {/* CLI Search Input */}
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600 dark:text-emerald-400 font-bold pointer-events-none">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-400 font-bold pointer-events-none">
                   &gt;_
                 </div>
                 <input
@@ -208,7 +208,7 @@ export default function ComponentsPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="filter_modules..."
-                  className="w-full bg-white/80 dark:bg-black/80 border border-zinc-400 dark:border-zinc-700/20 py-2 pl-10 pr-4 text-zinc-900 dark:text-zinc-300 focus:outline-none focus:border-emerald-400 dark:border-emerald-500/30 focus:ring-1 focus:ring-terminal-cyan placeholder-terminal-text/30 font-mono text-sm transition-all"
+                  className="w-full bg-black/80 border border-neutral-500/20 py-2 pl-10 pr-4 text-neutral-300 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 placeholder-neutral-300/30 font-mono text-sm transition-all"
                 />
               </div>
             </div>
@@ -221,36 +221,36 @@ export default function ComponentsPage() {
             <FadeIn key={component.id} delay={idx * 30} direction="up">
               <Link
                 href={`/components/${component.id}`}
-                className="group relative h-full flex flex-col overflow-hidden border border-emerald-400 dark:border-emerald-500/30/10 bg-zinc-50 dark:bg-[#0c0c0c]/40 p-6 transition-all duration-300 hover:border-emerald-400 dark:border-emerald-500/30 hover:bg-white dark:bg-black hover:shadow-[0_0_20px_-5px_rgba(0,255,255,0.2)]"
+                className="group relative h-full flex flex-col overflow-hidden border border-cyan-400/10 bg-black/40 p-6 transition-all duration-300 hover:border-cyan-400 hover:bg-black hover:shadow-[0_0_20px_-5px_rgba(0,255,255,0.2)]"
               >
                 {/* Corner Accents (Hidden by default, visible on hover) */}
                 <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400">
+                  <span className="text-xs font-mono text-cyan-400">
                     [↗]
                   </span>
                 </div>
-                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-emerald-400 dark:border-emerald-500/30/0 group-hover:border-emerald-400 dark:border-emerald-500/30 transition-colors"></div>
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-emerald-400 dark:border-emerald-500/30/0 group-hover:border-emerald-400 dark:border-emerald-500/30 transition-colors"></div>
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400/0 group-hover:border-cyan-400 transition-colors"></div>
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400/0 group-hover:border-cyan-400 transition-colors"></div>
 
                 <div className="flex items-start justify-between mb-4">
-                  <div className="h-12 w-12 flex items-center justify-center rounded-sm border border-emerald-400 dark:border-emerald-500/30/20 bg-emerald-200 dark:bg-emerald-400/20/5 text-2xl text-emerald-600 dark:text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-200 dark:bg-emerald-400/20/10 transition-all duration-300">
+                  <div className="h-12 w-12 flex items-center justify-center rounded-sm border border-cyan-400/20 bg-cyan-400/5 text-2xl text-cyan-400 group-hover:scale-110 group-hover:bg-cyan-400/10 transition-all duration-300">
                     {component.icon}
                   </div>
-                  <span className="font-mono text-[10px] text-zinc-900 dark:text-zinc-300/40 border border-zinc-400 dark:border-zinc-700/10 px-1.5 py-0.5">
+                  <span className="font-mono text-[10px] text-neutral-300/40 border border-neutral-500/10 px-1.5 py-0.5">
                     ID: {component.count.toString().padStart(2, "0")}
                   </span>
                 </div>
 
-                <h3 className="mb-2 text-xl font-bold text-zinc-900 dark:text-zinc-300 group-hover:text-emerald-600 dark:text-emerald-400 transition-colors font-mono">
+                <h3 className="mb-2 text-xl font-bold text-neutral-300 group-hover:text-cyan-400 transition-colors font-mono">
                   {component.name}
                 </h3>
 
-                <p className="text-sm text-zinc-900 dark:text-zinc-300/60 font-mono line-clamp-2 group-hover:text-zinc-900 dark:text-zinc-300/80">
+                <p className="text-sm text-neutral-300/60 font-mono line-clamp-2 group-hover:text-neutral-300/80">
                   {component.description}
                 </p>
 
                 {/* Animated Bottom Scanline */}
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-emerald-200 dark:bg-emerald-400/20 transition-all duration-500 group-hover:w-full shadow-[0_0_10px_#0ff]" />
+                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-400 transition-all duration-500 group-hover:w-full shadow-[0_0_10px_#0ff]" />
               </Link>
             </FadeIn>
           ))}
@@ -258,16 +258,16 @@ export default function ComponentsPage() {
 
         {/* Empty State */}
         {filteredComponents.length === 0 && (
-          <div className="py-20 text-center border border-dashed border-zinc-400 dark:border-zinc-700/20 mt-8">
-            <p className="text-red-600 dark:text-red-400 font-mono text-lg">
+          <div className="py-20 text-center border border-dashed border-neutral-500/20 mt-8">
+            <p className="text-red-400 font-mono text-lg">
               ERROR: MODULE_NOT_FOUND
             </p>
-            <p className="text-zinc-900 dark:text-zinc-300/40 text-sm mt-2">
+            <p className="text-neutral-300/40 text-sm mt-2">
               Query "{searchQuery}" returned 0 results.
             </p>
             <button
               onClick={() => setSearchQuery("")}
-              className="mt-4 text-emerald-600 dark:text-emerald-400 hover:underline text-sm"
+              className="mt-4 text-cyan-400 hover:underline text-sm"
             >
               [ RESET_SEARCH ]
             </button>
@@ -276,39 +276,39 @@ export default function ComponentsPage() {
       </div>
 
       {/* --- RETRO FOOTER --- */}
-      <footer className="border-t-2 border-emerald-400 dark:border-emerald-500/30/20 bg-zinc-100 dark:bg-[#050505] relative z-10 mt-auto">
+      <footer className="border-t-2 border-cyan-400/20 bg-[#050505] relative z-10 mt-auto">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 font-mono text-sm">
             {/* Branding Column */}
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-4 h-4 bg-emerald-200 dark:bg-emerald-400/20"></div>
-                <span className="font-bold text-lg text-zinc-900 dark:text-white tracking-widest">
+                <div className="w-4 h-4 bg-cyan-400"></div>
+                <span className="font-bold text-lg text-white tracking-widest">
                   SIDDCN
                 </span>
               </div>
-              <p className="text-zinc-900 dark:text-zinc-300/50 max-w-xs mb-6">
+              <p className="text-neutral-300/50 max-w-xs mb-6">
                 High-performance TUI components.
                 <br />
                 Built for the React Ink ecosystem.
                 <br />
                 MIT License.
               </p>
-              <div className="text-xs text-zinc-900 dark:text-zinc-300/30">
+              <div className="text-xs text-neutral-300/30">
                 EST. 2026 // SYSTEM_ID: #8821
               </div>
             </div>
 
             {/* Links Column 1 */}
             <div>
-              <h4 className="text-emerald-600 dark:text-emerald-400 font-bold mb-4 uppercase tracking-wider border-b border-emerald-400 dark:border-emerald-500/30/20 pb-1 w-fit">
+              <h4 className="text-cyan-400 font-bold mb-4 uppercase tracking-wider border-b border-cyan-400/20 pb-1 w-fit">
                 Directory
               </h4>
               <ul className="space-y-2">
                 <li>
                   <Link
                     href="/"
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     Home
@@ -317,7 +317,7 @@ export default function ComponentsPage() {
                 <li>
                   <Link
                     href="/components"
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     Components
@@ -326,7 +326,7 @@ export default function ComponentsPage() {
                 <li>
                   <Link
                     href="/themes"
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     Themes
@@ -335,7 +335,7 @@ export default function ComponentsPage() {
                 <li>
                   <Link
                     href="/docs/cli"
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     CLI
@@ -346,14 +346,14 @@ export default function ComponentsPage() {
 
             {/* Links Column 2 */}
             <div>
-              <h4 className="text-emerald-600 dark:text-emerald-400 font-bold mb-4 uppercase tracking-wider border-b border-emerald-400 dark:border-emerald-500/30/20 pb-1 w-fit">
+              <h4 className="text-cyan-400 font-bold mb-4 uppercase tracking-wider border-b border-cyan-400/20 pb-1 w-fit">
                 Network
               </h4>
               <ul className="space-y-2">
                 <li>
                   <a
                     href="https://github.com/sidgaikwad/siddcn"
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     GitHub
@@ -362,7 +362,7 @@ export default function ComponentsPage() {
                 <li>
                   <a
                     href="https://npmjs.com/package/siddcn"
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     NPM
@@ -371,7 +371,7 @@ export default function ComponentsPage() {
                 <li>
                   <a
                     href={`${DOCS_URL}/docs`}
-                    className="text-zinc-900 dark:text-zinc-300/60 hover:text-zinc-900 dark:text-white hover:translate-x-1 transition-all inline-block"
+                    className="text-neutral-300/60 hover:text-white hover:translate-x-1 transition-all inline-block"
                   >
                     {" "}
                     Docs
@@ -382,7 +382,7 @@ export default function ComponentsPage() {
           </div>
 
           {/* Status Bar Footer */}
-          <div className="mt-12 border-t border-zinc-400 dark:border-zinc-700/10 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-900 dark:text-zinc-300/40 font-mono">
+          <div className="mt-12 border-t border-neutral-500/10 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-neutral-300/40 font-mono">
             <div>COPYRIGHT © {new Date().getFullYear()} SIDDCN</div>
             <div className="flex gap-6 mt-2 md:mt-0">
               <span className="flex items-center gap-1">

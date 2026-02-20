@@ -710,30 +710,30 @@ export default async function ComponentVariantPage({
   if (!variantData) return <NotFound />;
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-[#0c0c0c] px-4 py-12 sm:px-6 lg:px-8 font-mono text-zinc-900 dark:text-zinc-300 selection:bg-emerald-200 dark:bg-emerald-400/20/30">
+    <main className="min-h-screen bg-black px-4 py-12 sm:px-6 lg:px-8 font-mono text-neutral-300 selection:bg-cyan-400/30">
       <div className="mx-auto max-w-7xl">
         {/* Top Navigation Bar */}
-        <nav className="mb-8 flex items-center justify-between border-b border-emerald-400 dark:border-emerald-500/30/20 pb-4">
+        <nav className="mb-8 flex items-center justify-between border-b border-cyan-400/20 pb-4">
           <div className="flex items-center gap-2 text-sm">
             <Link
               href="/components"
-              className="text-zinc-900 dark:text-zinc-300/50 hover:text-emerald-600 dark:text-emerald-400"
+              className="text-neutral-300/50 hover:text-cyan-400"
             >
               components
             </Link>
-            <span className="text-zinc-900 dark:text-zinc-300/30">/</span>
+            <span className="text-neutral-300/30">/</span>
             <Link
               href={`/components/${category}`}
-              className="text-zinc-900 dark:text-zinc-300/50 hover:text-emerald-600 dark:text-emerald-400"
+              className="text-neutral-300/50 hover:text-cyan-400"
             >
               {categoryData.name}
             </Link>
-            <span className="text-zinc-900 dark:text-zinc-300/30">/</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-200 dark:bg-emerald-400/20/10 px-2 py-0.5 rounded">
+            <span className="text-neutral-300/30">/</span>
+            <span className="text-cyan-400 font-bold bg-cyan-400/10 px-2 py-0.5 rounded">
               {variantData.name}
             </span>
           </div>
-          <div className="text-xs text-zinc-900 dark:text-zinc-300/40 hidden sm:block">
+          <div className="text-xs text-neutral-300/40 hidden sm:block">
             STATUS: READ_ONLY
           </div>
         </nav>
@@ -743,14 +743,14 @@ export default async function ComponentVariantPage({
           <div className="lg:col-span-7 space-y-8">
             <div>
               <div className="flex items-center gap-4 mb-4">
-                <div className="h-16 w-16 rounded border border-emerald-400 dark:border-emerald-500/30/30 bg-emerald-200 dark:bg-emerald-400/20/5 flex items-center justify-center text-3xl text-emerald-600 dark:text-emerald-400 shadow-[0_0_15px_-3px_rgba(0,255,255,0.2)]">
+                <div className="h-16 w-16 rounded border border-cyan-400/30 bg-cyan-400/5 flex items-center justify-center text-3xl text-cyan-400 shadow-[0_0_15px_-3px_rgba(0,255,255,0.2)]">
                   {categoryData.icon}
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-300 mb-1">
+                  <h1 className="text-4xl font-bold text-neutral-300 mb-1">
                     {variantData.name}
                   </h1>
-                  <p className="text-lg text-zinc-900 dark:text-zinc-300/60">
+                  <p className="text-lg text-neutral-300/60">
                     {variantData.description}
                   </p>
                 </div>
@@ -759,16 +759,16 @@ export default async function ComponentVariantPage({
 
             {/* Interactive Preview Window */}
             <section className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-terminal-cyan to-terminal-green opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
-              <div className="relative rounded-lg border border-emerald-400 dark:border-emerald-500/30/30 bg-white dark:bg-black overflow-hidden">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-green-400 opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
+              <div className="relative rounded-lg border border-cyan-400/30 bg-black overflow-hidden">
                 {/* Fake Window Header */}
-                <div className="flex items-center justify-between px-4 py-2 bg-zinc-900 dark:bg-zinc-100/10 border-b border-zinc-400 dark:border-zinc-700/10">
+                <div className="flex items-center justify-between px-4 py-2 bg-neutral-300/10 border-b border-neutral-500/10">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
                   </div>
-                  <div className="text-xs text-zinc-900 dark:text-zinc-300/40 tracking-widest">
+                  <div className="text-xs text-neutral-300/40 tracking-widest">
                     LOCALHOST:3000
                   </div>
                 </div>
@@ -776,14 +776,14 @@ export default async function ComponentVariantPage({
                 {/* Preview Content */}
                 <div className="p-12 min-h-[300px] flex items-center justify-center bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-20">
                   <div className="scale-125 transform">
-                    <pre className="font-mono text-emerald-600 dark:text-emerald-400 drop-shadow-[0_0_5px_rgba(0,255,255,0.5)] bg-white/50 dark:bg-black/50 p-6 border border-emerald-400 dark:border-emerald-500/30/20 rounded">
+                    <pre className="font-mono text-cyan-400 drop-shadow-[0_0_5px_rgba(0,255,255,0.5)] bg-black/50 p-6 border border-cyan-400/20 rounded">
                       {variantData.preview}
                     </pre>
                   </div>
                 </div>
 
                 {/* Status Bar */}
-                <div className="bg-emerald-200 dark:bg-emerald-400/20 text-black px-4 py-1 text-xs font-bold flex justify-between">
+                <div className="bg-cyan-400 text-black px-4 py-1 text-xs font-bold flex justify-between">
                   <span>NORMAL</span>
                   <span>100%</span>
                 </div>
@@ -793,12 +793,12 @@ export default async function ComponentVariantPage({
             {/* Props Table */}
             {variantData.props && variantData.props.length > 0 && (
               <section>
-                <h2 className="mb-6 text-xl font-bold text-zinc-900 dark:text-zinc-300 flex items-center gap-2">
-                  <span className="text-emerald-600 dark:text-emerald-400">#</span> API Reference
+                <h2 className="mb-6 text-xl font-bold text-neutral-300 flex items-center gap-2">
+                  <span className="text-cyan-400">#</span> API Reference
                 </h2>
-                <div className="rounded border border-zinc-400 dark:border-zinc-700/20 overflow-hidden">
+                <div className="rounded border border-neutral-500/20 overflow-hidden">
                   <table className="w-full text-left text-sm">
-                    <thead className="bg-zinc-900 dark:bg-zinc-100/5 text-zinc-900 dark:text-zinc-300/60 uppercase text-xs tracking-wider">
+                    <thead className="bg-neutral-300/5 text-neutral-300/60 uppercase text-xs tracking-wider">
                       <tr>
                         <th className="px-6 py-4 font-medium">Prop</th>
                         <th className="px-6 py-4 font-medium">Type</th>
@@ -806,13 +806,13 @@ export default async function ComponentVariantPage({
                         <th className="px-6 py-4 font-medium">Description</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-terminal-text/10 bg-black/20">
+                    <tbody className="divide-y divide-neutral-300/10 bg-black/20">
                       {variantData.props.map((prop: any, idx: number) => (
                         <tr
                           key={prop.name}
-                          className="hover:bg-emerald-200 dark:bg-emerald-400/20/5 transition-colors group"
+                          className="hover:bg-cyan-400/5 transition-colors group"
                         >
-                          <td className="px-6 py-4 font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+                          <td className="px-6 py-4 font-mono text-cyan-400 font-bold">
                             {prop.name}
                           </td>
                           <td className="px-6 py-4 font-mono text-terminal-yellow text-xs">
@@ -820,14 +820,14 @@ export default async function ComponentVariantPage({
                           </td>
                           <td className="px-6 py-4">
                             {prop.required ? (
-                              <span className="inline-flex items-center rounded-sm bg-red-500 dark:bg-red-500/50/10 px-2 py-1 text-xs font-medium text-red-600 dark:text-red-400 ring-1 ring-inset ring-terminal-red/20">
+                              <span className="inline-flex items-center rounded-sm bg-red-400/10 px-2 py-1 text-xs font-medium text-red-400 ring-1 ring-inset ring-red-400/20">
                                 YES
                               </span>
                             ) : (
-                              <span className="text-zinc-900 dark:text-zinc-300/30">-</span>
+                              <span className="text-neutral-300/30">-</span>
                             )}
                           </td>
-                          <td className="px-6 py-4 text-zinc-900 dark:text-zinc-300/70">
+                          <td className="px-6 py-4 text-neutral-300/70">
                             {prop.description}
                           </td>
                         </tr>
@@ -842,14 +842,14 @@ export default async function ComponentVariantPage({
           {/* Right Column: Code & Usage */}
           <div className="lg:col-span-5 space-y-8">
             {/* Installation Card */}
-            <div className="bg-zinc-50 dark:bg-[#0c0c0c] border border-zinc-400 dark:border-zinc-700/20 rounded-lg overflow-hidden">
-              <div className="px-4 py-3 border-b border-zinc-400 dark:border-zinc-700/20 bg-zinc-900 dark:bg-zinc-100/5 flex items-center justify-between">
-                <span className="text-sm font-bold text-zinc-900 dark:text-zinc-300/80">
+            <div className="bg-black border border-neutral-500/20 rounded-lg overflow-hidden">
+              <div className="px-4 py-3 border-b border-neutral-500/20 bg-neutral-300/5 flex items-center justify-between">
+                <span className="text-sm font-bold text-neutral-300/80">
                   Installation
                 </span>
-                <span className="text-xs text-zinc-900 dark:text-zinc-300/40">BASH</span>
+                <span className="text-xs text-neutral-300/40">BASH</span>
               </div>
-              <div className="p-4 bg-white dark:bg-black">
+              <div className="p-4 bg-black">
                 <CodeBlock
                   code={variantData.installCommand}
                   language="bash"
@@ -859,14 +859,14 @@ export default async function ComponentVariantPage({
             </div>
 
             {/* Usage Card */}
-            <div className="bg-zinc-50 dark:bg-[#0c0c0c] border border-zinc-400 dark:border-zinc-700/20 rounded-lg overflow-hidden">
-              <div className="px-4 py-3 border-b border-zinc-400 dark:border-zinc-700/20 bg-zinc-900 dark:bg-zinc-100/5 flex items-center justify-between">
-                <span className="text-sm font-bold text-zinc-900 dark:text-zinc-300/80">
+            <div className="bg-black border border-neutral-500/20 rounded-lg overflow-hidden">
+              <div className="px-4 py-3 border-b border-neutral-500/20 bg-neutral-300/5 flex items-center justify-between">
+                <span className="text-sm font-bold text-neutral-300/80">
                   Usage
                 </span>
-                <span className="text-xs text-zinc-900 dark:text-zinc-300/40">TSX</span>
+                <span className="text-xs text-neutral-300/40">TSX</span>
               </div>
-              <div className="p-4 bg-white dark:bg-black">
+              <div className="p-4 bg-black">
                 <CodeBlock
                   code={variantData.usage}
                   language="tsx"
@@ -885,10 +885,10 @@ function NotFound() {
   return (
     <main className="min-h-screen px-4 py-12">
       <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-2xl text-red-600 dark:text-red-400">DATA_CORRUPTED</h1>
+        <h1 className="text-2xl text-red-400">DATA_CORRUPTED</h1>
         <Link
           href="/components"
-          className="mt-4 text-emerald-600 dark:text-emerald-400 hover:underline"
+          className="mt-4 text-cyan-400 hover:underline"
         >
           &lt; Return to Safety
         </Link>
