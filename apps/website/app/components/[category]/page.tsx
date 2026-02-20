@@ -447,13 +447,13 @@ export default async function CategoryPage({
 
   if (!data) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-terminal-bg text-terminal-red font-mono">
+      <main className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-[#0c0c0c] text-red-600 dark:text-red-400 font-mono">
         <div className="border border-terminal-red p-8 text-center max-w-md">
           <h1 className="text-4xl mb-4">404 ERROR</h1>
           <p>CATEGORY_NOT_FOUND: {category}</p>
           <Link
             href="/components"
-            className="mt-8 block hover:underline text-terminal-text"
+            className="mt-8 block hover:underline text-zinc-900 dark:text-zinc-300"
           >
             [ Return to Root ]
           </Link>
@@ -463,34 +463,34 @@ export default async function CategoryPage({
   }
 
   return (
-    <main className="min-h-screen bg-terminal-bg px-4 py-12 sm:px-6 lg:px-8 font-mono">
+    <main className="min-h-screen bg-zinc-50 dark:bg-[#0c0c0c] px-4 py-12 sm:px-6 lg:px-8 font-mono">
       <div className="mx-auto max-w-7xl">
         {/* Breadcrumb / CLI Path */}
-        <nav className="mb-12 flex items-center gap-2 text-sm text-terminal-text/60 bg-terminal-text/5 p-3 rounded border border-terminal-text/10 w-fit">
-          <span className="text-terminal-green">$</span>
+        <nav className="mb-12 flex items-center gap-2 text-sm text-zinc-900 dark:text-zinc-300/60 bg-zinc-900 dark:bg-zinc-100/5 p-3 rounded border border-zinc-400 dark:border-zinc-700/10 w-fit">
+          <span className="text-emerald-600 dark:text-emerald-400">$</span>
           <Link
             href="/components"
-            className="hover:text-terminal-cyan transition-colors"
+            className="hover:text-emerald-600 dark:text-emerald-400 transition-colors"
           >
             ~/components
           </Link>
-          <span className="text-terminal-text/30">/</span>
-          <span className="text-terminal-cyan font-bold">{category}</span>
-          <span className="animate-pulse inline-block w-2 h-4 bg-terminal-cyan/50 ml-1 align-middle"></span>
+          <span className="text-zinc-900 dark:text-zinc-300/30">/</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold">{category}</span>
+          <span className="animate-pulse inline-block w-2 h-4 bg-emerald-200 dark:bg-emerald-400/20/50 ml-1 align-middle"></span>
         </nav>
 
         {/* Category Header */}
         <div className="mb-16 relative">
           <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-terminal-cyan to-transparent opacity-50"></div>
           <div className="flex items-center gap-4 mb-4">
-            <span className="text-5xl text-terminal-cyan opacity-80">
+            <span className="text-5xl text-emerald-600 dark:text-emerald-400 opacity-80">
               {data.icon}
             </span>
-            <h1 className="text-5xl font-black text-terminal-text tracking-tight uppercase">
+            <h1 className="text-5xl font-black text-zinc-900 dark:text-zinc-300 tracking-tight uppercase">
               {data.name}
             </h1>
           </div>
-          <p className="text-xl text-terminal-text/70 max-w-2xl leading-relaxed">
+          <p className="text-xl text-zinc-900 dark:text-zinc-300/70 max-w-2xl leading-relaxed">
             {data.description}
           </p>
         </div>
@@ -501,60 +501,60 @@ export default async function CategoryPage({
             <Link
               key={variant.id}
               href={`/components/${category}/${variant.id}`}
-              className="group block rounded-none border border-terminal-cyan/30 bg-terminal-bg hover:bg-terminal-cyan/5 transition-all duration-300 overflow-hidden relative"
+              className="group block rounded-none border border-emerald-400 dark:border-emerald-500/30/30 bg-zinc-50 dark:bg-[#0c0c0c] hover:bg-emerald-200 dark:bg-emerald-400/20/5 transition-all duration-300 overflow-hidden relative"
             >
               {/* Decorators */}
-              <div className="absolute top-0 right-0 p-2 text-[10px] text-terminal-cyan/40 group-hover:text-terminal-cyan">
+              <div className="absolute top-0 right-0 p-2 text-[10px] text-emerald-600 dark:text-emerald-400/40 group-hover:text-emerald-600 dark:text-emerald-400">
                 ID: {variant.id.toUpperCase()}
               </div>
 
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-bold text-terminal-cyan group-hover:text-white transition-colors">
+                  <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 group-hover:text-zinc-900 dark:text-white transition-colors">
                     {variant.name}
                   </h3>
                 </div>
 
-                <p className="mb-6 text-sm text-terminal-text/70">
+                <p className="mb-6 text-sm text-zinc-900 dark:text-zinc-300/70">
                   {variant.description}
                 </p>
 
                 {/* Mini Preview Window */}
-                <div className="bg-black/40 border border-terminal-text/20 rounded mb-4">
-                  <div className="flex items-center gap-1.5 px-3 py-2 border-b border-terminal-text/10 bg-terminal-text/5">
-                    <div className="w-2 h-2 rounded-full bg-terminal-red/50"></div>
-                    <div className="w-2 h-2 rounded-full bg-terminal-yellow/50"></div>
-                    <div className="w-2 h-2 rounded-full bg-terminal-green/50"></div>
-                    <span className="ml-2 text-[10px] text-terminal-text/40">
+                <div className="bg-white/40 dark:bg-black/40 border border-zinc-400 dark:border-zinc-700/20 rounded mb-4">
+                  <div className="flex items-center gap-1.5 px-3 py-2 border-b border-zinc-400 dark:border-zinc-700/10 bg-zinc-900 dark:bg-zinc-100/5">
+                    <div className="w-2 h-2 rounded-full bg-red-500 dark:bg-red-500/50/50"></div>
+                    <div className="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-500/50/50"></div>
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-500/50/50"></div>
+                    <span className="ml-2 text-[10px] text-zinc-900 dark:text-zinc-300/40">
                       preview.tsx
                     </span>
                   </div>
-                  <div className="p-6 flex items-center justify-center font-mono text-sm text-terminal-green min-h-[100px]">
+                  <div className="p-6 flex items-center justify-center font-mono text-sm text-emerald-600 dark:text-emerald-400 min-h-[100px]">
                     <pre className="whitespace-pre">{variant.preview}</pre>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-terminal-cyan/60 font-bold group-hover:text-terminal-cyan">
+                <div className="flex items-center justify-between text-xs text-emerald-600 dark:text-emerald-400/60 font-bold group-hover:text-emerald-600 dark:text-emerald-400">
                   <span>VIEW_DETAILS</span>
                   <span>--&gt;</span>
                 </div>
               </div>
 
               {/* Animated Border Bottom */}
-              <div className="absolute bottom-0 left-0 h-1 w-0 bg-terminal-cyan transition-all duration-500 group-hover:w-full"></div>
+              <div className="absolute bottom-0 left-0 h-1 w-0 bg-emerald-200 dark:bg-emerald-400/20 transition-all duration-500 group-hover:w-full"></div>
             </Link>
           ))}
         </div>
 
         {/* Footer Navigation */}
-        <div className="mt-20 border-t border-dashed border-terminal-text/20 pt-8 flex justify-between items-center text-sm">
+        <div className="mt-20 border-t border-dashed border-zinc-400 dark:border-zinc-700/20 pt-8 flex justify-between items-center text-sm">
           <Link
             href="/components"
-            className="text-terminal-text/60 hover:text-terminal-cyan font-mono"
+            className="text-zinc-900 dark:text-zinc-300/60 hover:text-emerald-600 dark:text-emerald-400 font-mono"
           >
             &lt; cd ..
           </Link>
-          <span className="text-terminal-text/30">END_OF_BUFFER</span>
+          <span className="text-zinc-900 dark:text-zinc-300/30">END_OF_BUFFER</span>
         </div>
       </div>
     </main>
