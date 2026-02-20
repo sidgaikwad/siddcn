@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 
-// Component data - Updated with ALL categories
+// Component data - Complete with ALL categories
 const componentData: Record<
   string,
   {
@@ -710,47 +710,47 @@ export default async function ComponentVariantPage({
   if (!variantData) return <NotFound />;
 
   return (
-    <main className="min-h-screen bg-black px-4 py-12 sm:px-6 lg:px-8 font-mono text-neutral-300 selection:bg-cyan-400/30">
+    <main className="font-mono min-h-screen bg-slate-50 text-slate-900 transition-colors duration-500 px-4 py-12 sm:px-6 lg:px-8 selection:bg-emerald-500/30 dark:bg-[#09090b] dark:text-slate-50">
       <div className="mx-auto max-w-7xl">
         {/* Top Navigation Bar */}
-        <nav className="mb-8 flex items-center justify-between border-b border-cyan-400/20 pb-4">
-          <div className="flex items-center gap-2 text-sm">
+        <nav className="mb-10 flex items-center justify-between border-b-2 border-slate-200 pb-5 dark:border-white/10">
+          <div className="flex items-center gap-3 text-sm font-bold">
             <Link
               href="/components"
-              className="text-neutral-300/50 hover:text-cyan-400"
+              className="text-slate-400 hover:text-emerald-600 transition-colors dark:text-slate-500 dark:hover:text-emerald-400"
             >
               components
             </Link>
-            <span className="text-neutral-300/30">/</span>
+            <span className="text-slate-300 dark:text-slate-600">/</span>
             <Link
               href={`/components/${category}`}
-              className="text-neutral-300/50 hover:text-cyan-400"
+              className="text-slate-400 hover:text-emerald-600 transition-colors dark:text-slate-500 dark:hover:text-emerald-400"
             >
               {categoryData.name}
             </Link>
-            <span className="text-neutral-300/30">/</span>
-            <span className="text-cyan-400 font-bold bg-cyan-400/10 px-2 py-0.5 rounded">
+            <span className="text-slate-300 dark:text-slate-600">/</span>
+            <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-md shadow-sm dark:text-emerald-400 dark:bg-emerald-400/10">
               {variantData.name}
             </span>
           </div>
-          <div className="text-xs text-neutral-300/40 hidden sm:block">
+          <div className="text-xs font-black text-slate-300 hidden sm:block dark:text-slate-600 tracking-widest">
             STATUS: READ_ONLY
           </div>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Header & Preview */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-10">
             <div>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="h-16 w-16 rounded border border-cyan-400/30 bg-cyan-400/5 flex items-center justify-center text-3xl text-cyan-400 shadow-[0_0_15px_-3px_rgba(0,255,255,0.2)]">
+              <div className="flex items-center gap-5 mb-5">
+                <div className="h-16 w-16 rounded-xl border-2 border-emerald-200 bg-emerald-50 flex items-center justify-center text-3xl text-emerald-600 shadow-sm dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400 dark:shadow-[0_0_20px_-5px_rgba(16,185,129,0.3)]">
                   {categoryData.icon}
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold text-neutral-300 mb-1">
+                  <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-2 dark:text-white">
                     {variantData.name}
                   </h1>
-                  <p className="text-lg text-neutral-300/60">
+                  <p className="text-lg font-medium text-slate-500 dark:text-slate-400">
                     {variantData.description}
                   </p>
                 </div>
@@ -759,31 +759,31 @@ export default async function ComponentVariantPage({
 
             {/* Interactive Preview Window */}
             <section className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-green-400 opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
-              <div className="relative rounded-lg border border-cyan-400/30 bg-black overflow-hidden">
+              <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 opacity-20 blur-md transition duration-1000 group-hover:opacity-40"></div>
+              <div className="relative rounded-xl border border-slate-200 bg-white overflow-hidden shadow-2xl dark:border-white/10 dark:bg-[#050505]">
                 {/* Fake Window Header */}
-                <div className="flex items-center justify-between px-4 py-2 bg-neutral-300/10 border-b border-neutral-500/10">
+                <div className="flex items-center justify-between px-5 py-3 bg-slate-100 border-b border-slate-200 dark:bg-white/5 dark:border-white/10">
                   <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-red-400 shadow-inner"></div>
+                    <div className="w-3 h-3 rounded-full bg-amber-400 shadow-inner"></div>
+                    <div className="w-3 h-3 rounded-full bg-emerald-400 shadow-inner"></div>
                   </div>
-                  <div className="text-xs text-neutral-300/40 tracking-widest">
+                  <div className="text-[10px] font-bold text-slate-400 tracking-widest dark:text-slate-500">
                     LOCALHOST:3000
                   </div>
                 </div>
 
                 {/* Preview Content */}
-                <div className="p-12 min-h-[300px] flex items-center justify-center bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-20">
+                <div className="p-12 min-h-[350px] flex items-center justify-center bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-5 relative shadow-inner dark:bg-opacity-20">
                   <div className="scale-125 transform">
-                    <pre className="font-mono text-cyan-400 drop-shadow-[0_0_5px_rgba(0,255,255,0.5)] bg-black/50 p-6 border border-cyan-400/20 rounded">
+                    <pre className="font-mono font-bold text-emerald-600 bg-slate-50 p-8 border-2 border-slate-200 rounded-xl shadow-lg dark:text-emerald-400 dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] dark:bg-black/60 dark:border-emerald-400/20 backdrop-blur-sm">
                       {variantData.preview}
                     </pre>
                   </div>
                 </div>
 
                 {/* Status Bar */}
-                <div className="bg-cyan-400 text-black px-4 py-1 text-xs font-bold flex justify-between">
+                <div className="bg-emerald-500 text-white px-5 py-1.5 text-xs font-black flex justify-between dark:bg-emerald-400 dark:text-black">
                   <span>NORMAL</span>
                   <span>100%</span>
                 </div>
@@ -793,41 +793,41 @@ export default async function ComponentVariantPage({
             {/* Props Table */}
             {variantData.props && variantData.props.length > 0 && (
               <section>
-                <h2 className="mb-6 text-xl font-bold text-neutral-300 flex items-center gap-2">
-                  <span className="text-cyan-400">#</span> API Reference
+                <h2 className="mb-6 text-xl font-black text-slate-900 flex items-center gap-3 dark:text-white">
+                  <span className="text-emerald-500 bg-emerald-50 px-2 py-1 rounded-md text-sm dark:bg-emerald-400/10 dark:text-emerald-400">API</span> Reference
                 </h2>
-                <div className="rounded border border-neutral-500/20 overflow-hidden">
+                <div className="rounded-xl border border-slate-200 overflow-hidden shadow-sm dark:border-white/10 bg-white dark:bg-transparent">
                   <table className="w-full text-left text-sm">
-                    <thead className="bg-neutral-300/5 text-neutral-300/60 uppercase text-xs tracking-wider">
+                    <thead className="bg-slate-50 text-slate-500 uppercase text-xs font-black tracking-wider dark:bg-white/5 dark:text-slate-400">
                       <tr>
-                        <th className="px-6 py-4 font-medium">Prop</th>
-                        <th className="px-6 py-4 font-medium">Type</th>
-                        <th className="px-6 py-4 font-medium">Required</th>
-                        <th className="px-6 py-4 font-medium">Description</th>
+                        <th className="px-6 py-4">Prop</th>
+                        <th className="px-6 py-4">Type</th>
+                        <th className="px-6 py-4">Required</th>
+                        <th className="px-6 py-4">Description</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-neutral-300/10 bg-black/20">
-                      {variantData.props.map((prop: any, idx: number) => (
+                    <tbody className="divide-y divide-slate-100 dark:divide-white/5 dark:bg-black/40">
+                      {variantData.props.map((prop: any) => (
                         <tr
                           key={prop.name}
-                          className="hover:bg-cyan-400/5 transition-colors group"
+                          className="hover:bg-slate-50 transition-colors group dark:hover:bg-white/5"
                         >
-                          <td className="px-6 py-4 font-mono text-cyan-400 font-bold">
+                          <td className="px-6 py-4 font-mono text-slate-900 font-bold dark:text-emerald-400">
                             {prop.name}
                           </td>
-                          <td className="px-6 py-4 font-mono text-terminal-yellow text-xs">
+                          <td className="px-6 py-4 font-mono font-medium text-amber-600 text-xs dark:text-amber-400 bg-amber-50 dark:bg-transparent px-2 py-1 rounded inline-block m-4 border border-amber-200 dark:border-transparent">
                             {prop.type}
                           </td>
                           <td className="px-6 py-4">
                             {prop.required ? (
-                              <span className="inline-flex items-center rounded-sm bg-red-400/10 px-2 py-1 text-xs font-medium text-red-400 ring-1 ring-inset ring-red-400/20">
+                              <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-bold text-red-600 ring-1 ring-inset ring-red-500/20 dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20">
                                 YES
                               </span>
                             ) : (
-                              <span className="text-neutral-300/30">-</span>
+                              <span className="text-slate-300 font-bold dark:text-slate-600">-</span>
                             )}
                           </td>
-                          <td className="px-6 py-4 text-neutral-300/70">
+                          <td className="px-6 py-4 text-slate-500 font-medium dark:text-slate-400">
                             {prop.description}
                           </td>
                         </tr>
@@ -842,14 +842,14 @@ export default async function ComponentVariantPage({
           {/* Right Column: Code & Usage */}
           <div className="lg:col-span-5 space-y-8">
             {/* Installation Card */}
-            <div className="bg-black border border-neutral-500/20 rounded-lg overflow-hidden">
-              <div className="px-4 py-3 border-b border-neutral-500/20 bg-neutral-300/5 flex items-center justify-between">
-                <span className="text-sm font-bold text-neutral-300/80">
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-lg dark:bg-black dark:border-white/10">
+              <div className="px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between dark:border-white/10 dark:bg-white/5">
+                <span className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                   Installation
                 </span>
-                <span className="text-xs text-neutral-300/40">BASH</span>
+                <span className="text-[10px] font-bold text-slate-400 bg-slate-200 px-2 py-0.5 rounded dark:bg-white/10 dark:text-slate-500">BASH</span>
               </div>
-              <div className="p-4 bg-black">
+              <div className="p-5">
                 <CodeBlock
                   code={variantData.installCommand}
                   language="bash"
@@ -859,14 +859,14 @@ export default async function ComponentVariantPage({
             </div>
 
             {/* Usage Card */}
-            <div className="bg-black border border-neutral-500/20 rounded-lg overflow-hidden">
-              <div className="px-4 py-3 border-b border-neutral-500/20 bg-neutral-300/5 flex items-center justify-between">
-                <span className="text-sm font-bold text-neutral-300/80">
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-lg dark:bg-black dark:border-white/10">
+              <div className="px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between dark:border-white/10 dark:bg-white/5">
+                <span className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                   Usage
                 </span>
-                <span className="text-xs text-neutral-300/40">TSX</span>
+                <span className="text-[10px] font-bold text-slate-400 bg-slate-200 px-2 py-0.5 rounded dark:bg-white/10 dark:text-slate-500">TSX</span>
               </div>
-              <div className="p-4 bg-black">
+              <div className="p-5">
                 <CodeBlock
                   code={variantData.usage}
                   language="tsx"
@@ -883,12 +883,14 @@ export default async function ComponentVariantPage({
 
 function NotFound() {
   return (
-    <main className="min-h-screen px-4 py-12">
-      <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-2xl text-red-400">DATA_CORRUPTED</h1>
+    <main className="font-mono min-h-screen px-4 py-20 flex items-center justify-center bg-slate-50 dark:bg-[#09090b]">
+      <div className="mx-auto max-w-lg text-center bg-white p-12 rounded-2xl border-2 border-red-100 shadow-xl dark:bg-black/50 dark:border-red-900/30">
+        <h1 className="text-3xl font-black text-red-500 mb-4 dark:text-red-400 flex justify-center gap-3">
+          <span className="animate-bounce">✖</span> DATA_CORRUPTED
+        </h1>
         <Link
           href="/components"
-          className="mt-4 text-cyan-400 hover:underline"
+          className="mt-6 inline-block text-slate-900 font-bold bg-slate-100 px-6 py-3 rounded-lg hover:bg-slate-200 transition-colors dark:text-white dark:bg-white/10 dark:hover:bg-white/20"
         >
           &lt; Return to Safety
         </Link>
